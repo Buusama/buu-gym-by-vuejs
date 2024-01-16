@@ -11,7 +11,7 @@
         >
           <h2 class="font-medium text-base mr-auto">Thông tin hội viên</h2>
         </div>
-        <div class="p-5">
+        <div class="p-5 border-b border-slate-200/60 dark:border-darkmode-400">
           <div class="flex flex-col-reverse xl:flex-row flex-col">
             <div class="flex-1 mt-6 xl:mt-0">
               <div class="grid grid-cols-12 gap-x-5">
@@ -28,7 +28,9 @@
                     />
                   </div>
                   <div class="mt-3">
-                    <label for="create-member-form-2" class="form-label">Giới tính</label>
+                    <label for="create-member-form-2" class="form-label"
+                      >Giới tính</label
+                    >
                     <select v-model="gender" class="form-select">
                       <option value="1">Nam</option>
                       <option value="2">Nữ</option>
@@ -36,7 +38,9 @@
                     </select>
                   </div>
                   <div class="mt-3">
-                    <label for="create-member-form-3" class="form-label">Ngày sinh</label>
+                    <label for="create-member-form-3" class="form-label"
+                      >Ngày sinh</label
+                    >
                     <div class="relative form-control">
                       <div
                         class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400"
@@ -46,7 +50,6 @@
                       <Litepicker
                         v-model="date"
                         :options="{
-                          
                           showWeekNumbers: true,
                           maxDate: new Date(),
                           autoRefresh: true,
@@ -76,7 +79,9 @@
                     />
                   </div>
                   <div class="mt-3">
-                    <label for="create-member-form-5" class="form-label">Email</label>
+                    <label for="create-member-form-5" class="form-label"
+                      >Email</label
+                    >
                     <input
                       v-model="email"
                       type="text"
@@ -96,7 +101,9 @@
                 </div>
                 <div class="col-span-12">
                   <div class="mt-3">
-                    <label for="create-member-form-7" class="form-label">Địa chỉ</label>
+                    <label for="create-member-form-7" class="form-label"
+                      >Địa chỉ</label
+                    >
                     <textarea
                       v-model="address"
                       rows="8"
@@ -107,19 +114,11 @@
                   </div>
                 </div>
               </div>
-              <button
-                type="button"
-                class="btn btn-primary w-20 mt-3"
-                @click="createMemberFunc"
-              >
-                Lưu
-              </button>
-              <router-link :to="{ name: 'list-members' }" tag="a" class="btn btn-outline-secondary ml-3 w-20 mt-3">
-                Hủy
-              </router-link>
             </div>
             <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
-              <label for="create-member-form-8" class="form-label">Avatar</label>
+              <label for="create-member-form-8" class="form-label"
+                >Avatar</label
+              >
 
               <div
                 class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5"
@@ -155,6 +154,194 @@
             </div>
           </div>
         </div>
+        <div
+          class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
+        >
+          <h2 class="font-medium text-base mr-auto">Thông tin sức khỏe</h2>
+        </div>
+        <div class="p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+          <div class="flex flex-col-reverse xl:flex-row flex-col">
+            <div class="flex-1 mt-6 xl:mt-0">
+              <div class="grid grid-cols-12 gap-x-5">
+                <div class="col-span-12 2xl:col-span-6">
+                  <div>
+                    <label for="create-member-form-1" class="form-label"
+                      >Cân nặng</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-text">Kg</div>
+                      <input
+                        v-model="weight"
+                        type="text"
+                        class="form-control"
+                      />
+                      <div class="input-group-text">.00</div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label"
+                      >Chiều cao</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-text">Cm</div>
+                      <input
+                        v-model="height"
+                        type="text"
+                        class="form-control"
+                      />
+                      <div class="input-group-text">.00</div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label"
+                      >Tỷ lệ mỡ</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-text">%</div>
+                      <input v-model="fat" type="text" class="form-control" />
+                      <div class="input-group-text">.00</div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label"
+                      >Vòng bắp tay</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-text">Cm</div>
+                      <input v-model="aims" type="text" class="form-control" />
+                      <div class="input-group-text">.00</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-span-12 2xl:col-span-6">
+                  <div class="mt-3 2xl:mt-0">
+                    <label for="create-member-form-4" class="form-label"
+                      >Vòng ngực</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-text">Cm</div>
+                      <input v-model="chest" type="text" class="form-control" />
+                      <div class="input-group-text">.00</div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-4" class="form-label"
+                      >Vòng eo</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-text">Cm</div>
+                      <input v-model="waist" type="text" class="form-control" />
+                      <div class="input-group-text">.00</div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-4" class="form-label"
+                      >Vòng hông</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-text">Cm</div>
+                      <input
+                        v-model="thight"
+                        type="text"
+                        class="form-control"
+                      />
+                      <div class="input-group-text">.00</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
+        >
+          <h2 class="font-medium text-base mr-auto">Thông tin mở rộng</h2>
+        </div>
+        <div class="p-5">
+          <div class="flex flex-col-reverse xl:flex-row flex-col">
+            <div class="flex-1 mt-6 xl:mt-0">
+              <div class="grid grid-cols-12 gap-x-5">
+                <div class="col-span-12 2xl:col-span-6">
+                  <div>
+                    <label for="create-member-form-1" class="form-label"
+                      >Gói tập luyện</label
+                    >
+                    <select class="form-select">
+                      <option value="1">Gói tập 1</option>
+                      <option value="2">Gói tập 2</option>
+                      <option value="3">Gói tập 3</option>
+                    </select>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label"
+                      >Huấn luyện viên</label
+                    >
+                    <select class="form-select">
+                      <option value="1">Huấn luyện viên 1</option>
+                      <option value="2">Huấn luyện viên 2</option>
+                      <option value="3">Huấn luyện viên 3</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-span-12 2xl:col-span-6">
+                  <div class="mt-3 2xl:mt-0">
+                    <label for="create-member-form-4" class="form-label"
+                      >Lớp học</label
+                    >
+                    <select class="form-select">
+                      <option value="1">Lớp học 1</option>
+                      <option value="2">Lớp học 2</option>
+                      <option value="3">Lớp học 3</option>
+                    </select>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label"
+                      >Ngày đăng ký</label
+                    >
+                    <div class="relative form-control">
+                      <div
+                        class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400"
+                      >
+                        <CalendarIcon class="w-4 h-4" />
+                      </div>
+                      <Litepicker
+                        v-model="date"
+                        :options="{
+                          showWeekNumbers: true,
+                          maxDate: new Date(),
+                          autoRefresh: true,
+                          dropdowns: {
+                            minYear: 1900,
+                            maxYear: null,
+                            months: true,
+                            years: true,
+                          },
+                          format: 'YYYY-MM-DD',
+                        }"
+                        class="form-control pl-12"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary w-20 mt-3"
+            @click="createMemberFunc"
+          >
+            Lưu
+          </button>
+          <router-link
+            :to="{ name: 'list-members' }"
+            tag="a"
+            class="btn btn-outline-secondary ml-3 w-20 mt-3"
+          >
+            Hủy
+          </router-link>
+        </div>
       </div>
       <!-- END: Thông tin hội viên -->
     </div>
@@ -162,67 +349,67 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { createMember } from "@/api/members";
-import { CreateMemberRequest } from "@/api/members/interfaces/create";
-import { showMessage } from "@/common/utils/helpers";
-import router from "@/router";
+  import { ref } from 'vue';
+  import { createMember } from '@/api/members';
+  import { CreateMemberRequest } from '@/api/members/interfaces/create';
+  import { showMessage } from '@/common/utils/helpers';
+  import router from '@/router';
 
-const select = ref("1");
-const newImage = ref(null);
-const newImageFile = ref(null);
-const name = ref("");
-const gender = ref("M");
-const phone = ref("");
-const email = ref("");
-const status = ref(1);
-const address = ref("");
-const date = ref("");
+  const select = ref('1');
+  const newImage = ref(null);
+  const newImageFile = ref(null);
+  const name = ref('');
+  const gender = ref('M');
+  const phone = ref('');
+  const email = ref('');
+  const status = ref(1);
+  const address = ref('');
+  const date = ref('');
 
-const previewFiles = (event: any) => {
-  var input = event.target;
-  if (input.files) {
-    var reader = new FileReader();
-    reader.onload = (e: any) => {
-      newImage.value = e.target.result;
-    };
-    reader.readAsDataURL(input.files[0]);
-    newImageFile.value = input.files[0];
-  }
-};
+  const previewFiles = (event: any) => {
+    var input = event.target;
+    if (input.files) {
+      var reader = new FileReader();
+      reader.onload = (e: any) => {
+        newImage.value = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+      newImageFile.value = input.files[0];
+    }
+  };
 
-const removePreview = () => {
-  newImage.value = null;
-  const input = document.getElementById("form-avatar") as HTMLInputElement;
-  input.value = "";
-  newImageFile.value = null;
-};
-const createMemberFunc = async () => {
-  const data = {
-    name: name.value,
-    gender: gender.value,
-    avatar: newImageFile.value,
-    phone: phone.value,
-    email: email.value,
-    status: status.value,
-    address: address.value,
-    birth_date: date.value,
-  } as CreateMemberRequest;
+  const removePreview = () => {
+    newImage.value = null;
+    const input = document.getElementById('form-avatar') as HTMLInputElement;
+    input.value = '';
+    newImageFile.value = null;
+  };
+  const createMemberFunc = async () => {
+    const data = {
+      name: name.value,
+      gender: gender.value,
+      avatar: newImageFile.value,
+      phone: phone.value,
+      email: email.value,
+      status: status.value,
+      address: address.value,
+      birth_date: date.value,
+    } as CreateMemberRequest;
 
-  const formData = new FormData();
-  formData.append("name", data.name);
-  formData.append("gender", data.gender);
-  formData.append("avatar", data.avatar);
-  formData.append("phone", data.phone);
-  formData.append("email", data.email);
-  formData.append("status", data.status.toString());
-  formData.append("address", data.address);
-  formData.append("birth_date", data.birth_date);
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('gender', data.gender);
+    formData.append('avatar', data.avatar);
+    formData.append('phone', data.phone);
+    formData.append('email', data.email);
+    formData.append('status', data.status.toString());
+    formData.append('address', data.address);
+    formData.append('birth_date', data.birth_date);
 
-  const res = await createMember(formData);
-  if (res) {
-    showMessage("Thêm mới hội viên thành công", true);
-    router.push({ name: "list-members" });
-  }
-};
+    const res = await createMember(formData);
+    if (res) {
+      showMessage('Thêm mới hội viên thành công', true);
+      router.push({ name: 'list-members' });
+    }
+  };
 </script>
