@@ -26,9 +26,9 @@
       <DropdownMenu class="w-56">
         <DropdownContent class="bg-primary text-white">
           <DropdownHeader tag="div" class="!font-normal">
-            <div class="font-medium">{{ currentUser.name }}</div>
+            <div class="font-medium">{{ currentUser.name }} - {{ userRole }} </div>
             <div class="text-xs text-white/70 dark:text-slate-500 mt-2">
-              {{ currentUser.role === 1 ? 'Admin' : 'Member' }}: {{ currentUser.email }}
+              {{ currentUser.email }}
             </div>
           </DropdownHeader>
           <DropdownDivider class="border-white/[0.08]" />
@@ -48,6 +48,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
+import { RoleValue, RoleLabel } from '@/common/enums/permision/role'
 export default {
   name: 'TopBar',
   setup() {
@@ -58,7 +59,7 @@ export default {
     const routeMatched = computed(() => {
       return router.currentRoute.value.matched.filter(item => item.meta && item.meta.title);
     });
-    
+
     const showSearchDropdown = () => {
       searchDropdown.value = true
     }
@@ -70,16 +71,30 @@ export default {
     async function actionLogout() {
       authStore.logout()
     }
-    const currentUser = computed(
-      () => JSON.parse(authStore.currentUser ?? "")
-    )
+    const currentUser = computed(() => {
+      return JSON.parse(authStore.currentUser ?? "")
+    })
+
+    const roleMapping: { [key: number]: string } = {
+      [RoleValue.ADMIN]: RoleLabel.ADMIN,
+      [RoleValue.TRAINER]: RoleLabel.TRAINER,
+      [RoleValue.STAFF]: RoleLabel.STAFF,
+      [RoleValue.MEMBER]: RoleLabel.MEMBER,
+    }
+
+    const userRole = computed(() => {
+      const role = currentUser.value.role as RoleValue
+      return roleMapping[role] || RoleLabel.MEMBER
+    })
+
     return {
       searchDropdown,
       showSearchDropdown,
       hideSearchDropdown,
       actionLogout,
       currentUser,
-      routeMatched
+      userRole,
+      routeMatched,
     }
   },
 }

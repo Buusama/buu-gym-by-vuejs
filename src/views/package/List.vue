@@ -138,7 +138,7 @@ const RequestFunc = async (url, config, params) => {
     let data = []
     const offset = (params.page - 1) * params.size
     const limit = params.size
-    const order = params.sorters[0] ? params.sorters[0].field : 'updated_at'
+    const order = params.sorters[0] ? params.sorters[0].field : 'id '
     const sort = params.sorters[0] ? params.sorters[0].dir : 'desc'
 
     await getPackages({
@@ -203,7 +203,7 @@ const initTabulator = () => {
             },
             {
                 title: 'GIÁ DỊCH VỤ',
-                minWidth: 180,
+                minWidth: 100,
                 field: 'phone',
                 hozAlign: 'center',
                 vertAlign: 'middle',
@@ -235,36 +235,36 @@ const initTabulator = () => {
             },
             {
                 title: 'GHI CHÚ',
-                minWidth: 150,
-                field: 'address',
+                minWidth: 300,
+                field: 'description',
                 hozAlign: 'center',
                 vertAlign: 'middle',
                 print: false,
                 download: false,
                 formatter(cell) {
                     return `<div>
-                        <div class="font-medium whitespace-nowrap">${cell.getData().note
+                        <div class="font-medium whitespace-nowrap">${cell.getData().description
                         }</div>
                 </div > `
                 },
             },
-            {
-                title: 'STATUS',
-                minWidth: 200,
-                field: 'status',
-                hozAlign: 'center',
-                vertAlign: 'middle',
-                print: false,
-                download: false,
-                headerSort: false,
-                formatter(cell) {
-                    return `<div class="flex items-center lg:justify-center ${cell.getData().status ? 'text-success' : 'text-danger'
-                        }">
-    <i data-lucide="check-square" class="w-4 h-4 mr-2" ></i > ${cell.getData().status ? 'Active' : 'Inactive'
-                        }
-                </div > `
-                },
-            },
+    //         {
+    //             title: 'STATUS',
+    //             minWidth: 200,
+    //             field: 'status',
+    //             hozAlign: 'center',
+    //             vertAlign: 'middle',
+    //             print: false,
+    //             download: false,
+    //             headerSort: false,
+    //             formatter(cell) {
+    //                 return `<div class="flex items-center lg:justify-center ${cell.getData().status ? 'text-success' : 'text-danger'
+    //                     }">
+    // <i data-lucide="check-square" class="w-4 h-4 mr-2" ></i > ${cell.getData().status ? 'Active' : 'Inactive'
+    //                     }
+    //             </div > `
+    //             },
+    //         },
             {
                 title: 'ACTIONS',
                 minWidth: 100,

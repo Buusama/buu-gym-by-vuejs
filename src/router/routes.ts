@@ -1,3 +1,4 @@
+import { RoleValue } from '@/common/enums/permision/role'
 import SideMenu from '@/layouts/side-menu/Main.vue'
 import ErrorPage from '@/views/error-page/ErrorPage.vue'
 import PermisionPage from '@/views/error-page/PermisionPage.vue'
@@ -23,12 +24,12 @@ const routes = [
         path: '',
         name: 'dashboard',
         component: Home,
-        meta: { requiresAuth: true, title: 'Dashboard' },
+        meta: { requiresAuth: true, title: 'Dashboard', role: [RoleValue.TRAINER, RoleValue.STAFF, RoleValue.MEMBER] },
       },
       {
         path: '/trainers',
         name: 'trainers',
-        meta: { requiresAuth: true, title: 'Huấn luyện viên' },
+        meta: { requiresAuth: true, title: 'Huấn luyện viên', role: [RoleValue.STAFF] },
         children: [
           {
             path: '',
@@ -58,7 +59,7 @@ const routes = [
       {
         path: '/members',
         name: 'members',
-        meta: { requiresAuth: true, title: 'Hội viên' },
+        meta: { requiresAuth: true, title: 'Hội viên', role: [RoleValue.TRAINER, RoleValue.STAFF] },
         children: [
           {
             path: '',
@@ -105,7 +106,7 @@ const routes = [
             path: '',
             name: 'list-packages',
             component: List,
-            meta: { requiresAuth: true, title: 'Danh sách dịch vụ' },
+            meta: { requiresAuth: true, title: 'Danh sách dịch vụ', role: [RoleValue.STAFF] },
           },
           {
             path: ':id/edit',
@@ -131,30 +132,30 @@ const routes = [
         name: 'schedule',
         meta: { requiresAuth: true, title: 'Lịch trình' },
         children: [
-          {
-            path: 'create',
-            name: 'create-schedule',
-            component: () => import('@/views/schedule/Create.vue'),
-            meta: { requiresAuth: true, title: 'Thêm lịch trình' }
-          },
-          {
-            path: ':id/edit',
-            name: 'edit-schedule',
-            component: () => import('@/views/schedule/Edit.vue'),
-            meta: { requiresAuth: true, title: 'Chỉnh sửa lịch trình' }
-          },
-          {
-            path: 'members',
-            name: 'schedule-members',
-            component: () => import('@/views/schedule/Member.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách hội viên' }
-          },
-          {
-            path: 'trainers',
-            name: 'schedule-trainers',
-            component: () => import('@/views/schedule/Trainer.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách huấn luyện viên' }
-          }
+          // {
+          //   path: 'create',
+          //   name: 'create-schedule',
+          //   component: () => import('@/views/schedule/Create.vue'),
+          //   meta: { requiresAuth: true, title: 'Thêm lịch trình' }
+          // },
+          // {
+          //   path: ':id/edit',
+          //   name: 'edit-schedule',
+          //   component: () => import('@/views/schedule/Edit.vue'),
+          //   meta: { requiresAuth: true, title: 'Chỉnh sửa lịch trình' }
+          // },
+          // {
+          //   path: 'members',
+          //   name: 'schedule-members',
+          //   component: () => import('@/views/schedule/Member.vue'),
+          //   meta: { requiresAuth: true, title: 'Danh sách hội viên' }
+          // },
+          // {
+          //   path: 'trainers',
+          //   name: 'schedule-trainers',
+          //   component: () => import('@/views/schedule/Trainer.vue'),
+          //   meta: { requiresAuth: true, title: 'Danh sách huấn luyện viên' }
+          // }
         ]
       },
       {
@@ -184,6 +185,11 @@ const routes = [
     name: 'errors.404',
     path: '/404',
     component: ErrorPage,
+  },
+  {
+    name: 'errors.403',
+    path: '/403',
+    component: PermisionPage,
   },
   {
     path: '/:pathMatch(.*)*',

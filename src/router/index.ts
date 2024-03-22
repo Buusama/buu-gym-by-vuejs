@@ -24,19 +24,20 @@ router.beforeEach((to, from, next) => {
         next();
       } else if (userRole === RoleValue.STAFF) {
         // Staff can access specific routes
-        if (to.matched.some(record => record.meta.role === RoleValue.STAFF)) {
+        if (to.matched.some(record => (record.meta.role as RoleValue[])?.includes(RoleValue.STAFF))) {
           next();
         } else {
           // Unauthorized access
-          next({ name: '/' }); // Redirect to default page or handle accordingly
+          next({ name: 'errors.403' }); // Redirect to default page or handle accordingly
         }
       } else if (userRole === RoleValue.TRAINER) {
         // Trainer can access specific routes
-        if (to.matched.some(record => record.meta.role === RoleValue.TRAINER)) {
+        if (to.matched.some(record => (record.meta.role as RoleValue[])?.includes(RoleValue.TRAINER))) {
           next();
-        } else {
+        }
+        else {
           // Unauthorized access
-          next({ name: '/' }); // Redirect to default page or handle accordingly
+          next({ name: 'errors.403' }); // Redirect to default page or handle accordingly
         }
       } else {
         // Other roles (MEMBER or any other)

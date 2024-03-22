@@ -1,6 +1,6 @@
 export default {
   auth: {
-    login: '/auth/admin/login',
+    login: '/auth/login',
     logout: '/auth/logout',
   },
   users: {

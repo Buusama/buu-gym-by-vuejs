@@ -56,6 +56,9 @@ api.interceptors.response.use(
       } else if (error.response.status === 404) {
         router.push({ name: 'errors.404' })
         return null
+      } else if (error.response.status === 403) {
+        router.push({ name: 'errors.403' })
+        return null
       }
     }
     return Promise.reject(error)
