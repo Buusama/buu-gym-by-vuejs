@@ -1,10 +1,12 @@
-import Login from '@/views/login/Login.vue'
-import Home from '@/views/home/Home.vue'
+import SideMenu from '@/layouts/side-menu/Main.vue'
 import ErrorPage from '@/views/error-page/ErrorPage.vue'
-import Member from '@/views/member/List.vue'
+import PermisionPage from '@/views/error-page/PermisionPage.vue'
+import Home from '@/views/home/Home.vue'
+import Login from '@/views/login/Login.vue'
 import MemberCreate from '@/views/member/Create.vue'
 import MemberEdit from '@/views/member/Edit.vue'
-import SideMenu from '@/layouts/side-menu/Main.vue'
+import Member from '@/views/member/List.vue'
+import List from '@/views/package/List.vue';
 const routes = [
   {
     name: 'login',
@@ -102,7 +104,7 @@ const routes = [
           {
             path: '',
             name: 'list-packages',
-            component: () => import('@/views/package/List.vue'),
+            component: List,
             meta: { requiresAuth: true, title: 'Danh sách dịch vụ' },
           },
           {
@@ -123,6 +125,37 @@ const routes = [
             ],
           },
         ],
+      },
+      {
+        path: '/schedule',
+        name: 'schedule',
+        meta: { requiresAuth: true, title: 'Lịch trình' },
+        children: [
+          {
+            path: 'create',
+            name: 'create-schedule',
+            component: () => import('@/views/schedule/Create.vue'),
+            meta: { requiresAuth: true, title: 'Thêm lịch trình' }
+          },
+          {
+            path: ':id/edit',
+            name: 'edit-schedule',
+            component: () => import('@/views/schedule/Edit.vue'),
+            meta: { requiresAuth: true, title: 'Chỉnh sửa lịch trình' }
+          },
+          {
+            path: 'members',
+            name: 'schedule-members',
+            component: () => import('@/views/schedule/Member.vue'),
+            meta: { requiresAuth: true, title: 'Danh sách hội viên' }
+          },
+          {
+            path: 'trainers',
+            name: 'schedule-trainers',
+            component: () => import('@/views/schedule/Trainer.vue'),
+            meta: { requiresAuth: true, title: 'Danh sách huấn luyện viên' }
+          }
+        ]
       },
       {
         path: '/users',
@@ -156,6 +189,10 @@ const routes = [
     path: '/:pathMatch(.*)*',
     component: ErrorPage,
   },
+  {
+    path: '/unauthorized',
+    component: PermisionPage,
+  }
 ]
 
 export default routes

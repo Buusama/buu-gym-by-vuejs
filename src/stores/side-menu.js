@@ -10,23 +10,6 @@ export const useSideMenuStore = defineStore('sideMenu', {
       },
       'devider',
       {
-        icon: 'UsersIcon',
-        title: 'Huấn luyện viên',
-        subMenu: [
-          {
-            icon: '',
-            pageName: 'create-trainer',
-            title: 'Thêm huấn luyện viên',
-          },
-          {
-            icon: '',
-            pageName: 'list-trainers',
-            title: 'Danh sách huấn luyện viên',
-            path: '/trainers',
-          },
-        ],
-      },
-      {
         icon: 'UserIcon',
         title: 'Hội Viên',
         subMenu: [
@@ -49,6 +32,23 @@ export const useSideMenuStore = defineStore('sideMenu', {
         ],
       },
       {
+        icon: 'UsersIcon',
+        title: 'Huấn luyện viên',
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'create-trainer',
+            title: 'Thêm huấn luyện viên',
+          },
+          {
+            icon: '',
+            pageName: 'list-trainers',
+            title: 'Danh sách huấn luyện viên',
+            path: '/trainers',
+          },
+        ],
+      },
+      {
         icon: 'PackageIcon',
         title: 'Gói tập',
         subMenu: [
@@ -62,6 +62,58 @@ export const useSideMenuStore = defineStore('sideMenu', {
             pageName: 'list-packages',
             title: 'Danh sách gói tập',
             path: '/packages',
+          },
+        ],
+      },
+      {
+        icon: 'CalendarIcon',
+        title: 'Lịch tập',
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'schedule-members',
+            title: 'Lịch tập hội viên',
+            path: '/schedules',
+          }, {
+            icon: '',
+            pageName: 'schedule-trainers',
+            title: 'Lịch tập huấn luyện viên',
+            path: '/schedules',
+          }
+        ],
+      },
+      'devider',
+      {
+        icon: 'UsersIcon',
+        title: 'Thiết bị',
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'create-device',
+            title: 'Thêm thiết bị',
+          },
+          {
+            icon: '',
+            pageName: 'list-devices',
+            title: 'Danh sách thiết bị',
+            path: '/devices',
+          },
+        ],
+      },
+      {
+        icon: 'UsersIcon',
+        title: 'Dịch vụ',
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'create-service',
+            title: 'Thêm dịch vụ',
+          },
+          {
+            icon: '',
+            pageName: 'list-services',
+            title: 'Danh sách dịch vụ',
+            path: '/services',
           },
         ],
       },
