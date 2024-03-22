@@ -11,12 +11,10 @@
             <div class="flex">
               <ShoppingCartIcon class="report-box__icon text-theme-10" />
               <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="33% Higher than last month"
-                >
-                  33% <ChevronUpIcon class="w-4 h-4" />
+                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer"
+                  content="33% Higher than last month">
+                  33%
+                  <ChevronUpIcon class="w-4 h-4" />
                 </Tippy>
               </div>
             </div>
@@ -31,12 +29,10 @@
             <div class="flex">
               <CreditCardIcon class="report-box__icon text-theme-11" />
               <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-6 cursor-pointer"
-                  content="2% Lower than last month"
-                >
-                  2% <ChevronDownIcon class="w-4 h-4" />
+                <Tippy tag="div" class="report-box__indicator bg-theme-6 cursor-pointer"
+                  content="2% Lower than last month">
+                  2%
+                  <ChevronDownIcon class="w-4 h-4" />
                 </Tippy>
               </div>
             </div>
@@ -51,12 +47,10 @@
             <div class="flex">
               <MonitorIcon class="report-box__icon text-theme-12" />
               <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="12% Higher than last month"
-                >
-                  12% <ChevronUpIcon class="w-4 h-4" />
+                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer"
+                  content="12% Higher than last month">
+                  12%
+                  <ChevronUpIcon class="w-4 h-4" />
                 </Tippy>
               </div>
             </div>
@@ -71,12 +65,10 @@
             <div class="flex">
               <UserIcon class="report-box__icon text-theme-9" />
               <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="22% Higher than last month"
-                >
-                  22% <ChevronUpIcon class="w-4 h-4" />
+                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer"
+                  content="22% Higher than last month">
+                  22%
+                  <ChevronUpIcon class="w-4 h-4" />
                 </Tippy>
               </div>
             </div>
@@ -90,11 +82,7 @@
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Danh sách hội viên</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-      <router-link
-        :to="{ name: 'create-member' }"
-        tag="a"
-        class="btn btn-primary shadow-md mr-2"
-      >
+      <router-link :to="{ name: 'create-member' }" tag="a" class="btn btn-primary shadow-md mr-2">
         Thêm mới hội viên
       </router-link>
     </div>
@@ -114,7 +102,8 @@
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">So sánh</label>
-          <select id="tabulator-html-filter-type" v-model="filter.type" class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
+          <select id="tabulator-html-filter-type" v-model="filter.type"
+            class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="like" selected>like</option>
             <option value="=">=</option>
             <option value="<">&lt;</option>
@@ -145,22 +134,14 @@
           <button id="tabulator-html-filter-go" type="button" class="btn btn-primary w-full sm:w-16" @click="onFilter">
             Lọc
           </button>
-          <button
-            id="tabulator-html-filter-reset"
-            type="button"
-            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
-          >
+          <button id="tabulator-html-filter-reset" type="button"
+            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1" @click="onResetFilter">
             Reset
           </button>
         </div>
       </form>
       <div class="flex mt-5 sm:mt-0">
-        <button
-          id="tabulator-print"
-          class="btn btn-outline-secondary w-1/2 sm:w-auto mr-2"
-          @click="onPrint"
-        >
+        <button id="tabulator-print" class="btn btn-outline-secondary w-1/2 sm:w-auto mr-2" @click="onPrint">
           <PrinterIcon class="w-4 h-4 mr-2" /> Print
         </button>
         <Dropdown class="w-1/2 sm:w-auto">
@@ -188,11 +169,7 @@
       </div>
     </div>
     <div class="overflow-x-auto scrollbar-hidden">
-      <div
-        id="tabulator"
-        ref="tableRef"
-        class="mt-5 table-report table-report--tabulator"
-      ></div>
+      <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
     </div>
 
     <!-- Sử dụng Modal component -->
@@ -207,11 +184,7 @@
           </div>
         </div>
         <div class="px-5 pb-8 text-center">
-          <button
-            type="button"
-            class="btn btn-outline-secondary w-24 mr-1"
-            @click="hideDeleteConfirmationModal"
-          >
+          <button type="button" class="btn btn-outline-secondary w-24 mr-1" @click="hideDeleteConfirmationModal">
             Hủy
           </button>
           <button type="button" class="btn btn-danger w-24" @click="deleteMemberById">
@@ -234,6 +207,7 @@ import dom from '@left4code/tw-starter/dist/js/dom'
 import { upperCaseValue } from '@/common/utils/helpers'
 import { getMembers, deleteMember } from '@/api/members'
 import MemberEdit from '@/views/member/Edit.vue'
+import moment from 'moment';
 import router from '@/router'
 
 const tableRef = ref()
@@ -260,10 +234,10 @@ const RequestFunc = async (url, config, params) => {
   let data = []
   const offset = (params.page - 1) * params.size
   const limit = params.size
-  const order = params.sorters[0] ? params.sorters[0].field : 'updated_at'
+  const order = params.sorters[0] ? params.sorters[0].field : 'id'
   const sort = params.sorters[0] ? params.sorters[0].dir : 'desc'
   const filter = params.filters[0] ? params.filters[0] : null
-  
+
   await getMembers({
     skip: offset,
     take: limit,
@@ -323,13 +297,12 @@ const initTabulator = () => {
           return `
           <div class="flex items-center lg:justify-center">
             <div class="intro-x w-10 h-10 image-fit">
-              <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${
-                cell.getData().avatar
-              }">
+              <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${cell.getData().MemberAvatar
+            }">
             </div>
             <div class="intro-x ml-5">
-              <div class="font-medium whitespace-nowrap">${cell.getData().name}</div>
-              <div class="text-slate-500 text-xs whitespace-nowrap">${cell.getData().email
+              <div class="font-medium whitespace-nowrap">${cell.getData().MemberName}</div>
+              <div class="text-slate-500 text-xs whitespace-nowrap">${cell.getData().MemberEmail
             }</div>
             </div>
           </div>`;
@@ -345,7 +318,7 @@ const initTabulator = () => {
         download: false,
         formatter(cell) {
           return `<div>
-                  <div class="font-medium whitespace-nowrap">${cell.getData().phone}</div>
+                  <div class="font-medium whitespace-nowrap">${cell.getData().MemberPhone}</div>
               </div>`;
         },
       },
@@ -358,8 +331,9 @@ const initTabulator = () => {
         print: false,
         download: false,
         formatter(cell) {
+          const formattedDate = moment(cell.getData().MemberBirthDate).format('DD/MM/YYYY');
           return `<div>
-                  <div class="font-medium whitespace-nowrap">${cell.getData().birth_date}</div>
+                  <div class="font-medium whitespace-nowrap">${formattedDate}</div>
               </div>`
         },
       },
@@ -372,20 +346,18 @@ const initTabulator = () => {
         print: false,
         download: false,
         formatter(cell) {
-          return `<div class="flex items-center lg:justify-center ${
-            cell.getData().gender == 1
-              ? "text-success"
-              : cell.getData().gender == 2
+          return `<div class="flex items-center lg:justify-center ${cell.getData().MemberGender == 1
+            ? "text-success"
+            : cell.getData().MemberGender == 2
               ? "text-danger"
               : "text-info"
-          }">
-                ${
-                  cell.getData().gender == 1
-                    ? "Nam"
-                    : cell.getData().gender == 2
-                    ? "Nu"
-                    : "Khac"
-                }
+            }">
+                ${cell.getData().MemberGender == 1
+              ? "Nam"
+              : cell.getData().MemberGender == 2
+                ? "Nu"
+                : "Khac"
+            }
               </div>`;
         },
       },
@@ -399,9 +371,8 @@ const initTabulator = () => {
         download: false,
         formatter(cell) {
           return `<div>
-                  <div class="font-medium whitespace-nowrap">${
-                    cell.getData().address
-                  }</div>
+                  <div class="font-medium whitespace-nowrap">${cell.getData().MemberAddress
+            }</div>
               </div>`;
         },
       },
@@ -444,7 +415,7 @@ const initTabulator = () => {
             </a>`);
 
           dom(editButton).on("click", function () {
-            const memberId = cell.getData().id;
+            const memberId = cell.getData().MemberId;
             router.push({
               name: "edit-member",
               params: {
