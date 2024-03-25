@@ -333,7 +333,7 @@ const initTabulator = () => {
         formatter(cell) {
           const formattedDate = moment(cell.getData().MemberBirthDate).format('DD/MM/YYYY');
           return `<div>
-                  <div class="font-medium whitespace-nowrap">${formattedDate}</div>
+                  <div class="font-medium whitespace-nowrap">${cell.getData().MemberBirthDate}</div>
               </div>`
         },
       },
