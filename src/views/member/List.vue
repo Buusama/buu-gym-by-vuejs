@@ -207,8 +207,8 @@ import dom from '@left4code/tw-starter/dist/js/dom'
 import { upperCaseValue } from '@/common/utils/helpers'
 import { getMembers, deleteMember } from '@/api/members'
 import MemberEdit from '@/views/member/Edit.vue'
-import moment from 'moment';
 import router from '@/router'
+import { showMessage } from "@/common/utils/helpers";
 
 const tableRef = ref()
 const tabulator = ref()
@@ -219,22 +219,13 @@ const filter = reactive({
   type: 'like',
   value: ['', 0],
 })
-const tableData = reactive({
-  totalRecordCount: 0,
-  sortable: {
-    order: "asc",
-    sort: "name",
-  },
-  rows: [],
-});
-const imageAssets = import.meta.globEager(`/src/assets/images/*.{jpg,jpeg,png,svg}`);
 
 const RequestFunc = async (url, config, params) => {
   let last_page = 0
   let data = []
   const offset = (params.page - 1) * params.size
   const limit = params.size
-  const order = params.sorters[0] ? params.sorters[0].field : 'id'
+  const order = params.sorters[0] ? params.sorters[0].field : 'MemberId'
   const sort = params.sorters[0] ? params.sorters[0].dir : 'desc'
   const filter = params.filters[0] ? params.filters[0] : null
 
@@ -289,7 +280,7 @@ const initTabulator = () => {
         title: "TÊN HỘI VIÊN",
         minWidth: 180,
         responsive: 0,
-        field: "name",
+        field: "MemberName",
         vertAlign: "middle",
         print: false,
         download: false,
@@ -311,7 +302,7 @@ const initTabulator = () => {
       {
         title: 'SỐ ĐIỆN THOẠI',
         minWidth: 100,
-        field: 'phone',
+        field: 'MemberPhone',
         hozAlign: 'center',
         vertAlign: 'middle',
         print: false,
@@ -325,13 +316,12 @@ const initTabulator = () => {
       {
         title: 'NGÀY SINH',
         minWidth: 100,
-        field: 'birth_date',
+        field: 'MemberBirthDate',
         hozAlign: 'center',
         vertAlign: 'middle',
         print: false,
         download: false,
         formatter(cell) {
-          const formattedDate = moment(cell.getData().MemberBirthDate).format('DD/MM/YYYY');
           return `<div>
                   <div class="font-medium whitespace-nowrap">${cell.getData().MemberBirthDate}</div>
               </div>`
@@ -339,7 +329,7 @@ const initTabulator = () => {
       },
       {
         title: 'GIỚI TÍNH',
-        field: 'gender',
+        field: 'MemberGender',
         minWidth: 50,
         hozAlign: 'center',
         vertAlign: 'middle',
@@ -364,7 +354,7 @@ const initTabulator = () => {
       {
         title: "ĐỊA CHỈ",
         minWidth: 150,
-        field: "address",
+        field: "MemberAddress",
         hozAlign: "center",
         vertAlign: "middle",
         print: false,
@@ -431,7 +421,7 @@ const initTabulator = () => {
             </a>`);
 
           dom(deleteButton).on("click", function () {
-            showDeleteConfirmationModal(cell.getData().id);
+            showDeleteConfirmationModal(cell.getData().MemberId);
           });
           const container = dom(
             '<div class="flex lg:justify-center items-center"></div>'
@@ -497,9 +487,15 @@ const hideDeleteConfirmationModal = () => {
 };
 
 const deleteMemberById = async () => {
-  await deleteMember(deleteMemberId.value);
+  const res = await deleteMember(deleteMemberId.value);
   hideDeleteConfirmationModal();
   tabulator.value.replaceData();
+  if (res.statusCode === 200) {
+    showMessage("Xóa hội viên thành công", true);
+  } else {
+    showMessage("Xóa hội viên thất bại", false);
+  }
+
 };
 // Redraw table onresize
 const reInitOnResizeWindow = () => {

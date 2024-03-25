@@ -6,7 +6,6 @@ export interface CreateMemberRequest {
   email: string;
   phone: string;
   address: string;
-  status: number;
 }
 
 export interface CreateMemberResponse {
@@ -16,5 +15,4 @@ export interface CreateMemberResponse {
   gender: string;
   phone: string;
   address: string;
-  status: number;
 }

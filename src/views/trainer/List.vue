@@ -102,7 +102,8 @@
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">So sánh</label>
-          <select id="tabulator-html-filter-type" v-model="filter.type" class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
+          <select id="tabulator-html-filter-type" v-model="filter.type"
+            class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="like" selected>like</option>
             <option value="=">=</option>
             <option value="<">&lt;</option>
@@ -228,7 +229,7 @@ const RequestFunc = async (url, config, params) => {
   let data = []
   const offset = (params.page - 1) * params.size
   const limit = params.size
-  const order = params.sorters[0] ? params.sorters[0].field : 'updated_at'
+  const order = params.sorters[0] ? params.sorters[0].field : 'MemberId'
   const sort = params.sorters[0] ? params.sorters[0].dir : 'desc'
   const filter = params.filters[0] ? params.filters[0] : null
 
@@ -280,7 +281,7 @@ const initTabulator = () => {
 
       // For HTML table
       {
-        title: "TÊN HỘI VIÊN",
+        title: "TÊN HUẤN LUYỆN VIÊN",
         minWidth: 200,
         responsive: 0,
         field: "name",
@@ -397,14 +398,14 @@ const initTabulator = () => {
       {
         title: "GHI CHÚ",
         minWidth: 125,
-        field: "note",
+        field: "specialization",
         hozAlign: "left",
         vertAlign: "middle",
         print: false,
         download: false,
         formatter(cell) {
           return `<div>
-                  <div class="font-medium whitespace-nowrap">${cell.getData().note
+                  <div class="font-medium whitespace-nowrap">${cell.getData().specialization
             }</div>
               </div>`;
         },
@@ -427,7 +428,7 @@ const initTabulator = () => {
             </a>`);
 
           dom(editButton).on("click", function () {
-            const trainerId = cell.getData().id;
+            const trainerId = cell.getData().MemberId;
             router.push({
               name: "edit-trainer",
               params: {
