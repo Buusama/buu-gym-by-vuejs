@@ -36,9 +36,9 @@
   import { showMessage } from '@/common/utils/helpers';
   import router from '@/router';
   import { CreateMemberRequest } from '@/api/members/interfaces/create';
-  import MemberInfoTab from './components/MemberInfoTab.vue';
-  import MemberHealthInfo from './components/MemberHealthInfo.vue';
-  import MemberServiceInfo from './components/MemberServiceInfo.vue';
+  import MemberInfoTab from './components/InfoTab.vue';
+  import MemberHealthInfo from './components/HealthInfo.vue';
+  import MemberServiceInfo from './components/ServiceInfo.vue';
 
   const tabs = [
     { id: 1, name: 'Thông tin hội viên' },
