@@ -26,6 +26,9 @@
       <TabPanel class="leading-relaxed">
         <MemberServiceInfo />
       </TabPanel>
+      <TabPanel class="leading-relaxed">
+        <MemberHistoryInfo />
+      </TabPanel>
     </TabPanels>
   </TabGroup>
 </template>
@@ -39,6 +42,7 @@
   import MemberInfoTab from './components/InfoTab.vue';
   import MemberHealthInfo from './components/HealthInfo.vue';
   import MemberServiceInfo from './components/ServiceInfo.vue';
+  import MemberHistoryInfo from './components/HistoryInfo.vue';
 
   const tabs = [
     { id: 1, name: 'Thông tin hội viên' },
