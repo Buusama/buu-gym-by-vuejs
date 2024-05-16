@@ -1,15 +1,10 @@
 export enum MemberStatusValue {
   ACTIVE = 1,
   INACTIVE = 2,
-  DORMANT = 3,
-  FREEZE = 4,
-  UNPAID = 5,
+  EXPIRING = 3,
 }
-
 export enum MemberStatusLabel {
-  ACTIVE = 'Kích hoạt',
-  INACTIVE = 'Bị khóa',
-  DORMANT = 'Ngưng hoạt động',
-  FREEZE = 'Đóng băng',
-  UNPAID = 'Chưa thanh toán',
+  ACTIVE = 'Hoạt động',
+  INACTIVE = 'Đã ngưng',
+  EXPIRING = 'Sắp hết hạn',
 }

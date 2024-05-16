@@ -128,6 +128,36 @@ const routes = [
         ],
       },
       {
+        path: '/services',
+        name: 'services',
+        meta: { requiresAuth: true, title: 'Dịch vụ' },
+        children: [
+          {
+            path: '',
+            name: 'list-services',
+            component: () => import('@/views/service/List.vue'),
+            meta: { requiresAuth: true, title: 'Danh sách dịch vụ' },
+          },
+          {
+            path: ':id/edit',
+            name: 'edit-service',
+            component: () => import('@/views/service/Edit.vue'),
+            meta: { requiresAuth: true, title: 'Chỉnh sửa dịch vụ' },
+          },
+          {
+            path: 'create',
+            children: [
+              {
+                path: '',
+                name: 'create-service',
+                component: () => import('@/views/service/Create.vue'),
+                meta: { requiresAuth: true, title: 'Thêm dịch vụ' },
+              },
+            ],
+          },
+        ],
+      },
+      {
         path: '/schedule',
         name: 'schedule',
         meta: { requiresAuth: true, title: 'Lịch trình' },

@@ -27,7 +27,7 @@ export interface CreateTrainerResponse {
 }
 
 export interface GetTrainersRequest {
-  skip: number;
+  page: number;
   take: number;
   sort_enum: string;
   sort_by: string;

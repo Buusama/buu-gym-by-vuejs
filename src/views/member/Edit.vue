@@ -4,7 +4,7 @@
   </div>
 
   <TabGroup class="py-5">
-    <TabList class="nav-boxed-tabs text-bold">
+    <TabList class="nav-boxed-tabs text-bold flex sm:flex-row flex-col">
       <Tab v-for="tab in tabs" tag="button" class="w-full py-2">
         <h6 class="font-medium">{{ tab.name }}</h6>
       </Tab>
@@ -24,10 +24,13 @@
         <MemberHealthInfo />
       </TabPanel>
       <TabPanel class="leading-relaxed">
-        <MemberServiceInfo />
+        <MemberHistoryInfo />
       </TabPanel>
       <TabPanel class="leading-relaxed">
-        <MemberHistoryInfo />
+        <MemberBodyMeasurement />
+      </TabPanel>
+      <TabPanel class="leading-relaxed">
+        <MemberPaymentList />
       </TabPanel>
     </TabPanels>
   </TabGroup>
@@ -41,16 +44,15 @@
   import { CreateMemberRequest } from '@/api/members/interfaces/create';
   import MemberInfoTab from './components/InfoTab.vue';
   import MemberHealthInfo from './components/HealthInfo.vue';
-  import MemberServiceInfo from './components/ServiceInfo.vue';
   import MemberHistoryInfo from './components/HistoryInfo.vue';
-
+  import MemberBodyMeasurement from './components/BodyMeasurement.vue';
+  import MemberPaymentList from './components/Payment.vue';
   const tabs = [
     { id: 1, name: 'Thông tin hội viên' },
     { id: 2, name: 'Thông tin sức khỏe' },
-    { id: 3, name: 'Dịch vụ đăng ký' },
-    { id: 4, name: 'Lịch sử tập luyện' },
-    { id: 5, name: 'Chỉ số cơ thể' },
-    { id: 6, name: 'Lịch sử thanh toán' },
+    { id: 3, name: 'Lịch sử tập luyện' },
+    { id: 4, name: 'Chỉ số cơ thể' },
+    { id: 5, name: 'Lịch sử thanh toán' },
   ];
   const datePickerOptions = {
     autoApply: false,

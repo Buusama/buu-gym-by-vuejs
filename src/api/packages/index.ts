@@ -23,7 +23,7 @@ export const getPackages = async (
   request: GetPackagesRequest,
 ): Promise<any> => {
   const params = new URLSearchParams()
-  params.append('skip', request.skip.toString())
+  params.append('page', request.page.toString())
   params.append('take', request.take.toString())
   params.append('sort_enum', request.sort_enum)
   params.append('sort_by', request.sort_by)

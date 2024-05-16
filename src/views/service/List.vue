@@ -1,105 +1,14 @@
 <template>
   <!-- BEGIN: General Report -->
-  <div class="col-span-12 mt-8">
-    <div class="intro-y flex items-center h-10">
-      <h2 class="text-lg font-medium truncate mr-5">Tổng quan</h2>
-    </div>
-    <div class="grid grid-cols-12 gap-6 mt-5">
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
-              <ShoppingCartIcon class="report-box__icon text-theme-10" />
-              <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="33% Higher than last month"
-                >
-                  33%
-                  <ChevronUpIcon class="w-4 h-4" />
-                </Tippy>
-              </div>
-            </div>
-            <div class="text-3xl font-bold leading-8 mt-6">4.710</div>
-            <div class="text-base text-gray-600 mt-1">Tổng số hội viên</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
-              <CreditCardIcon class="report-box__icon text-theme-11" />
-              <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-6 cursor-pointer"
-                  content="2% Lower than last month"
-                >
-                  2%
-                  <ChevronDownIcon class="w-4 h-4" />
-                </Tippy>
-              </div>
-            </div>
-            <div class="text-3xl font-bold leading-8 mt-6">3.721</div>
-            <div class="text-base text-gray-600 mt-1">Tham gia hôm nay</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
-              <MonitorIcon class="report-box__icon text-theme-12" />
-              <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="12% Higher than last month"
-                >
-                  12%
-                  <ChevronUpIcon class="w-4 h-4" />
-                </Tippy>
-              </div>
-            </div>
-            <div class="text-3xl font-bold leading-8 mt-6">2.149</div>
-            <div class="text-base text-gray-600 mt-1">Tỷ lệ hội viên mới</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
-              <UserIcon class="report-box__icon text-theme-9" />
-              <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="22% Higher than last month"
-                >
-                  22%
-                  <ChevronUpIcon class="w-4 h-4" />
-                </Tippy>
-              </div>
-            </div>
-            <div class="text-3xl font-bold leading-8 mt-6">152.040</div>
-            <div class="text-base text-gray-600 mt-1">Khách vãng lai</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Danh sách hội viên</h2>
+    <h2 class="text-lg font-medium mr-auto">Danh sách lớp dịch vụ</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
       <router-link
         :to="{ name: 'create-member' }"
         tag="a"
         class="btn btn-primary shadow-md mr-2"
       >
-        Thêm mới hội viên
+        Thêm mới lớp dịch vụ
       </router-link>
     </div>
   </div>
@@ -116,9 +25,7 @@
             v-model="filter.field"
             class="form-select w-full sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto"
           >
-            <option value="name">Tên hội viên</option>
-            <option value="phone">Số điện thoại</option>
-            <option value="address">Địa chỉ</option>
+            <option value="name">Tên dịch vụ</option>
           </select>
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
@@ -160,10 +67,12 @@
             v-model="filter.value[1]"
             class="form-select w-full mt-2 sm:mt-0 sm:w-auto"
           >
-            <option value="0" selected>Tất cả</option>
+            <option value="0">Tất cả</option>
             <option value="1">Đang hoạt động</option>
-            <option value="2">Ngưng hoạt động</option>
-            <option value="3">Sắp hết hạn</option>
+            <option value="2">Bị Khóa</option>
+            <option value="3">Ngưng hoạt động</option>
+            <option value="4">Đóng băng</option>
+            <option value="5">Chưa thanh toán</option>
           </select>
         </div>
         <div class="mt-2 xl:mt-0">
@@ -266,7 +175,7 @@
   import Tabulator from 'tabulator-tables';
   import dom from '@left4code/tw-starter/dist/js/dom';
   import { upperCaseValue } from '@/common/utils/helpers';
-  import { getMembers, deleteMember } from '@/api/members';
+  import { getServices } from '@/api/services';
   import MemberEdit from '@/views/member/Edit.vue';
   import router from '@/router';
   import { showMessage } from '@/common/utils/helpers';
@@ -286,11 +195,12 @@
     let data = [];
     const page = params.page - 1;
     const take = params.size;
-    const order = params.sorters[0] ? params.sorters[0].field : 'MemberId';
+    const order = params.sorters[0] ? params.sorters[0].field : 'serviceId';
     const sort = params.sorters[0] ? params.sorters[0].dir : 'desc';
     const filter = params.filters[0] ? params.filters[0] : null;
 
-    await getMembers({
+    console.log(params);
+    await getServices({
       page: page,
       take: take,
       sort_by: order,
@@ -338,11 +248,10 @@
 
         // For HTML table
         {
-          title: 'TÊN HỘI VIÊN',
+          title: 'TÊN DỊCH VỤ',
           minWidth: 180,
-          width: 250,
           responsive: 0,
-          field: 'MemberName',
+          field: 'name',
           vertAlign: 'middle',
           print: false,
           download: false,
@@ -351,118 +260,81 @@
           <div class="flex items-center lg:justify-center">
             <div class="intro-x w-10 h-10 image-fit">
               <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${
-                cell.getData().MemberAvatar
+                cell.getData().serviceThumbnail
               }">
             </div>
             <div class="intro-x ml-5">
-              <div class="font-medium whitespace-nowrap">${cell.getData().MemberName}</div>
-              <div class="text-slate-500 text-xs whitespace-nowrap">${
-                cell.getData().MemberEmail
-              }</div>
+              <div class="font-medium whitespace-nowrap">${cell.getData().name}</div>
             </div>
           </div>`;
           },
         },
         {
-          title: 'SỐ ĐIỆN THOẠI',
+          title: 'Thời lượng',
           minWidth: 100,
-          width: 150,
-          field: 'MemberPhone',
+          field: 'duration',
           hozAlign: 'center',
           vertAlign: 'middle',
           print: false,
           download: false,
           formatter(cell) {
             return `<div>
-                  <div class="font-medium whitespace-nowrap">${cell.getData().MemberPhone}</div>
+                  <div class="font-medium whitespace-nowrap">${cell.getData().duration}</div>
               </div>`;
           },
         },
         {
-          title: 'NGÀY SINH',
+          title: 'Giá',
           minWidth: 100,
-          width: 120,
-          field: 'MemberBirthDate',
+          field: 'price',
           hozAlign: 'center',
           vertAlign: 'middle',
           print: false,
           download: false,
           formatter(cell) {
             return `<div>
-                  <div class="font-medium whitespace-nowrap">${cell.getData().MemberBirthDate}</div>
+                  <div class="font-medium whitespace-nowrap">${cell.getData().price}</div>
               </div>`;
           },
         },
         {
-          title: 'GIỚI TÍNH',
-          field: 'MemberGender',
+          title: 'Loại dịch vụ',
+          field: 'serviceType',
           minWidth: 50,
-          width: 110,
           hozAlign: 'center',
           vertAlign: 'middle',
           print: false,
           download: false,
           formatter(cell) {
-            return `<div class="flex items-center lg:justify-center ${
-              cell.getData().MemberGender == 1
-                ? 'text-success'
-                : cell.getData().MemberGender == 2
-                  ? 'text-danger'
-                  : 'text-info'
-            }">
+            return `<div class="flex items-center lg:justify-center }">
                 ${
-                  cell.getData().MemberGender == 1
-                    ? 'Nam'
-                    : cell.getData().MemberGender == 2
-                      ? 'Nu'
-                      : 'Khac'
+                  cell.getData().serviceType == 1? 'Lớp Online': 
+                  cell.getData().serviceType == 2? 'Lớp/ Nhóm Offline':
+                  cell.getData().serviceType == 3? 'Hướng dẫn riêng':
+                  'Tự tập luyện'
                 }
               </div>`;
           },
         },
         {
-          title: 'ĐỊA CHỈ',
-          minWidth: 200,
-          width: 350,
-          field: 'MemberAddress',
-          hozAlign: 'left',
+          title: 'Mô tả',
+          minWidth: 150,
+          field: 'description',
+          hozAlign: 'center',
           vertAlign: 'middle',
           print: false,
           download: false,
           formatter(cell) {
             return `<div>
                   <div class="font-medium whitespace-nowrap">${
-                    cell.getData().MemberAddress
+                    cell.getData().description
                   }</div>
               </div>`;
           },
         },
         {
-          title: 'NGÀY KẾT THÚC',
-          minWidth: 100,
-          width: 150,
-          field: 'Status',
-          hozAlign: 'left',
-          vertAlign: 'middle',
-          print: false,
-          download: false,
-          headerSort: false,
-          formatter(cell) {
-            return `<div class="flex items-center lg:justify-center ${
-              cell.getData().Status === 1
-                ? 'text-success'
-                : cell.getData().Status === 2
-                  ? 'text-danger'
-                  : 'text-info'
-            }">
-                ${cell.getData().EndDate}
-              </div>`;
-          },
-        },
-        {
           title: 'ACTIONS',
-          minWidth: 30,
-          width: 100,
+          minWidth: 100,
           field: 'actions',
           responsive: 1,
           hozAlign: 'left',
@@ -473,15 +345,15 @@
           formatter(cell) {
             const editButton = dom(`
             <a class="flex items-center mr-3 text-primary" href="javascript:;">
-                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i>
+                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Chỉnh sửa
             </a>`);
 
             dom(editButton).on('click', function () {
-              const memberId = cell.getData().MemberId;
+              const id = cell.getData().id;
               router.push({
-                name: 'edit-member',
+                name: 'edit-service',
                 params: {
-                  id: memberId,
+                  id: id,
                 },
               });
             });
@@ -489,7 +361,7 @@
             const deleteButton = dom(`
             <a class="flex items-center mr-3 text-danger" href="javascript:;" data-toggle="modal"
                     data-target="#delete-confirmation-modal">
-                <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
+                <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>Xóa
             </a>`);
 
             dom(deleteButton).on('click', function () {

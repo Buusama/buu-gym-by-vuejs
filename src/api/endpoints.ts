@@ -27,4 +27,11 @@ export default {
     update: (id: string) => `/trainers/${id}`,
     delete: (id: string) => `/trainers/${id}`,
   },
+  services: {
+    list: '/services',
+    create: '/services',
+    detail: (id: string) => `/services/${id}`,
+    update: (id: string) => `/services/${id}`,
+    delete: (id: string) => `/services/${id}`,
+  },
 }

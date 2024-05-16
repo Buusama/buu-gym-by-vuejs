@@ -176,7 +176,7 @@
             </div>
           </div>
 
-          <div
+          <!-- <div
             class="form-inline items-start flex-col xl:flex-row mt-2 pt-2 first:mt-0 first:pt-0"
           >
             <div class="form-label xl:w-64 xl:!mr-10">
@@ -213,45 +213,6 @@
                     <label class="form-label sm:w-20">Cường độ luyện tập</label>
                     <div class="flex items-center flex-1 xl:pr-20">
                       <div class="flex flex-col sm:flex-row">
-                        <!-- <div class="form-check mr-4">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="horizontal_radio_button"
-                            value="horizontal-radio-chris-evans"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="shipping-service-standard"
-                            >Nhẹ nhàng</label
-                          >
-                        </div>
-                        <div class="form-check mr-4 mt-2 sm:mt-0">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="horizontal_radio_button"
-                            value="horizontal-radio-liam-neeson"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="shipping-service-custom"
-                            >Bình thường</label
-                          >
-                        </div>
-                        <div class="form-check mr-4 mt-2 sm:mt-0">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="horizontal_radio_button"
-                            value="horizontal-radio-liam-neeson"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="shipping-service-custom"
-                            >Mạnh</label
-                          >
-                        </div> -->
                         <div
                         v-for="intensity in intensityOptions"
                         class="form-check mr-4"
@@ -290,7 +251,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <button
             type="button"
