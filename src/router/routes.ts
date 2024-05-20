@@ -181,12 +181,42 @@ const routes = [
             meta: { requiresAuth: true, title: 'Danh sách hội viên' }
           },
           // {
-            // path: 'trainers',
-            // name: 'schedule-trainers',
-            // component: () => import('@/views/schedule/Trainer.vue'),
-            // meta: { requiresAuth: true, title: 'Danh sách huấn luyện viên' }
+          // path: 'trainers',
+          // name: 'schedule-trainers',
+          // component: () => import('@/views/schedule/Trainer.vue'),
+          // meta: { requiresAuth: true, title: 'Danh sách huấn luyện viên' }
           // }
         ]
+      },
+      {
+        path: '/rooms',
+        name: 'rooms',
+        meta: { requiresAuth: true, title: 'Phòng tập' },
+        children: [
+          {
+            path: '',
+            name: 'list-rooms',
+            component: () => import('@/views/room/List.vue'),
+            meta: { requiresAuth: true, title: 'Danh sách phòng tập', role: [RoleValue.STAFF] },
+          },
+          {
+            path: ':id/edit',
+            name: 'edit-room',
+            component: () => import('@/views/room/Edit.vue'),
+            meta: { requiresAuth: true, title: 'Chỉnh sửa phòng tập' },
+          },
+          {
+            path: 'create',
+            children: [
+              {
+                path: '',
+                name: 'create-room',
+                component: () => import('@/views/room/Create.vue'),
+                meta: { requiresAuth: true, title: 'Thêm phòng tập' },
+              },
+            ],
+          },
+        ],
       },
       {
         path: '/users',

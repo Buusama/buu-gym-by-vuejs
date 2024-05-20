@@ -14,11 +14,11 @@ export default {
     delete: (id: string) => `/members/${id}`,
   },
   packages: {
-    list: '/packages',
-    create: '/packages',
-    detail: (id: string) => `/packages/${id}`,
-    update: (id: string) => `/packages/${id}`,
-    delete: (id: string) => `/packages/${id}`,
+    list: '/membership_plans',
+    create: '/membership_plans',
+    detail: (id: string) => `/membership_plans/${id}`,
+    update: (id: string) => `/membership_plans/${id}`,
+    delete: (id: string) => `/membership_plans/${id}`,
   },
   trainers: {
     list: '/trainers',
@@ -33,5 +33,12 @@ export default {
     detail: (id: string) => `/services/${id}`,
     update: (id: string) => `/services/${id}`,
     delete: (id: string) => `/services/${id}`,
+  },
+  rooms: {
+    list: '/rooms',
+    create: '/rooms',
+    detail: (id: string) => `/rooms/${id}`,
+    update: (id: string) => `/rooms/${id}`,
+    delete: (id: string) => `/rooms/${id}`,
   },
 }

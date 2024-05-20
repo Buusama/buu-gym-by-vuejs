@@ -54,7 +54,6 @@ export const getDetailPackage = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
     endpoints.packages.detail(id),
   )
-
   return response.data
 }
 

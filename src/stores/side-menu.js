@@ -59,19 +59,19 @@ export const useSideMenuStore = defineStore('sideMenu', {
       },
       {
         icon: 'PackageIcon',
-        title: 'Gói tập',
+        title: 'Thẻ hội viên',
         role: [RoleValue.ADMIN, RoleValue.STAFF],
         subMenu: [
           {
             icon: '',
             pageName: 'create-package',
-            title: 'Thêm gói tập',
+            title: 'Thêm thẻ hội viên',
             role: [RoleValue.ADMIN],
           },
           {
             icon: '',
             pageName: 'list-packages',
-            title: 'Danh sách gói tập',
+            title: 'Danh sách thẻ hội viên',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
             path: '/packages',
           },
@@ -99,7 +99,27 @@ export const useSideMenuStore = defineStore('sideMenu', {
       },
       'devider',
       {
-        icon: 'UsersIcon',
+        icon: 'BuildingIcon',
+        title: 'Phòng tập',
+        role: [RoleValue.ADMIN, RoleValue.STAFF],
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'create-room',
+            title: 'Thêm phòng tập',
+            role: [RoleValue.ADMIN, RoleValue.STAFF],
+          },
+          {
+            icon: '',
+            pageName: 'list-rooms',
+            title: 'Danh sách phòng tập',
+            path: '/rooms',
+            role: [RoleValue.ADMIN, RoleValue.STAFF],
+          },
+        ],
+      },
+      {
+        icon: 'DumbbellIcon',
         title: 'Thiết bị',
         role: [RoleValue.ADMIN, RoleValue.STAFF],
         subMenu: [
@@ -119,7 +139,7 @@ export const useSideMenuStore = defineStore('sideMenu', {
         ],
       },
       {
-        icon: 'UsersIcon',
+        icon: 'ServerIcon',
         title: 'Dịch vụ',
         role: [RoleValue.ADMIN, RoleValue.STAFF],
         subMenu: [
