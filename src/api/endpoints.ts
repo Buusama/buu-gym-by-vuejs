@@ -37,8 +37,16 @@ export default {
   rooms: {
     list: '/rooms',
     create: '/rooms',
+    listEquipment: (id:string) => `/rooms/${id}/equipments`,
     detail: (id: string) => `/rooms/${id}`,
     update: (id: string) => `/rooms/${id}`,
     delete: (id: string) => `/rooms/${id}`,
+  },
+  equipments: {
+    list: '/equipments',
+    create: '/equipments',
+    detail: (id: string) => `/equipments/${id}`,
+    update: (id: string) => `/equipments/${id}`,
+    delete: (id: string) => `/equipments/${id}`,
   },
 }

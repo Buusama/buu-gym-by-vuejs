@@ -4,7 +4,7 @@
   </div>
   <div class="grid">
     <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
-      <!-- BEGIN: Thông tin dịch vụ -->
+      <!-- BEGIN: Thông tin phòng tập -->
       <div class="intro-y box lg:mt-5">
         <div
           class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
@@ -24,7 +24,7 @@
                       v-model="nameRoom"
                       type="text"
                       class="form-control"
-                      placeholder="Tên dịch vụ"
+                      placeholder="Tên phòng tập"
                     />
                   </div>
                   <div class="mt-3">
@@ -36,27 +36,29 @@
                       type="number"
                       step="50000"
                       class="form-control"
-                      placeholder="Giá dịch vụ"
+                      placeholder="Chức năng phòng tập"
                     />
                   </div>
                 </div>
                 <div class="col-span-12 2xl:col-span-6">
                   <div class="mt-3 2xl:mt-0">
                     <label for="create-member-form-4" class="form-label"
-                      >Tầng</label
+                      >Vị trí (Tầng)</label
                     >
                     <input
                       v-model="price"
                       type="number"
                       step="50000"
                       class="form-control"
-                      placeholder="Giá dịch vụ"
+                      placeholder="Tầng"
                     />
                   </div>
                 </div>
                 <div class="col-span-12">
                   <div class="mt-3">
-                    <label for="create-member-form-7" class="form-label">Ghi chú</label>
+                    <label for="create-member-form-7" class="form-label"
+                      >Ghi chú</label
+                    >
                     <textarea
                       v-model="note"
                       rows="5"
@@ -71,7 +73,7 @@
 
           <div class="p-5">
             <button
-              @click="createRoomFunc"
+              @click="updateRoomFunc"
               type="button"
               class="btn btn-primary w-20 mt-3"
             >
@@ -87,36 +89,48 @@
           </div>
         </div>
       </div>
-      <!-- END: Thông tin dịch vụ -->
+      <!-- END: Thông tin phòng tập -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { createRoom } from "@/api/rooms";
-import { CreateRoomRequest } from "@/api/rooms/interfaces";
-import { ref } from "vue";
-import { showMessage } from "@/common/utils/helpers";
-import router from "@/router";
+  import { onMounted, ref, watch } from 'vue';
+  import { getDetailRoom, editRoom } from '@/api/rooms';
+  import { showMessage } from '@/common/utils/helpers';
+  import router from '@/router';
+  import { CreateRoomRequest } from '@/api/rooms/interfaces';
+  const paramId = router.currentRoute.value.params.id.toString();
 
-const nameRoom = ref("");
-const freeServices = ref([]);
-const price = ref(0);
-const note = ref("");
-const duration = ref(0);
+  const nameRoom = ref('');
+  const freeServices = ref([]);
+  const duration = ref(0);
+  const price = ref(0);
+  const note = ref('');
 
-const createRoomFunc = async () => {
-  const data = {
-    name: nameRoom.value,
-    freeServices: freeServices.value,
-    price: price.value,
-    description: note.value,
-    duration: duration.value,
-  } as CreateRoomRequest;
-  const res = await createRoom(data);
-  if (res) {
-    showMessage("Thêm mới dịch vụ thành công", true);
-    router.push({ name: "list-rooms" });
-  }
-};
+  onMounted(() => {
+    getDetailRoomData();
+  });
+
+  const getDetailRoomData = async () => {
+    const res = await getDetailRoom(paramId);
+    if (res) {
+      nameRoom.value = res.data.name;
+      note.value = res.data.description;
+    }
+    console.log(res);
+  };
+
+  const updateRoomFunc = async () => {
+    const data = {
+      name: nameRoom.value,
+      description: note.value,
+    } as CreateRoomRequest;
+
+    const res = await editRoom(paramId, data);
+    if (res) {
+      showMessage('Chỉnh sửa thông tin phòng tập thành công', true);
+      router.push({ name: 'list-rooms' });
+    }
+  };
 </script>

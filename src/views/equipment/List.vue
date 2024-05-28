@@ -1,6 +1,6 @@
 <template>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Danh sách phòng tập</h2>
+    <h2 class="text-lg font-medium mr-auto">Danh sách thiết bị</h2>
 
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
       <router-link
@@ -8,7 +8,7 @@
         tag="a"
         class="btn btn-primary shadow-md mr-2"
       >
-        Thêm mới phòng tập
+        Thêm mới thiết bị
       </router-link>
     </div>
   </div>
@@ -148,28 +148,18 @@ import { createIcons, icons } from "lucide";
 import Tabulator from "tabulator-tables";
 import dom from "@left4code/tw-starter/dist/js/dom";
 import { upperCaseValue } from "@/common/utils/helpers";
-import { getRooms, deleteRoom } from "@/api/rooms";
-import RoomEdit from "@/views/room/Edit.vue";
+import { getEquipments } from "@/api/equipments";
 
 import router from "@/router";
 const tableRef = ref();
 const tabulator = ref();
 const isModalVisible = ref(false);
-const deleteRoomId = ref(null);
+const deleteEquipmentId = ref(null);
 const filter = reactive({
   field: "name",
   type: "like",
   value: "",
 });
-const tableData = reactive({
-  totalRecordCount: 0,
-  sortable: {
-    order: "asc",
-    sort: "name",
-  },
-  rows: [],
-});
-const imageAssets = import.meta.globEager(`/src/assets/images/*.{jpg,jpeg,png,svg}`);
 
 const RequestFunc = async (url, config, params) => {
   let last_page = 0;
@@ -177,10 +167,10 @@ const RequestFunc = async (url, config, params) => {
   const page = params.page - 1;
   const take = params.size;
   const limit = params.size;
-  const order = params.sorters[0] ? params.sorters[0].field : "id ";
-  const sort = params.sorters[0] ? params.sorters[0].dir : "desc";
+  const order = params.sorters[0] ? params.sorters[0].field : "EquipmentId";
+  const sort = params.sorters[0] ? params.sorters[0].dir : "asc";
 
-  await getRooms({
+  await getEquipments({
     page: page,
     take: take,
     sort_by: order,
@@ -228,10 +218,11 @@ const initTabulator = () => {
 
       // For HTML table
       {
-        title: "TÊN PHÒNG TẬP",
-        minWidth: 180,
+        title: "ID",
+        // minWidth: 180,
+        width:100,
         responsive: 0,
-        field: "name",
+        field: "EquipmentId",
         vertAlign: "middle",
         print: false,
         download: false,
@@ -239,49 +230,66 @@ const initTabulator = () => {
           return `
             <div class="flex items-center lg:justify-center">
               <div class="intro-x">
-                <div class="font-medium whitespace-nowrap">${cell.getData().name}</div>
+                <div class="font-medium whitespace-nowrap">${cell.getData().EquipmentId}</div>
               </div>
             </div>`;
         },
       },
       {
-        title: "TẦNG",
+        title: "TÊN THIẾT BỊ",
+        minWidth: 180,
+        responsive: 0,
+        field: "EquipmentName",
+        vertAlign: "middle",
+        print: false,
+        download: false,
+        formatter(cell) {
+          return `
+            <div class="flex items-center lg:justify-center">
+              <div class="intro-x">
+                <div class="font-medium whitespace-nowrap">${cell.getData().EquipmentName}</div>
+              </div>
+            </div>`;
+        },
+      },
+      {
+        title: "MÃ SERIAL",
+        minWidth: 180,
+        responsive: 0,
+        field: "EquipmentSerialId",
+        vertAlign: "middle",
+        print: false,
+        download: false,
+        formatter(cell) {
+          return `
+            <div class="flex items-center lg:justify-center">
+              <div class="intro-x">
+                <div class="font-medium whitespace-nowrap">${cell.getData().EquipmentSerialId}</div>
+              </div>
+            </div>`;
+        },
+      },
+      {
+        title: "VỊ TRÍ",
+        minWidth: 180,
+        responsive: 0,
+        field: "RoomName",
+        vertAlign: "middle",
+        print: false,
+        download: false,
+        formatter(cell) {
+          return `
+            <div class="flex items-center lg:justify-center">
+              <div class="intro-x">
+                <div class="font-medium whitespace-nowrap">${cell.getData().RoomName}</div>
+              </div>
+            </div>`;
+        },
+      },
+      {
+        title: "TÌNH TRẠNG",
         minWidth: 100,
-        width: 100,
-        field: "floor",
-        hozAlign: "center",
-        vertAlign: "middle",
-        print: false,
-        download: false,
-        formatter(cell) {
-          return `<div>
-                        <div class="font-medium whitespace-nowrap">${
-                          cell.getData().floor
-                        }</div>
-                </div > `;
-        },
-      },
-      {
-        title: "SỨC CHỨA",
-        minWidth: 200,
-        width: 200,
-        field: "max_capacity",
-        hozAlign: "center",
-        vertAlign: "middle",
-        print: false,
-        download: false,
-        formatter(cell) {
-          return `<div>
-                        <div class="font-medium whitespace-nowrap">${
-                          cell.getData().max_capacity
-                        }</div>
-                </div > `;
-        },
-      },
-      {
-        title: "GHI CHÚ",
-        minWidth: 300,
-        field: "description",
+        field: "EquipmentCondition",
         hozAlign: "left",
         vertAlign: "middle",
         print: false,
@@ -289,7 +297,7 @@ const initTabulator = () => {
         formatter(cell) {
           return `<div>
                         <div class="font-medium whitespace-nowrap">${
-                          cell.getData().description
+                          cell.getData().EquipmentCondition
                         }</div>
                 </div > `;
         },
@@ -384,17 +392,17 @@ data-target="#delete-confirmation-modal" >
 };
 
 const showDeleteConfirmationModal = (id) => {
-  deleteRoomId.value = id;
+  deleteEquipmentId.value = id;
   isModalVisible.value = true;
 };
 
 const hideDeleteConfirmationModal = () => {
-  deleteRoomId.value = null;
+  deleteEquipmentId.value = null;
   isModalVisible.value = false;
 };
 
-const deleteRoomById = async () => {
-  await deleteRoom(deleteRoomId.value);
+const deleteEquipmentById = async () => {
+  await deleteEquipment(deleteEquipmentId.value);
   hideDeleteConfirmationModal();
   tabulator.value.replaceData();
 };

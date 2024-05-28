@@ -144,17 +144,17 @@ const routes = [
             component: () => import('@/views/service/Edit.vue'),
             meta: { requiresAuth: true, title: 'Chỉnh sửa dịch vụ' },
           },
-          {
-            path: 'create',
-            children: [
-              {
-                path: '',
-                name: 'create-service',
-                component: () => import('@/views/service/Create.vue'),
-                meta: { requiresAuth: true, title: 'Thêm dịch vụ' },
-              },
-            ],
-          },
+          // {
+          //   path: 'create',
+          //   children: [
+          //     {
+          //       path: '',
+          //       name: 'create-service',
+          //       component: () => import('@/views/service/Create.vue'),
+          //       meta: { requiresAuth: true, title: 'Thêm dịch vụ' },
+          //     },
+          //   ],
+          // },
         ],
       },
       {
@@ -213,6 +213,36 @@ const routes = [
                 name: 'create-room',
                 component: () => import('@/views/room/Create.vue'),
                 meta: { requiresAuth: true, title: 'Thêm phòng tập' },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: '/equipments',
+        name: 'equipments',
+        meta: { requiresAuth: true, title: 'Thiết bị' },
+        children: [
+          {
+            path: '',
+            name: 'list-equipments',
+            component: () => import('@/views/equipment/List.vue'),
+            meta: { requiresAuth: true, title: 'Danh sách thiết bị', role: [RoleValue.STAFF] },
+          },
+          {
+            path: ':id/edit',
+            name: 'edit-equipment',
+            component: () => import('@/views/equipment/Edit.vue'),
+            meta: { requiresAuth: true, title: 'Chỉnh sửa thiết bị' },
+          },
+          {
+            path: 'create',
+            children: [
+              {
+                path: '',
+                name: 'create-equipment',
+                component: () => import('@/views/equipment/Create.vue'),
+                meta: { requiresAuth: true, title: 'Thêm thiết bị' },
               },
             ],
           },

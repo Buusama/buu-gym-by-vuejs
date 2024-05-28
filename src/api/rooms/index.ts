@@ -56,9 +56,16 @@ export const editRoom = async (
     id: string,
     request: CreateRoomRequest,
 ): Promise<any> => {
-    const response: AxiosResponse<any> = await axios.put(
+    const response: AxiosResponse<any> = await axios.patch(
         endpoints.rooms.update(id),
         request,
     )
     return response.data
 };
+
+export const getEquipmentsByRoomId = async (id: string): Promise<any> => {
+    const response: AxiosResponse<any> = await axios.get(
+        endpoints.rooms.listEquipment(id),
+    )
+    return response.data
+}

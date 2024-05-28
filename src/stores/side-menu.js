@@ -125,15 +125,15 @@ export const useSideMenuStore = defineStore('sideMenu', {
         subMenu: [
           {
             icon: '',
-            pageName: 'create-device',
+            pageName: 'create-equipment',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
             title: 'Thêm thiết bị',
           },
           {
             icon: '',
-            pageName: 'list-devices',
+            pageName: 'list-equipments',
             title: 'Danh sách thiết bị',
-            path: '/devices',
+            path: '/equipments',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
           },
         ],
