@@ -9,13 +9,15 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user') != null;
-  const userRole = loggedIn ? JSON.parse(localStorage.getItem('user')!).role : null;
+  const userRole = loggedIn
+    ? JSON.parse(localStorage.getItem('user')!).role
+    : null;
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!loggedIn) {
       next({
         path: '/login',
-        query: { redirect: to.fullPath }
+        query: { redirect: to.fullPath },
       });
     } else {
       // Check role permissions
@@ -24,7 +26,11 @@ router.beforeEach((to, from, next) => {
         next();
       } else if (userRole === RoleValue.STAFF) {
         // Staff can access specific routes
-        if (to.matched.some(record => (record.meta.role as RoleValue[])?.includes(RoleValue.STAFF))) {
+        if (
+          to.matched.some((record) =>
+            (record.meta.role as RoleValue[])?.includes(RoleValue.STAFF),
+          )
+        ) {
           next();
         } else {
           // Unauthorized access
@@ -32,10 +38,13 @@ router.beforeEach((to, from, next) => {
         }
       } else if (userRole === RoleValue.TRAINER) {
         // Trainer can access specific routes
-        if (to.matched.some(record => (record.meta.role as RoleValue[])?.includes(RoleValue.TRAINER))) {
+        if (
+          to.matched.some((record) =>
+            (record.meta.role as RoleValue[])?.includes(RoleValue.TRAINER),
+          )
+        ) {
           next();
-        }
-        else {
+        } else {
           // Unauthorized access
           next({ name: 'errors.403' }); // Redirect to default page or handle accordingly
         }

@@ -1,35 +1,35 @@
 import { RoleValue } from '@/common/enums/permision/role'
-import SideMenu from '@/layouts/side-menu/Main.vue'
-import ErrorPage from '@/views/error-page/ErrorPage.vue'
-import PermisionPage from '@/views/error-page/PermisionPage.vue'
-import Home from '@/views/home/Home.vue'
-import Login from '@/views/login/Login.vue'
-import MemberCreate from '@/views/member/Create.vue'
-import MemberEdit from '@/views/member/Edit.vue'
-import Member from '@/views/member/List.vue'
-import List from '@/views/package/List.vue';
+
 const routes = [
   {
     name: 'login',
     path: '/login',
-    component: Login,
+    component: () => import('@/views/login/Login.vue'),
   },
   {
     name: 'home',
     path: '/',
-    component: SideMenu,
+    component: () => import('@/layouts/side-menu/Main.vue'),
     meta: { requiresAuth: true, title: 'Trang chủ' },
     children: [
       {
         path: '',
         name: 'dashboard',
-        component: Home,
-        meta: { requiresAuth: true, title: 'Dashboard', role: [RoleValue.TRAINER, RoleValue.STAFF, RoleValue.MEMBER] },
+        component: () => import('@/views/home/Home.vue'),
+        meta: {
+          requiresAuth: true,
+          title: 'Dashboard',
+          role: [RoleValue.TRAINER, RoleValue.STAFF, RoleValue.MEMBER],
+        },
       },
       {
         path: '/trainers',
         name: 'trainers',
-        meta: { requiresAuth: true, title: 'Huấn luyện viên', role: [RoleValue.STAFF] },
+        meta: {
+          requiresAuth: true,
+          title: 'Huấn luyện viên',
+          role: [RoleValue.STAFF],
+        },
         children: [
           {
             path: '',
@@ -51,7 +51,7 @@ const routes = [
           {
             path: ':id/edit',
             name: 'edit-trainer',
-            component: Home,
+            component: () => import('@/views/trainer/Edit.vue'),
             meta: { requiresAuth: true, title: 'Chỉnh sửa huấn luyện viên' },
           },
         ],
@@ -59,12 +59,16 @@ const routes = [
       {
         path: '/members',
         name: 'members',
-        meta: { requiresAuth: true, title: 'Hội viên', role: [RoleValue.TRAINER, RoleValue.STAFF] },
+        meta: {
+          requiresAuth: true,
+          title: 'Hội viên',
+          role: [RoleValue.TRAINER, RoleValue.STAFF],
+        },
         children: [
           {
             path: '',
             name: 'list-members',
-            component: Member,
+            component: () => import('@/views/member/List.vue'),
             meta: { requiresAuth: true, title: 'Danh sách hội viên' },
           },
           {
@@ -73,7 +77,7 @@ const routes = [
               {
                 path: '',
                 name: 'create-member',
-                component: MemberCreate,
+                component: () => import('@/views/member/Create.vue'),
                 meta: { requiresAuth: true, title: 'Thêm hội viên' },
               },
             ],
@@ -84,7 +88,7 @@ const routes = [
               {
                 path: '',
                 name: 'checkin-history',
-                component: Home,
+                component: () => import('@/views/home/Home.vue'),
                 meta: { requiresAuth: true, title: 'Lịch sử checkin' },
               },
             ],
@@ -92,36 +96,40 @@ const routes = [
           {
             path: ':id/edit',
             name: 'edit-member',
-            component: MemberEdit,
+            component: () => import('@/views/member/Edit.vue'),
             meta: { requiresAuth: true, title: 'Chỉnh sửa hội viên' },
           },
         ],
       },
       {
-        path: '/packages',
-        name: 'packages',
-        meta: { requiresAuth: true, title: 'Dịch vụ' },
+        path: '/memberships',
+        name: 'memberships',
+        meta: { requiresAuth: true, title: 'Gói tập' },
         children: [
           {
             path: '',
-            name: 'list-packages',
-            component: List,
-            meta: { requiresAuth: true, title: 'Danh sách dịch vụ', role: [RoleValue.STAFF] },
+            name: 'list-memberships',
+            component: () => import('@/views/membership/List.vue'),
+            meta: {
+              requiresAuth: true,
+              title: 'Danh sách gói tập',
+              role: [RoleValue.STAFF],
+            },
           },
           {
             path: ':id/edit',
-            name: 'edit-package',
-            component: () => import('@/views/package/Edit.vue'),
-            meta: { requiresAuth: true, title: 'Chỉnh sửa dịch vụ' },
+            name: 'edit-membership',
+            component: () => import('@/views/membership/Edit.vue'),
+            meta: { requiresAuth: true, title: 'Chỉnh sửa gói tập' },
           },
           {
             path: 'create',
             children: [
               {
                 path: '',
-                name: 'create-package',
-                component: () => import('@/views/package/Create.vue'),
-                meta: { requiresAuth: true, title: 'Thêm dịch vụ' },
+                name: 'create-membership',
+                component: () => import('@/views/membership/Create.vue'),
+                meta: { requiresAuth: true, title: 'Thêm gói tập' },
               },
             ],
           },
@@ -130,31 +138,31 @@ const routes = [
       {
         path: '/services',
         name: 'services',
-        meta: { requiresAuth: true, title: 'Dịch vụ' },
+        meta: { requiresAuth: true, title: 'Lớp dịch vụ' },
         children: [
           {
             path: '',
             name: 'list-services',
             component: () => import('@/views/service/List.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách dịch vụ' },
+            meta: { requiresAuth: true, title: 'Danh sách lớp dịch vụ' },
           },
           {
             path: ':id/edit',
             name: 'edit-service',
             component: () => import('@/views/service/Edit.vue'),
-            meta: { requiresAuth: true, title: 'Chỉnh sửa dịch vụ' },
+            meta: { requiresAuth: true, title: 'Chỉnh sửa lớp dịch vụ' },
           },
-          // {
-          //   path: 'create',
-          //   children: [
-          //     {
-          //       path: '',
-          //       name: 'create-service',
-          //       component: () => import('@/views/service/Create.vue'),
-          //       meta: { requiresAuth: true, title: 'Thêm dịch vụ' },
-          //     },
-          //   ],
-          // },
+          {
+            path: 'create',
+            children: [
+              {
+                path: '',
+                name: 'create-service',
+                component: () => import('@/views/service/Create.vue'),
+                meta: { requiresAuth: true, title: 'Thêm lớp dịch vụ' },
+              },
+            ],
+          },
         ],
       },
       {
@@ -178,7 +186,7 @@ const routes = [
             path: 'members',
             name: 'schedule-members',
             component: () => import('@/views/schedule/Member.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách hội viên' }
+            meta: { requiresAuth: true, title: 'Danh sách hội viên' },
           },
           // {
           // path: 'trainers',
@@ -186,7 +194,7 @@ const routes = [
           // component: () => import('@/views/schedule/Trainer.vue'),
           // meta: { requiresAuth: true, title: 'Danh sách huấn luyện viên' }
           // }
-        ]
+        ],
       },
       {
         path: '/rooms',
@@ -197,7 +205,11 @@ const routes = [
             path: '',
             name: 'list-rooms',
             component: () => import('@/views/room/List.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách phòng tập', role: [RoleValue.STAFF] },
+            meta: {
+              requiresAuth: true,
+              title: 'Danh sách phòng tập',
+              role: [RoleValue.STAFF],
+            },
           },
           {
             path: ':id/edit',
@@ -227,7 +239,11 @@ const routes = [
             path: '',
             name: 'list-equipments',
             component: () => import('@/views/equipment/List.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách thiết bị', role: [RoleValue.STAFF] },
+            meta: {
+              requiresAuth: true,
+              title: 'Danh sách thiết bị',
+              role: [RoleValue.STAFF],
+            },
           },
           {
             path: ':id/edit',
@@ -274,21 +290,21 @@ const routes = [
   {
     name: 'errors.404',
     path: '/404',
-    component: ErrorPage,
+    component: () => import('@/views/error-page/ErrorPage.vue'),
   },
   {
     name: 'errors.403',
     path: '/403',
-    component: PermisionPage,
+    component: () => import('@/views/error-page/PermisionPage.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
-    component: ErrorPage,
+    component: () => import('@/views/error-page/ErrorPage.vue'),
   },
   {
     path: '/unauthorized',
-    component: PermisionPage,
-  }
+    component: () => import('@/views/error-page/PermisionPage.vue'),
+  },
 ]
 
 export default routes

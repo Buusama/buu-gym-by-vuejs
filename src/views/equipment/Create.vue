@@ -4,7 +4,7 @@
   </div>
   <div class="grid">
     <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
-      <!-- BEGIN: Thông tin dịch vụ -->
+      <!-- BEGIN: Thông tin thiết bị -->
       <div class="intro-y box lg:mt-5">
         <div
           class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
@@ -24,7 +24,7 @@
                       v-model="nameRoom"
                       type="text"
                       class="form-control"
-                      placeholder="Tên dịch vụ"
+                      placeholder="Tên thiết bị"
                     />
                   </div>
                   <div class="mt-3">
@@ -36,7 +36,7 @@
                       type="number"
                       step="50000"
                       class="form-control"
-                      placeholder="Giá dịch vụ"
+                      placeholder="Giá thiết bị"
                     />
                   </div>
                 </div>
@@ -50,7 +50,7 @@
                       type="number"
                       step="50000"
                       class="form-control"
-                      placeholder="Giá dịch vụ"
+                      placeholder="Giá thiết bị"
                     />
                   </div>
                 </div>
@@ -87,7 +87,7 @@
           </div>
         </div>
       </div>
-      <!-- END: Thông tin dịch vụ -->
+      <!-- END: Thông tin thiết bị -->
     </div>
   </div>
 </template>
@@ -115,7 +115,7 @@ const createRoomFunc = async () => {
   } as CreateRoomRequest;
   const res = await createRoom(data);
   if (res) {
-    showMessage("Thêm mới dịch vụ thành công", true);
+    showMessage("Thêm mới thiết bị thành công", true);
     router.push({ name: "list-rooms" });
   }
 };

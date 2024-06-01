@@ -8,7 +8,12 @@ export const useSideMenuStore = defineStore('sideMenu', {
         icon: 'HomeIcon',
         pageName: 'dashboard',
         title: 'Home',
-        role: [RoleValue.ADMIN, RoleValue.STAFF, RoleValue.TRAINER, RoleValue.MEMBER],
+        role: [
+          RoleValue.ADMIN,
+          RoleValue.STAFF,
+          RoleValue.TRAINER,
+          RoleValue.MEMBER,
+        ],
       },
       'devider',
       {
@@ -59,21 +64,21 @@ export const useSideMenuStore = defineStore('sideMenu', {
       },
       {
         icon: 'PackageIcon',
-        title: 'Thẻ hội viên',
+        title: 'Gói dịch vụ',
         role: [RoleValue.ADMIN, RoleValue.STAFF],
         subMenu: [
           {
             icon: '',
-            pageName: 'create-package',
-            title: 'Thêm thẻ hội viên',
+            pageName: 'create-membership',
+            title: 'Thêm gói dịch vụ',
             role: [RoleValue.ADMIN],
           },
           {
             icon: '',
-            pageName: 'list-packages',
-            title: 'Danh sách thẻ hội viên',
+            pageName: 'list-memberships',
+            title: 'Danh sách gói dịch vụ',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
-            path: '/packages',
+            path: '/memberships',
           },
         ],
       },
@@ -88,13 +93,14 @@ export const useSideMenuStore = defineStore('sideMenu', {
             title: 'Lịch tập hội viên',
             role: [RoleValue.ADMIN, RoleValue.STAFF, RoleValue.TRAINER],
             path: '/schedules',
-          }, {
+          },
+          {
             icon: '',
             pageName: 'schedule-trainers',
             title: 'Lịch tập huấn luyện viên',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
             path: '/schedules',
-          }
+          },
         ],
       },
       'devider',
@@ -140,19 +146,19 @@ export const useSideMenuStore = defineStore('sideMenu', {
       },
       {
         icon: 'ServerIcon',
-        title: 'Dịch vụ',
+        title: 'Lớp dịch vụ',
         role: [RoleValue.ADMIN, RoleValue.STAFF],
         subMenu: [
           {
             icon: '',
             pageName: 'create-service',
-            title: 'Thêm dịch vụ',
+            title: 'Thêm lớp dịch vụ',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
           },
           {
             icon: '',
             pageName: 'list-services',
-            title: 'Danh sách dịch vụ',
+            title: 'Danh sách lớp dịch vụ',
             path: '/services',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
           },

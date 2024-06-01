@@ -21,7 +21,7 @@
                       >Tên dịch vụ</label
                     >
                     <input
-                      v-model="namePackage"
+                      v-model="nameMembership"
                       type="text"
                       class="form-control"
                       placeholder="Tên dịch vụ"
@@ -99,7 +99,9 @@
                 </div>
                 <div class="col-span-12">
                   <div class="mt-3">
-                    <label for="create-member-form-7" class="form-label">Ghi chú</label>
+                    <label for="create-member-form-7" class="form-label"
+                      >Ghi chú</label
+                    >
                     <textarea
                       v-model="note"
                       rows="5"
@@ -114,14 +116,14 @@
 
           <div class="p-5">
             <button
-              @click="createPackageFunc"
+              @click="updateMembershipFunc"
               type="button"
               class="btn btn-primary w-20 mt-3"
             >
               Lưu
             </button>
             <router-link
-              :to="{ name: 'list-packages' }"
+              :to="{ name: 'list-memberships' }"
               tag="a"
               class="btn btn-outline-secondary ml-3 w-20 mt-3"
             >
@@ -136,30 +138,48 @@
 </template>
 
 <script setup lang="ts">
-import { createPackage } from "@/api/packages";
-import { CreatePackageRequest } from "@/api/packages/interfaces";
-import { ref } from "vue";
-import { showMessage } from "@/common/utils/helpers";
-import router from "@/router";
+  import { onMounted, ref, watch } from 'vue';
+  import { getDetailMembership, editMembership } from '@/api/memberships';
+  import { showMessage } from '@/common/utils/helpers';
+  import router from '@/router';
+  import { CreateMembershipRequest } from '@/api/memberships/interfaces';
+  const paramId = router.currentRoute.value.params.id.toString();
 
-const namePackage = ref("");
-const freeServices = ref([]);
-const price = ref(0);
-const note = ref("");
-const duration = ref(0);
+  const nameMembership = ref('');
+  const freeServices = ref([]);
+  const duration = ref(0);
+  const price = ref(0);
+  const note = ref('');
 
-const createPackageFunc = async () => {
-  const data = {
-    name: namePackage.value,
-    freeServices: freeServices.value,
-    price: price.value,
-    description: note.value,
-    duration: duration.value,
-  } as CreatePackageRequest;
-  const res = await createPackage(data);
-  if (res) {
-    showMessage("Thêm mới dịch vụ thành công", true);
-    router.push({ name: "list-packages" });
-  }
-};
+  onMounted(() => {
+    getDetailMembershipData();
+  });
+
+  const getDetailMembershipData = async () => {
+    const res = await getDetailMembership(paramId);
+    if (res) {
+      nameMembership.value = res.data.name;
+      freeServices.value = res.data.free_service;
+      price.value = res.data.price;
+      note.value = res.data.description;
+      duration.value = res.data.duration;
+    }
+    console.log(res);
+  };
+
+  const updateMembershipFunc = async () => {
+    const data = {
+      name: nameMembership.value,
+      free_service: freeServices.value.map((item) => parseInt(item)),
+      price: price.value,
+      description: note.value,
+      duration: duration.value,
+    } as CreateMembershipRequest;
+
+    const res = await editMembership(paramId, data);
+    if (res) {
+      showMessage('Chỉnh sửa thông tin dịch vụ thành công', true);
+      router.push({ name: 'list-memberships' });
+    }
+  };
 </script>

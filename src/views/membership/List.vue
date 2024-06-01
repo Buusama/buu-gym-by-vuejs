@@ -1,14 +1,14 @@
 <template>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Danh sách gói dịch vụ</h2>
+    <h2 class="text-lg font-medium mr-auto">Danh sách gói tập</h2>
 
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
       <router-link
-        :to="{ name: 'create-package' }"
+        :to="{ name: 'create-membership' }"
         tag="a"
         class="btn btn-primary shadow-md mr-2"
       >
-        Thêm mới gói dịch vụ
+        Thêm mới gói tập
       </router-link>
     </div>
   </div>
@@ -139,7 +139,7 @@
           <button
             type="button"
             class="btn btn-danger w-24"
-            @click="deletePackageById"
+            @click="deleteMembershipById"
           >
             Xóa
           </button>
@@ -152,36 +152,24 @@
 </template>
 
 <script setup>
-  import { ref, reactive, onMounted } from 'vue';
-  import xlsx from 'xlsx';
-  import { createIcons, icons } from 'lucide';
-  import Tabulator from 'tabulator-tables';
-  import dom from '@left4code/tw-starter/dist/js/dom';
-  import { upperCaseValue } from '@/common/utils/helpers';
-  import { getPackages, deletePackage } from '@/api/packages';
-  import PackageEdit from '@/views/package/Edit.vue';
+  import { deleteMembership, getMemberships } from '@/api/memberships';
+import { upperCaseValue } from '@/common/utils/helpers';
+import dom from '@left4code/tw-starter/dist/js/dom';
+import { createIcons, icons } from 'lucide';
+import Tabulator from 'tabulator-tables';
+import { onMounted, reactive, ref } from 'vue';
+import xlsx from 'xlsx';
 
   import router from '@/router';
   const tableRef = ref();
   const tabulator = ref();
   const isModalVisible = ref(false);
-  const deletePackageId = ref(null);
+  const deleteMembershipId = ref(null);
   const filter = reactive({
     field: 'name',
     type: 'like',
     value: '',
   });
-  const tableData = reactive({
-    totalRecordCount: 0,
-    sortable: {
-      order: 'asc',
-      sort: 'name',
-    },
-    rows: [],
-  });
-  const imageAssets = import.meta.globEager(
-    `/src/assets/images/*.{jpg,jpeg,png,svg}`,
-  );
 
   const RequestFunc = async (url, config, params) => {
     let last_page = 0;
@@ -192,7 +180,7 @@
     const order = params.sorters[0] ? params.sorters[0].field : 'id ';
     const sort = params.sorters[0] ? params.sorters[0].dir : 'desc';
 
-    await getPackages({
+    await getMemberships({
       page: page,
       take: take,
       sort_by: order,
@@ -339,11 +327,11 @@
               </a > `);
 
             dom(editButton).on('click', function () {
-              const packageId = cell.getData().id;
+              const membershipId = cell.getData().id;
               router.push({
-                name: 'edit-package',
+                name: 'edit-membership',
                 params: {
-                  id: packageId,
+                  id: membershipId,
                 },
               });
             });
@@ -411,17 +399,17 @@ data-target="#delete-confirmation-modal" >
   };
 
   const showDeleteConfirmationModal = (id) => {
-    deletePackageId.value = id;
+    deleteMembershipId.value = id;
     isModalVisible.value = true;
   };
 
   const hideDeleteConfirmationModal = () => {
-    deletePackageId.value = null;
+    deleteMembershipId.value = null;
     isModalVisible.value = false;
   };
 
-  const deletePackageById = async () => {
-    await deletePackage(deletePackageId.value);
+  const deleteMembershipById = async () => {
+    await deleteMembership(deleteMembershipId.value);
     hideDeleteConfirmationModal();
     tabulator.value.replaceData();
   };

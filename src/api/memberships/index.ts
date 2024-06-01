@@ -2,25 +2,25 @@ import axios from '@/common/utils/axios'
 import { AxiosResponse } from 'axios'
 import endpoints from '../endpoints'
 import {
-  CreatePackageRequest,
-  CreatePackageResponse,
-  EditPackageRequest,
-  GetPackagesRequest,
+  CreateMembershipRequest,
+  CreateMembershipResponse,
+  EditMembershipRequest,
+  GetMembershipsRequest,
 } from './interfaces'
 import { CommonResponse, SearchResponse } from '../response';
 
-export const createPackage = async (
-  request: CreatePackageRequest,
-): Promise<CreatePackageResponse> => {
-  const response: AxiosResponse<CreatePackageResponse> = await axios.post(
-    endpoints.packages.create,
+export const createMembership = async (
+  request: CreateMembershipRequest,
+): Promise<CreateMembershipResponse> => {
+  const response: AxiosResponse<CreateMembershipResponse> = await axios.post(
+    endpoints.memberships.create,
     request,
   )
   return response.data
-};
+}
 
-export const getPackages = async (
-  request: GetPackagesRequest,
+export const getMemberships = async (
+  request: GetMembershipsRequest,
 ): Promise<any> => {
   const params = new URLSearchParams()
   params.append('page', request.page.toString())
@@ -35,36 +35,36 @@ export const getPackages = async (
   }
 
   const response: AxiosResponse<SearchResponse<any>> = await axios.get(
-    endpoints.packages.list,
+    endpoints.memberships.list,
     { params: params },
+  )
+
+  return response.data
+}
+
+export const deleteMembership = async (id: string): Promise<any> => {
+  const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
+    endpoints.memberships.delete(id),
   )
 
   return response.data
 };
 
-export const deletePackage = async (id: string): Promise<any> => {
-  const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
-    endpoints.packages.delete(id),
-  )
-
-  return response.data
-}
-
-export const getDetailPackage = async (id: string): Promise<any> => {
+export const getDetailMembership = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
-    endpoints.packages.detail(id),
+    endpoints.memberships.detail(id),
   )
   return response.data
-}
+};
 
-export const editPackage = async (
+export const editMembership = async (
   id: string,
-  request: EditPackageRequest,
+  request: EditMembershipRequest,
 ): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.put(
-    endpoints.packages.update(id),
+    endpoints.memberships.update(id),
     { ...request },
   )
 
   return response.data
-}
+};

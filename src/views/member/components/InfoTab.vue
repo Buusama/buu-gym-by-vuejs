@@ -168,10 +168,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { CreateMemberRequest } from '@/api/members/interfaces/create';
-  import { getDetailMember, editMember } from '@/api/members';
-
+      
   const props = defineProps(['formData', 'newImage', 'datePickerOptions']);
 
   const emit = defineEmits(['preview-file', 'remove-preview', 'update']);

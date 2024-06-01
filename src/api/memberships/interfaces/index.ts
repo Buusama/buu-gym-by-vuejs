@@ -1,4 +1,4 @@
-export interface CreatePackageRequest {
+export interface CreateMembershipRequest {
   name?: string;
   price?: number;
   free_service?: number[];
@@ -6,7 +6,7 @@ export interface CreatePackageRequest {
   description?: string;
 }
 
-export interface CreatePackageResponse {
+export interface CreateMembershipResponse {
   name?: string;
   price?: number;
   free_service?: number[];
@@ -14,7 +14,7 @@ export interface CreatePackageResponse {
   description?: string;
 }
 
-export interface GetPackagesRequest {
+export interface GetMembershipsRequest {
   page: number;
   take: number;
   sort_enum: string;
@@ -25,7 +25,7 @@ export interface GetPackagesRequest {
   value?: string;
 }
 
-export interface EditPackageRequest {
+export interface EditMembershipRequest {
   name?: string;
   price?: number;
   free_service?: number[];

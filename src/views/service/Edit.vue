@@ -1,15 +1,15 @@
 <template>
   <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Thêm mới dịch vụ</h2>
+    <h2 class="text-lg font-medium mr-auto">Chỉnh sửa lớp dịch vụ</h2>
   </div>
   <div class="grid">
     <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
-      <!-- BEGIN: Thông tin dịch vụ -->
+      <!-- BEGIN: Thông tin lớp dịch vụ -->
       <div class="intro-y box lg:mt-5">
         <div
           class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
         >
-          <h2 class="font-medium text-base mr-auto">Thông tin dịch vụ</h2>
+          <h2 class="font-medium text-base mr-auto">Thông tin lớp dịch vụ</h2>
         </div>
         <div class="p-5 border-b border-slate-200/60 dark:border-darkmode-400">
           <div class="flex flex-col-reverse xl:flex-row flex-col">
@@ -18,10 +18,10 @@
                 <div class="col-span-12 2xl:col-span-6">
                   <div>
                     <label for="create-package-form-1" class="form-label"
-                      >Tên dịch vụ</label
+                      >Tên lớp dịch vụ</label
                     >
                     <input
-                      v-model="namePackage"
+                      v-model="nameService"
                       type="text"
                       class="form-control"
                       placeholder="Tên dịch vụ"
@@ -29,11 +29,11 @@
                   </div>
                   <div class="mt-3">
                     <label for="create-package-form-2" class="form-label"
-                      >Loại dịch vụ</label
+                      >Loại lớp dịch vụ</label
                     >
                     <select v-model="type" class="form-select">
-                      <option value="1">Gói Dịch vụ Massage Trị liệu</option>
-                      <option value="2">Gói Workout Plan</option>
+                      <option value="1">Lớp Online</option>
+                      <option value="2">Lớp Offline</option>
                     </select>
                   </div>
                   <div class="mt-3">
@@ -143,88 +143,16 @@
             </div>
           </div>
         </div>
-
-        <div
-          class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
-        >
-          <h2 class="font-medium text-base mr-auto">Thông tin hoa hồng</h2>
-        </div>
-        <div class="p-5">
-          <div class="flex flex-col-reverse xl:flex-row flex-col">
-            <div class="flex-1 mt-6 xl:mt-0">
-              <div class="grid grid-cols-12 gap-x-5">
-                <div class="col-span-12 2xl:col-span-6">
-                  <div>
-                    <label for="create-package-form-1" class="form-label"
-                      >Hoa hồng người bán</label
-                    >
-                    <div class="input-group">
-                      <div class="input-group-text">%</div>
-                      <input
-                        v-model="sellerCommission"
-                        type="text"
-                        class="form-control"
-                      />
-                      <div class="input-group-text">.00</div>
-                    </div>
-                  </div>
-                  <div class="mt-3">
-                    <label for="create-package-form-2" class="form-label"
-                      >Hoa hồng khách giới thiệu</label
-                    >
-                    <div class="input-group">
-                      <div class="input-group-text">%</div>
-                      <input
-                        v-model="referralCommission"
-                        type="text"
-                        class="form-control"
-                      />
-                      <div class="input-group-text">.00</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-span-12 2xl:col-span-6">
-                  <div class="mt-3 2xl:mt-0">
-                    <label for="create-package-form-4" class="form-label"
-                      >Hoa hồng nhân viên giới thiệu</label
-                    >
-                    <div class="input-group">
-                      <div class="input-group-text">%</div>
-                      <input v-model="staffCommission" type="text" class="form-control" />
-                      <div class="input-group-text">.00</div>
-                    </div>
-                  </div>
-                  <div class="mt-3">
-                    <label for="create-package-form-2" class="form-label"
-                      >Chiếu khấu hoa hồng</label
-                    >
-                    <div class="form-check mt-2">
-                      <input
-                        v-model="discount"
-                        id="checkbox-switch-8"
-                        class="form-check-switch form-check-input"
-                        type="checkbox"
-                      />
-                      <label class="form-check-label" for="checkbox-switch-8"
-                        >Cho phép chiết khấu</label
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="p-5">
           <button
-            @click="updatePackageFunc"
+            @click="updateServiceFunc"
             type="button"
             class="btn btn-primary w-20 mt-3"
           >
             Lưu
           </button>
           <router-link
-            :to="{ name: 'list-packages' }"
+            :to="{ name: 'list-services' }"
             tag="a"
             class="btn btn-outline-secondary ml-3 w-20 mt-3"
           >
@@ -239,13 +167,13 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { getDetailPackage, editPackage } from "@/api/packages";
+import { getDetailService, editService } from "@/api/services";
 import { showMessage } from "@/common/utils/helpers";
 import router from "@/router";
-import { CreatePackageRequest } from "@/api/packages/interfaces";
+import { CreateServiceRequest } from "@/api/services/interfaces";
 const paramId = router.currentRoute.value.params.id.toString();
 
-const namePackage = ref("");
+const nameService = ref("");
 const type = ref(0);
 const freeServices = ref([]);
 const price = ref(0);
@@ -259,13 +187,13 @@ const staffCommission = ref(0);
 const discount = ref(false);
 
 onMounted(() => {
-  getDetailPackageData();
+  getDetailServiceData();
 });
 
-const getDetailPackageData = async () => {
-  const res = await getDetailPackage(paramId);
+const getDetailServiceData = async () => {
+  const res = await getDetailService(paramId);
   if (res) {
-    namePackage.value = res.data.name;
+    nameService.value = res.data.name;
     type.value = res.data.type;
     freeServices.value = res.data.free_service;
     price.value = res.data.price;
@@ -280,9 +208,9 @@ const getDetailPackageData = async () => {
   }
 };
 
-const updatePackageFunc = async () => {
+const updateServiceFunc = async () => {
   const data = {
-    name: namePackage.value,
+    name: nameService.value,
     price: price.value,
     type: type.value,
     usage_type: useType.value,
@@ -294,8 +222,8 @@ const updatePackageFunc = async () => {
     referral_commission: Number(referralCommission.value),
     employee_referral_commission: Number(staffCommission.value),
     commission_status: Number(discount.value),
-  } as CreatePackageRequest;
-  const res = await editPackage(paramId, data);
+  } as CreateServiceRequest;
+  const res = await editService(paramId, data);
   if (res) {
     showMessage("Chỉnh sửa thông tin dịch vụ thành công", true);
     router.push({ name: "list-packages" });

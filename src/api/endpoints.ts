@@ -13,7 +13,7 @@ export default {
     update: (id: string) => `/members/${id}`,
     delete: (id: string) => `/members/${id}`,
   },
-  packages: {
+  memberships: {
     list: '/membership_plans',
     create: '/membership_plans',
     detail: (id: string) => `/membership_plans/${id}`,
@@ -37,7 +37,7 @@ export default {
   rooms: {
     list: '/rooms',
     create: '/rooms',
-    listEquipment: (id:string) => `/rooms/${id}/equipments`,
+    listEquipment: (id: string) => `/rooms/${id}/equipments`,
     detail: (id: string) => `/rooms/${id}`,
     update: (id: string) => `/rooms/${id}`,
     delete: (id: string) => `/rooms/${id}`,
@@ -48,5 +48,12 @@ export default {
     detail: (id: string) => `/equipments/${id}`,
     update: (id: string) => `/equipments/${id}`,
     delete: (id: string) => `/equipments/${id}`,
+  },
+  equipmentCategories: {
+    list: '/equipment_categories',
+    create: '/equipment_categories',
+    detail: (id: string) => `/equipment_categories/${id}`,
+    update: (id: string) => `/equipment_categories/${id}`,
+    delete: (id: string) => `/equipment_categories/${id}`,
   },
 }
