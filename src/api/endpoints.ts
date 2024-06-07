@@ -12,6 +12,13 @@ export default {
     detail: (id: string) => `/members/${id}`,
     update: (id: string) => `/members/${id}`,
     delete: (id: string) => `/members/${id}`,
+    memberships: (id: string) => `/members/${id}/membership-plans`,
+    createMemberships: (id: string) => `/members/${id}/membership-plans`,
+    membershipsPayment: (id: string) => `/members/${id}/membership-payments`,
+    createMembershipsPayment: (id: string) =>
+      `/members/${id}/membership-payments`,
+    financials: (id: string) => `/members/${id}/financials`,
+    measurements: (id: string) => `/members/${id}/measurements`,
   },
   memberships: {
     list: '/membership_plans',
@@ -55,5 +62,12 @@ export default {
     detail: (id: string) => `/equipment_categories/${id}`,
     update: (id: string) => `/equipment_categories/${id}`,
     delete: (id: string) => `/equipment_categories/${id}`,
+  },
+  bookings: {
+    list: '/admin/bookings',
+    create: '/admin/bookings',
+    detail: (id: string) => `/bookings/${id}`,
+    update: (id: string) => `/bookings/${id}`,
+    delete: (id: string) => `/bookings/${id}`,
   },
 }

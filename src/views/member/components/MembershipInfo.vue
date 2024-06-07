@@ -3,7 +3,7 @@
   <!-- BEGIN: Thông tin hội viên -->
   <div class="intro-y box lg:mt-5">
     <div class="intro-y flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-      <h2 class="text-lg font-medium mr-auto">Lịch sử tập luyện</h2>
+      <h2 class="text-lg font-medium mr-auto">Dịch vụ đăng ký</h2>
       <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
         <button class="btn btn-primary shadow-md mr-2" @click="showCreateModal">Thêm</button>
       </div>
@@ -17,19 +17,13 @@
               #
             </th>
             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
-              Ngày tập luyện
+              Ngày đăng ký
             </th>
             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
-              Dịch vụ
+              Dịch vụ đăng ký
             </th>
             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
-              Loại dịch vụ
-            </th>
-            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
-              Huấn luyện viên
-            </th>
-            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
-              Thời gian
+              Số tiền
             </th>
             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">
               Ghi chú
@@ -40,11 +34,9 @@
           <tr class="bg-gray-200 dark:bg-dark-1" v-for="(item, index) in tableData" :key="index">
             <td class="border-b dark:border-dark-5">{{ index + 1 }}</td>
             <td class="border-b dark:border-dark-5">{{ item.date }}</td>
-            <td class="border-b dark:border-dark-5">{{ item.serviceName ?? item.workoutName }}</td>
-            <td class="border-b dark:border-dark-5">{{ item.serviceType }}</td>
-            <td class="border-b dark:border-dark-5">{{ item.trainerName ?? bookingTrainerName }}</td>
-            <td class="border-b dark:border-dark-5">{{ item.time }}</td>
-            <td class="border-b dark:border-dark-5">{{ item.notes }}</td>
+            <td class="border-b dark:border-dark-5">{{ item.name }}</td>
+            <td class="border-b dark:border-dark-5">{{ item.price }}</td>
+            <td class="border-b dark:border-dark-5">{{ item.note }}</td>
           </tr>
         </tbody>
       </table>
@@ -54,7 +46,6 @@
     </div>
   </div>
   <!-- END: Thông tin hội viên -->
-
   <Modal :show="isCreateModalVisible" @hide="hideCreateModal">
     <ModalBody>
       <div class="p-5">
@@ -98,12 +89,14 @@
     </ModalFooter>
   </Modal>
 </template>
-
+  
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-// import { getmemberMemberships, createMemberMembership } from '@/api/members';
-import { getBookings } from '@/api/booking';
+import { getmemberMemberships, createMemberMembership } from '@/api/members';
+import { getMemberships } from '@/api/memberships';
 import router from '@/router';
+import { CreateMemberMembershipRequest } from '@/api/members/interfaces/create';
+import { showMessage } from '@/common/utils/helpers';
 
 const isCreateModalVisible = ref(false);
 const requiredAmount = ref(0);
@@ -128,19 +121,19 @@ const hideCreateModal = () => {
 };
 
 const createMemberMembershipFunc = async () => {
-  //  const data = {
-  //      start_date: formData.value.date,
-  //      membership_plan_id: formData.value.memberships_plan_id,
-  //      note: formData.value.note,
-  //  } as CreateMemberMembershipRequest;
+  const data = {
+    start_date: formData.value.date,
+    membership_plan_id: formData.value.memberships_plan_id,
+    note: formData.value.note,
+  } as CreateMemberMembershipRequest;
 
-  //  const response = await createMemberMembership(paramId, data);
+  const response = await createMemberMembership(paramId, data);
 
-  //  if(response) {
-  //   showMessage('Đăng ký dịch vụ thành công', true);
-  //   hideCreateModal();
-  //   await fetchBookingsFunc();
-  //   }
+  if (response) {
+    showMessage('Đăng ký dịch vụ thành công', true);
+    hideCreateModal();
+    await getmemberMembershipsFunc();
+  }
 };
 
 const datePickerOptions = {
@@ -155,13 +148,17 @@ const datePickerOptions = {
 };
 
 onMounted(async () => {
-  await fetchBookingsFunc();
+  await getmemberMembershipsFunc();
+  await fetchMemberships();
 });
-const fetchBookingsFunc = async () => {
-  const response = await getBookings({ member_id: paramId });
+const getmemberMembershipsFunc = async () => {
+  const response = await getmemberMemberships(paramId);
   tableData.value = response.data;
 };
-
+const fetchMemberships = async () => {
+  const response = await getMemberships({});
+  memberships.value = response.data;
+};
 const updateRequiredAmount = () => {
   const membership = memberships.value.find((item) => item.id === formData.value.memberships_plan_id);
   requiredAmount.value = Number(membership?.price);
@@ -169,3 +166,4 @@ const updateRequiredAmount = () => {
 
 
 </script>
+  

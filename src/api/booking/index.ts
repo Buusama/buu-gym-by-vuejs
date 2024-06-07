@@ -3,7 +3,7 @@ import { GetEquipmentsRequest } from './interfaces'
 import axios from '@/common/utils/axios'
 import endpoints from '../endpoints'
 
-export const getEquipments = async (
+export const getBookings = async (
   request?: Partial<GetEquipmentsRequest>,
 ): Promise<any> => {
   const params = new URLSearchParams();
@@ -22,8 +22,10 @@ export const getEquipments = async (
     params.append('value', request.value);
   }
 
+  if(request?.member_id) { params.append('member_id', request.member_id) }
+
   const response: AxiosResponse<any> = await axios.get(
-    endpoints.equipments.list,
+    endpoints.bookings.list,
     { params: params },
   );
 

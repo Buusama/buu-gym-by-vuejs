@@ -37,6 +37,13 @@ export default defineComponent({
   data() {
     return {
       calendarOptions: {
+        locale: "vi",
+        buttonText: {
+          today: "Hôm nay",
+          month: "Tháng",
+          week: "Tuần",
+          day: "Ngày",
+        },
         plugins: [
           dayGridPlugin,
           timeGridPlugin,

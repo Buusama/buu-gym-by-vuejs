@@ -8,16 +8,16 @@ import { CreateTrainerResponse, GetTrainersRequest } from './interfaces'
 export const getTrainers = async (
   request: GetTrainersRequest,
 ): Promise<any> => {
-  const params = new URLSearchParams()
-  params.append('page', request.page.toString())
-  params.append('take', request.take.toString())
-  params.append('sort_enum', request.sort_enum)
-  params.append('sort_by', request.sort_by)
-  if (request.status) params.append('status', request.status)
+  const params = new URLSearchParams();
+  if (request.page) params.append('page', request.page.toString());
+  if (request.take) params.append('take', request.take.toString());
+  if (request.sort_enum) params.append('sort_enum', request.sort_enum);
+  if (request.sort_by) params.append('sort_by', request.sort_by);
+  if (request.status) params.append('status', request.status);
   if (request.field && request.type && request.value) {
-    params.append('field', request.field)
-    params.append('type', request.type)
-    params.append('value', request.value)
+    params.append('field', request.field);
+    params.append('type', request.type);
+    params.append('value', request.value);
   }
 
   const response: AxiosResponse<SearchResponse<any>> = await axios.get(
@@ -26,14 +26,14 @@ export const getTrainers = async (
   )
 
   return response.data
-}
+};
 
 export const createTrainer = async (formData: FormData): Promise<any> => {
   const response: AxiosResponse<CommonResponse<CreateTrainerResponse>> =
     await axios.post(endpoints.trainers.create, formData)
 
   return response.data
-}
+};
 
 export const getDetailTrainer = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -41,7 +41,7 @@ export const getDetailTrainer = async (id: string): Promise<any> => {
   )
 
   return response.data
-}
+};
 
 export const editTrainer = async (
   id: string,
@@ -53,7 +53,7 @@ export const editTrainer = async (
   )
 
   return response.data
-}
+};
 
 export const deleteTrainer = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
@@ -61,4 +61,4 @@ export const deleteTrainer = async (id: string): Promise<any> => {
   )
 
   return response.data
-};
+}

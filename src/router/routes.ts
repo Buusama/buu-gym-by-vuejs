@@ -170,22 +170,22 @@ const routes = [
         name: 'schedule',
         meta: { requiresAuth: true, title: 'Lịch trình' },
         children: [
-          // {
-          //   path: 'create',
-          //   name: 'create-schedule',
-          //   component: () => import('@/views/schedule/Create.vue'),
-          //   meta: { requiresAuth: true, title: 'Thêm lịch trình' }
-          // },
-          // {
-          //   path: ':id/edit',
-          //   name: 'edit-schedule',
-          //   component: () => import('@/views/schedule/Edit.vue'),
-          //   meta: { requiresAuth: true, title: 'Chỉnh sửa lịch trình' }
-          // },
           {
             path: 'members',
             name: 'schedule-members',
             component: () => import('@/views/schedule/Member.vue'),
+            meta: { requiresAuth: true, title: 'Danh sách hội viên' },
+          },
+          {
+            path: 'requests',
+            name: 'schedule-requests',
+            component: () => import('@/views/home/Home.vue'),
+            meta: { requiresAuth: true, title: 'Danh sách hội viên' },
+          },
+          {
+            path: 'trainers',
+            name: 'schedule-trainers',
+            component: () => import('@/views/home/Home.vue'),
             meta: { requiresAuth: true, title: 'Danh sách hội viên' },
           },
           // {

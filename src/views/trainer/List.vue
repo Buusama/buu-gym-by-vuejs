@@ -11,11 +11,7 @@
             <div class="flex">
               <ShoppingCartIcon class="report-box__icon text-theme-10" />
               <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="33% Higher than last month"
-                >
+                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer" content="33% Higher than last month">
                   33%
                   <ChevronUpIcon class="w-4 h-4" />
                 </Tippy>
@@ -32,11 +28,7 @@
             <div class="flex">
               <CreditCardIcon class="report-box__icon text-theme-11" />
               <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-6 cursor-pointer"
-                  content="2% Lower than last month"
-                >
+                <Tippy tag="div" class="report-box__indicator bg-theme-6 cursor-pointer" content="2% Lower than last month">
                   2%
                   <ChevronDownIcon class="w-4 h-4" />
                 </Tippy>
@@ -53,11 +45,7 @@
             <div class="flex">
               <MonitorIcon class="report-box__icon text-theme-12" />
               <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="12% Higher than last month"
-                >
+                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer" content="12% Higher than last month">
                   12%
                   <ChevronUpIcon class="w-4 h-4" />
                 </Tippy>
@@ -74,11 +62,7 @@
             <div class="flex">
               <UserIcon class="report-box__icon text-theme-9" />
               <div class="ml-auto">
-                <Tippy
-                  tag="div"
-                  class="report-box__indicator bg-theme-9 cursor-pointer"
-                  content="22% Higher than last month"
-                >
+                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer" content="22% Higher than last month">
                   22%
                   <ChevronUpIcon class="w-4 h-4" />
                 </Tippy>
@@ -94,11 +78,7 @@
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Danh sách huấn luyện viên</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-      <router-link
-        :to="{ name: 'create-trainer' }"
-        tag="a"
-        class="btn btn-primary shadow-md mr-2"
-      >
+      <router-link :to="{ name: 'create-trainer' }" tag="a" class="btn btn-primary shadow-md mr-2">
         Thêm mới huấn luyện viên
       </router-link>
     </div>
@@ -108,28 +88,16 @@
     <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
       <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
         <div class="sm:flex items-center sm:mr-4">
-          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2"
-            >Trường</label
-          >
-          <select
-            id="tabulator-html-filter-field"
-            v-model="filter.field"
-            class="form-select w-full sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto"
-          >
+          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Trường</label>
+          <select id="tabulator-html-filter-field" v-model="filter.field" class="form-select w-full sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="name">Tên huấn luyện viên</option>
             <option value="phone">Số điện thoại</option>
             <option value="address">Địa chỉ</option>
           </select>
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2"
-            >So sánh</label
-          >
-          <select
-            id="tabulator-html-filter-type"
-            v-model="filter.type"
-            class="form-select w-full mt-2 sm:mt-0 sm:w-auto"
-          >
+          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">So sánh</label>
+          <select id="tabulator-html-filter-type" v-model="filter.type" class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="like" selected>like</option>
             <option value="=">=</option>
             <option value="<">&lt;</option>
@@ -140,55 +108,27 @@
           </select>
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2"
-            >Value</label
-          >
-          <input
-            id="tabulator-html-filter-value"
-            v-model="filter.value[0]"
-            type="text"
-            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
-            placeholder="Giá trị..."
-          />
+          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Value</label>
+          <input id="tabulator-html-filter-value" v-model="filter.value[0]" type="text" class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Giá trị..." />
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2"
-            >Trạng thái</label
-          >
-          <select
-            id="tabulator-html-filter-type"
-            v-model="filter.value[1]"
-            class="form-select w-full mt-2 sm:mt-0 sm:w-auto"
-          >
+          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Trạng thái</label>
+          <select id="tabulator-html-filter-type" v-model="filter.value[1]" class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="0">Tất cả</option>
             <option value="1">Đang hoạt động</option>
           </select>
         </div>
         <div class="mt-2 xl:mt-0">
-          <button
-            id="tabulator-html-filter-go"
-            type="button"
-            class="btn btn-primary w-full sm:w-16"
-            @click="onFilter"
-          >
+          <button id="tabulator-html-filter-go" type="button" class="btn btn-primary w-full sm:w-16" @click="onFilter">
             Lọc
           </button>
-          <button
-            id="tabulator-html-filter-reset"
-            type="button"
-            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
-          >
+          <button id="tabulator-html-filter-reset" type="button" class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1" @click="onResetFilter">
             Reset
           </button>
         </div>
       </form>
       <div class="flex mt-5 sm:mt-0">
-        <button
-          id="tabulator-print"
-          class="btn btn-outline-secondary w-1/2 sm:w-auto mr-2"
-          @click="onPrint"
-        >
+        <button id="tabulator-print" class="btn btn-outline-secondary w-1/2 sm:w-auto mr-2" @click="onPrint">
           <PrinterIcon class="w-4 h-4 mr-2" /> Print
         </button>
         <Dropdown class="w-1/2 sm:w-auto">
@@ -216,11 +156,7 @@
       </div>
     </div>
     <div class="overflow-x-auto scrollbar-hidden">
-      <div
-        id="tabulator"
-        ref="tableRef"
-        class="mt-5 table-report table-report--tabulator"
-      ></div>
+      <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
     </div>
 
     <!-- Sử dụng Modal component -->
@@ -235,18 +171,10 @@
           </div>
         </div>
         <div class="px-5 pb-8 text-center">
-          <button
-            type="button"
-            class="btn btn-outline-secondary w-24 mr-1"
-            @click="hideDeleteConfirmationModal"
-          >
+          <button type="button" class="btn btn-outline-secondary w-24 mr-1" @click="hideDeleteConfirmationModal">
             Hủy
           </button>
-          <button
-            type="button"
-            class="btn btn-danger w-24"
-            @click="deleteTrainerById"
-          >
+          <button type="button" class="btn btn-danger w-24" @click="deleteTrainerById">
             Xóa
           </button>
         </div>
@@ -297,7 +225,6 @@
     const order = params.sorters[0] ? params.sorters[0].field : 'TrainerId';
     const sort = params.sorters[0] ? params.sorters[0].dir : 'desc';
     const filter = params.filters[0] ? params.filters[0] : null;
-    console.log(page, limit, order, sort, filter);
     await getTrainers({
       page: page,
       take: limit,

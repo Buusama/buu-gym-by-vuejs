@@ -89,17 +89,24 @@ export const useSideMenuStore = defineStore('sideMenu', {
         subMenu: [
           {
             icon: '',
-            pageName: 'schedule-members',
-            title: 'Lịch tập hội viên',
+            pageName: 'schedule-requests',
+            title: 'Danh sách yêu cầu lịch tập hội viên',
             role: [RoleValue.ADMIN, RoleValue.STAFF, RoleValue.TRAINER],
-            path: '/schedules',
+            path: '/schedule/requests',
           },
           {
             icon: '',
             pageName: 'schedule-trainers',
             title: 'Lịch tập huấn luyện viên',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
-            path: '/schedules',
+            path: '/schedule/trainers',
+          },
+          {
+            icon: '',
+            pageName: 'schedule-members',
+            title: 'Lịch tập hội viên',
+            role: [RoleValue.ADMIN, RoleValue.STAFF],
+            path: '/schedule/members',
           },
         ],
       },
