@@ -11,7 +11,6 @@
         <!-- BEGIN: Logo -->
         <router-link
           :to="{ name: 'top-menu-page-1' }"
-          tag="a"
           class="-intro-x hidden md:flex"
         >
           <img

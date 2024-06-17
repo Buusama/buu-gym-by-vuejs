@@ -49,6 +49,17 @@ const routes = [
             ],
           },
           {
+            path: 'requests-dayoff',
+            children: [
+              {
+                path: '',
+                name: 'requests-dayoff',
+                component: () => import('@/views/trainer/RequestDayOff.vue'),
+                meta: { requiresAuth: true, title: 'Danh sách yêu cầu nghỉ' },
+              },
+            ],
+          },
+          {
             path: ':id/edit',
             name: 'edit-trainer',
             component: () => import('@/views/trainer/Edit.vue'),
@@ -185,7 +196,7 @@ const routes = [
           {
             path: 'trainers',
             name: 'schedule-trainers',
-            component: () => import('@/views/home/Home.vue'),
+            component: () => import('@/views/schedule/Trainer.vue'),
             meta: { requiresAuth: true, title: 'Danh sách hội viên' },
           },
           // {

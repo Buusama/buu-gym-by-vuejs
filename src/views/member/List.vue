@@ -96,7 +96,6 @@
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
       <router-link
         :to="{ name: 'create-member' }"
-        tag="a"
         class="btn btn-primary shadow-md mr-2"
       >
         Thêm mới hội viên
@@ -438,9 +437,25 @@
           },
         },
         {
+          title: 'NGÀY BẮT ĐẦU',
+          minWidth: 100,
+          width: 170,
+          field: 'StartDate',
+          hozAlign: 'left',
+          vertAlign: 'middle',
+          print: false,
+          download: false,
+          headerSort: false,
+          formatter(cell) {
+            return `<div class="flex items-center lg:justify-center text-info">
+                ${cell.getData().StartDate}
+              </div>`;
+          },
+        },
+        {
           title: 'NGÀY KẾT THÚC',
           minWidth: 100,
-          width: 150,
+          width: 170,
           field: 'Status',
           hozAlign: 'left',
           vertAlign: 'middle',

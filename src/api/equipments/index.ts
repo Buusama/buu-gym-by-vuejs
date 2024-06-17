@@ -28,4 +28,4 @@ export const getEquipments = async (
   );
 
   return response.data;
-};
+}

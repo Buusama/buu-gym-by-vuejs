@@ -1,6 +1,6 @@
 <template>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Lịch tập hội viên</h2>
+    <h2 class="text-lg font-medium mr-auto">Lịch tập huấn luyện viên</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
       <button class="btn btn-primary shadow-md mr-2">In Lịch tập</button>
       <span class="ml-auto sm:ml-0">
@@ -13,80 +13,13 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-12 gap-5 mt-5">
-    <!-- BEGIN: Calendar Side Menu -->
-    <div class="col-span-12 xl:col-span-4 2xl:col-span-3">
-      <div class="box p-5 intro-y">
-        <button type="button" class="btn btn-primary w-full mt-2" @click="showCreateBookingModal">
-          <Edit3Icon class="w-4 h-4 mr-2" />Tạo lịch tập
-        </button>
-        <div id="calendar-events" :options="dragableOptions" class="border-t border-b border-slate-200/60 dark:border-darkmode-400 mt-6 mb-5 py-3">
-          <div class="relative">
-            <div class="event p-3 -mx-3 cursor-pointer transition duration-300 ease-in-out hover:bg-slate-100 dark:hover:bg-darkmode-400 rounded-md flex items-center">
-              <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-              <div class="pr-10">
-                <div class="event__title truncate">VueJS Amsterdam</div>
-                <div class="text-slate-500 text-xs mt-0.5">
-                  <span class="event__days">2</span> Days
-                  <span class="mx-1">•</span> 10:00 AM
-                </div>
-              </div>
-            </div>
-            <a class="flex items-center absolute top-0 bottom-0 my-auto right-0" href="">
-              <EditIcon class="w-4 h-4 text-slate-500" />
-            </a>
-          </div>
-          <div class="relative">
-            <div class="event p-3 -mx-3 cursor-pointer transition duration-300 ease-in-out hover:bg-slate-100 dark:hover:bg-darkmode-400 rounded-md flex items-center">
-              <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-              <div class="pr-10">
-                <div class="event__title truncate">Vue Fes Japan 2019</div>
-                <div class="text-slate-500 text-xs mt-0.5">
-                  <span class="event__days">3</span> Days
-                  <span class="mx-1">•</span> 07:00 AM
-                </div>
-              </div>
-            </div>
-            <a class="flex items-center absolute top-0 bottom-0 my-auto right-0" href="">
-              <EditIcon class="w-4 h-4 text-slate-500" />
-            </a>
-          </div>
-          <div class="relative">
-            <div class="event p-3 -mx-3 cursor-pointer transition duration-300 ease-in-out hover:bg-slate-100 dark:hover:bg-darkmode-400 rounded-md flex items-center">
-              <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-              <div class="pr-10">
-                <div class="event__title truncate">Laracon 2021</div>
-                <div class="text-slate-500 text-xs mt-0.5">
-                  <span class="event__days">4</span> Days
-                  <span class="mx-1">•</span> 11:00 AM
-                </div>
-              </div>
-            </div>
-            <a class="flex items-center absolute top-0 bottom-0 my-auto right-0" href="">
-              <EditIcon class="w-4 h-4 text-slate-500" />
-            </a>
-          </div>
-          <div class="text-slate-500 p-3 text-center hidden" id="calendar-no-events">
-            No events yet
-          </div>
-        </div>
-        <div class="form-check form-switch flex">
-          <label class="form-check-label" for="checkbox-events">Remove after drop</label>
-          <input class="show-code form-check-input ml-auto" type="checkbox" id="checkbox-events" />
-        </div>
-      </div>
-      <div class="box p-5 intro-y mt-5"></div>
+  <!-- BEGIN: Calendar Content -->
+  <div class="col-span-12 xl:col-span-8 2xl:col-span-9 mt-5">
+    <div class="box p-5">
+      <Calendar :externalEvents="events" />
     </div>
-    <!-- END: Calendar Side Menu -->
-
-    <!-- BEGIN: Calendar Content -->
-    <div class="col-span-12 xl:col-span-8 2xl:col-span-9">
-      <div class="box p-5">
-        <Calendar :externalEvents="events" />
-      </div>
-    </div>
-    <!-- END: Calendar Content -->
   </div>
+  <!-- END: Calendar Content -->
 
   <Modal :show="isFilterModalVisible" @hide="hideFilterModal">
     <ModalBody>
@@ -96,8 +29,8 @@
           <div class="flex items-center mr-4">
             <label class="w-24 flex-none mr-2">Trường</label>
             <select id="tabulator-html-filter-field" v-model="filter.field" class="form-select mt-0 w-full">
-              <option value="memberUser.name">Tên hội viên</option>
-              <option value="memberUser.phone">Số điện thoại</option>
+              <option value="BookingTrainerUser.name">Tên hội viên</option>
+              <option value="BookingTrainerUser.phone">Số điện thoại</option>
             </select>
           </div>
           <div class="flex items-center mr-4 mt-2">
@@ -185,7 +118,7 @@
   };
 
   const filter = ref({
-    field: 'memberUser.name',
+    field: 'BookingTrainerUser.name',
     type: 'like',
     value: '',
   });
@@ -197,11 +130,11 @@
   };
 
   const fetchBookings = async (filter) => {
-    if(!filter) filter = { field: 'memberUser.name', type: 'like', value: '' };
+    if(!filter) filter = { field: 'BookingTrainerUser.name', type: 'like', value: '' };
     const { data } = await getBookings(filter);
     events.value = data.map((booking) => ({
       id: booking.bookingId,
-      title: booking.memberName,
+      title: booking.bookingTrainerName,
       start: `${booking.date}T${booking.time}`,
       url: `/bookings/${booking.bookingId}`,
     }));

@@ -1,85 +1,9 @@
 <template>
-  <!-- BEGIN: General Report -->
-  <div class="col-span-12 mt-8">
-    <div class="intro-y flex items-center h-10">
-      <h2 class="text-lg font-medium truncate mr-5">Tổng quan</h2>
-    </div>
-    <div class="grid grid-cols-12 gap-6 mt-5">
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
-              <ShoppingCartIcon class="report-box__icon text-theme-10" />
-              <div class="ml-auto">
-                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer" content="33% Higher than last month">
-                  33%
-                  <ChevronUpIcon class="w-4 h-4" />
-                </Tippy>
-              </div>
-            </div>
-            <div class="text-3xl font-bold leading-8 mt-6">4.710</div>
-            <div class="text-base text-gray-600 mt-1">Tổng số hội viên</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
-              <CreditCardIcon class="report-box__icon text-theme-11" />
-              <div class="ml-auto">
-                <Tippy tag="div" class="report-box__indicator bg-theme-6 cursor-pointer" content="2% Lower than last month">
-                  2%
-                  <ChevronDownIcon class="w-4 h-4" />
-                </Tippy>
-              </div>
-            </div>
-            <div class="text-3xl font-bold leading-8 mt-6">3.721</div>
-            <div class="text-base text-gray-600 mt-1">Tham gia hôm nay</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
-              <MonitorIcon class="report-box__icon text-theme-12" />
-              <div class="ml-auto">
-                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer" content="12% Higher than last month">
-                  12%
-                  <ChevronUpIcon class="w-4 h-4" />
-                </Tippy>
-              </div>
-            </div>
-            <div class="text-3xl font-bold leading-8 mt-6">2.149</div>
-            <div class="text-base text-gray-600 mt-1">Tỷ lệ hội viên mới</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
-              <UserIcon class="report-box__icon text-theme-9" />
-              <div class="ml-auto">
-                <Tippy tag="div" class="report-box__indicator bg-theme-9 cursor-pointer" content="22% Higher than last month">
-                  22%
-                  <ChevronUpIcon class="w-4 h-4" />
-                </Tippy>
-              </div>
-            </div>
-            <div class="text-3xl font-bold leading-8 mt-6">152.040</div>
-            <div class="text-base text-gray-600 mt-1">Khách vãng lai</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Danh sách huấn luyện viên</h2>
+    <h2 class="text-lg font-medium mr-auto">Danh sách yêu cầu nghỉ phép</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
       <router-link :to="{ name: 'create-trainer' }" class="btn btn-primary shadow-md mr-2">
-        Thêm mới huấn luyện viên
+        Tạo yêu cầu nghỉ phép
       </router-link>
     </div>
   </div>
@@ -115,7 +39,9 @@
           <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Trạng thái</label>
           <select id="tabulator-html-filter-type" v-model="filter.value[1]" class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="0">Tất cả</option>
-            <option value="1">Đang hoạt động</option>
+            <option value="1">Chưa Duyệt</option>
+            <option value="2">Đã Duyệt</option>
+            <option value="3">Đã Từ Chối</option>
           </select>
         </div>
         <div class="mt-2 xl:mt-0">
@@ -158,29 +84,6 @@
     <div class="overflow-x-auto scrollbar-hidden">
       <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
     </div>
-
-    <!-- Sử dụng Modal component -->
-    <Modal :show="isModalVisible" @hide="hideDeleteConfirmationModal">
-      <ModalBody>
-        <div class="p-5 text-center">
-          <XCircleIcon class="w-16 h-16 text-theme-6 mx-auto mt-3" />
-          <div class="text-3xl mt-5">Are you sure?</div>
-          <div class="text-gray-600 mt-2">
-            Bạn có chắc muốn xóa huấn luyện viên này không? <br />Thay tác này
-            sẽ không thể hoàn tác
-          </div>
-        </div>
-        <div class="px-5 pb-8 text-center">
-          <button type="button" class="btn btn-outline-secondary w-24 mr-1" @click="hideDeleteConfirmationModal">
-            Hủy
-          </button>
-          <button type="button" class="btn btn-danger w-24" @click="deleteTrainerById">
-            Xóa
-          </button>
-        </div>
-      </ModalBody>
-    </Modal>
-    <!-- END: Delete Confirmation Modal -->
   </div>
   <!-- END: HTML Table Data -->
 </template>
@@ -192,14 +95,14 @@
   import Tabulator from 'tabulator-tables';
   import dom from '@left4code/tw-starter/dist/js/dom';
   import { upperCaseValue } from '@/common/utils/helpers';
-  import { getTrainers, deleteTrainer } from '@/api/trainers';
+  import { getDaysOffRequests, approveDaysOffRequest,rejectDaysOffRequest } from '@/api/days_off_requests';
   import { showMessage } from '@/common/utils/helpers';
   import router from '@/router';
 
   const tableRef = ref();
   const tabulator = ref();
   const isModalVisible = ref(false);
-  const deleteTrainerId = ref(null);
+  const deleteid = ref(null);
   const filter = reactive({
     field: 'name',
     type: 'like',
@@ -222,10 +125,10 @@
     let data = [];
     const page = params.page - 1;
     const limit = params.size;
-    const order = params.sorters[0] ? params.sorters[0].field : 'table.id';
+    const order = params.sorters[0] ? params.sorters[0].field : 'table.date';
     const sort = params.sorters[0] ? params.sorters[0].dir : 'desc';
     const filter = params.filters[0] ? params.filters[0] : null;
-    await getTrainers({
+    await getDaysOffRequests({
       page: page,
       take: limit,
       sort_by: order,
@@ -233,7 +136,7 @@
       field: filter ? filter.field : null,
       type: filter ? filter.type : null,
       value: filter ? filter.value[0] : null,
-      // status: filter && filter.value[1] != 0 ? filter.value[1] : null,
+      status: filter && filter.value[1] != 0 ? filter.value[1] : null,
     }).then((response) => {
       last_page = response.meta.pageCount;
       data = response.data;
@@ -273,6 +176,22 @@
 
         // For HTML table
         {
+          title: 'ID',
+          minWidth: 80,
+          width: 80,
+          responsive: 0,
+          field: 'table.id',
+          vertAlign: 'middle',
+          hozAlign: 'left',
+          print: false,
+          download: false,
+          formatter(cell) {
+            return `
+              <div class="font-medium">${cell.getData().id}</div>
+            `;  
+          },
+        },
+        {
           title: 'TÊN HUẤN LUYỆN VIÊN',
           minWidth: 200,
           responsive: 0,
@@ -285,123 +204,34 @@
           <div class="flex items-center lg:justify-center">
             <div class="intro-x w-10 h-10 image-fit">
               <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${
-                cell.getData().avatar
+                cell.getData().trainer_avatar
               }">
             </div>
             <div class="intro-x ml-5">
-              <div class="font-medium whitespace-nowrap">${cell.getData().name}</div>
-              <div class="text-slate-500 text-xs whitespace-nowrap">${
-                cell.getData().email
-              }</div>
+              <div class="font-medium whitespace-nowrap">${cell.getData().trainer_name}</div>
             </div>
           </div>`;
           },
         },
         {
-          title: 'SỐ ĐIỆN THOẠI',
-          minWidth: 100,
-          width: 150,
-          field: 'user.phone',
+          title: 'NGÀY NGHỈ PHÉP',
+          minWidth: 200,
+          width: 200,
+          field: 'table.date',
           hozAlign: 'center',
           vertAlign: 'middle',
           print: false,
           download: false,
           formatter(cell) {
             return `<div>
-                  <div class="font-medium whitespace-nowrap">${cell.getData().phone}</div>
+                  <div class="font-medium whitespace-nowrap">${cell.getData().date}</div>
               </div>`;
           },
         },
         {
-          title: 'NGÀY SINH',
-          minWidth: 100,
-          width: 120,
-          field: 'user.birth_date',
-          hozAlign: 'center',
-          vertAlign: 'middle',
-          print: false,
-          download: false,
-          formatter(cell) {
-            return `<div>
-                  <div class="font-medium whitespace-nowrap">${cell.getData().birth_date}</div>
-              </div>`;
-          },
-        },
-        {
-          title: 'GIỚI TÍNH',
-          field: 'user.gender',
-          minWidth: 50,
-          width: 120,
-          hozAlign: 'center',
-          vertAlign: 'middle',
-          print: false,
-          download: false,
-          formatter(cell) {
-            return `<div class="flex items-center lg:justify-center ${
-              cell.getData().gender == 1
-                ? 'text-success'
-                : cell.getData().gender == 2
-                  ? 'text-danger'
-                  : 'text-info'
-            }">
-                ${
-                  cell.getData().gender == 1
-                    ? 'Nam'
-                    : cell.getData().gender == 2
-                      ? 'Nu'
-                      : 'Khac'
-                }
-              </div>`;
-          },
-        },
-        {
-          title: 'ĐỊA CHỈ',
+          title: 'LÝ DO NGHỈ PHÉP',
           minWidth: 125,
-          field: 'user.address',
-          hozAlign: 'center',
-          vertAlign: 'middle',
-          print: false,
-          download: false,
-          formatter(cell) {
-            return `<div>
-                  <div class="font-medium whitespace-nowrap">${
-                    cell.getData().address
-                  }</div>
-              </div>`;
-          },
-        },
-        // {
-        //   title: 'STATUS',
-        //   minWidth: 200,
-        //   field: 'status',
-        //   hozAlign: 'left',
-        //   vertAlign: 'middle',
-        //   print: false,
-        //   download: false,
-        //   headerSort: false,
-        //   formatter(cell) {
-        //     return `<div class="flex items-center lg:justify-center ${
-        //       cell.getData().status == 1 ? 'text-success' : 'text-danger'
-        //     }">
-        //         <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
-        //         ${
-        //           cell.getData().status == 1
-        //             ? 'Đang hoạt động'
-        //             : cell.getData().status == 2
-        //               ? 'Bị Khóa'
-        //               : cell.getData().status == 3
-        //                 ? 'Ngưng hoạt động'
-        //                 : cell.getData().status == 4
-        //                   ? 'Đóng băng'
-        //                   : 'Chưa thanh toán'
-        //         }
-        //       </div>`;
-        //   },
-        // },
-        {
-          title: 'CHUYÊN NGÀNH',
-          minWidth: 125,
-          field: 'table.specialty',
+          field: 'table.note',
           hozAlign: 'left',
           vertAlign: 'middle',
           print: false,
@@ -409,8 +239,33 @@
           formatter(cell) {
             return `<div>
                   <div class="font-medium whitespace-nowrap">${
-                    cell.getData().specialty
+                    cell.getData().note
                   }</div>
+              </div>`;
+          },
+        },
+         {
+          title: 'TRẠNG THÁI',
+          minWidth: 100,
+          width: 150,
+          field: 'table.status',
+          hozAlign: 'left',
+          vertAlign: 'middle',
+          print: false,
+          download: false,
+          formatter(cell) {
+            return `<div class="flex items-center lg:justify-center ${
+              cell.getData().status === 1
+                ? 'text-info'
+                : cell.getData().status === 2
+                  ? 'text-success'
+                  : 'text-danger'
+            }">
+                ${cell.getData().status === 1
+                  ? 'Chưa duyệt'
+                  : cell.getData().status === 2
+                    ? 'Đã duyệt'
+                    : 'Đã từ chối'}
               </div>`;
           },
         },
@@ -426,70 +281,33 @@
           download: false,
           headerSort: false,
           formatter(cell) {
-            const editButton = dom(`
+            const approveButton = dom(`
             <a class="flex items-center mr-3 text-primary" href="javascript:;">
-                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Chỉnh sửa
+                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Duyệt
             </a>`);
 
-            dom(editButton).on('click', function () {
-              const trainerId = cell.getData().TrainerId;
-              router.push({
-                name: 'edit-trainer',
-                params: {
-                  id: trainerId,
-                },
-              });
+            dom(approveButton).on('click', function () {
+              approveFunc(cell.getData().id);
             });
 
-            const deleteButton = dom(`
+            const rejectButton = dom(`
             <a class="flex items-center mr-3 text-danger" href="javascript:;" data-toggle="modal"
                     data-target="#delete-confirmation-modal">
-                <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>Xóa
+                <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>Từ chối
             </a>`);
 
-            dom(deleteButton).on('click', function () {
-              showDeleteConfirmationModal(cell.getData().TrainerId);
+            dom(rejectButton).on('click', function () {
+              rejectFunc(cell.getData().id);
             });
             const container = dom(
               '<div class="flex lg:justify-center items-center"></div>',
             );
-            container.append(editButton[0]);
-            container.append(deleteButton[0]);
+            if (cell.getData().status === 1) {
+              container.append(approveButton);
+              container.append(rejectButton);
+            }
 
             return container[0];
-          },
-        },
-
-        // For print format
-        {
-          title: 'TÊN HỘI VIÊN',
-          field: 'name',
-          visible: false,
-          print: true,
-          download: true,
-        },
-        {
-          title: 'SỐ ĐIỆN THOẠI',
-          field: 'phone',
-          visible: false,
-          print: true,
-          download: true,
-        },
-        {
-          title: 'ĐỊA CHỈ',
-          field: 'address',
-          visible: false,
-          print: true,
-          download: true,
-        },
-        {
-          title: 'STATUS',
-          field: 'status',
-          visible: false,
-          print: true,
-          download: true,
-          formatterPrint(cell) {
-            return cell.getValue() ? 'Active' : 'Inactive';
           },
         },
       ],
@@ -503,24 +321,22 @@
     });
   };
 
-  const showDeleteConfirmationModal = (id) => {
-    deleteTrainerId.value = id;
-    isModalVisible.value = true;
-  };
-
-  const hideDeleteConfirmationModal = () => {
-    deleteTrainerId.value = null;
-    isModalVisible.value = false;
-  };
-
-  const deleteTrainerById = async () => {
-    const res = await deleteTrainer(deleteTrainerId.value);
-    hideDeleteConfirmationModal();
+  const approveFunc = async (id) => {
+    const res = await approveDaysOffRequest(id);
     tabulator.value.replaceData();
     if (res) {
-      showMessage('Xóa huấn luyện viên thành công', true);
+      showMessage('Duyệt yêu cầu thành công', true);
     }
   };
+
+  const rejectFunc = async (id) => {
+    const res = await rejectDaysOffRequest(id);
+    tabulator.value.replaceData();
+    if (res) {
+      showMessage('Từ chối yêu cầu thành công', true);
+    }
+  };
+  
   // Redraw table onresize
   const reInitOnResizeWindow = () => {
     window.addEventListener('resize', () => {

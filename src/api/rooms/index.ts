@@ -16,7 +16,7 @@ export const createRoom = async (
     request,
   )
   return response.data
-};
+}
 
 export const getRooms = async (request: GetRoomsRequest): Promise<any> => {
   const params = new URLSearchParams();
@@ -36,7 +36,7 @@ export const getRooms = async (request: GetRoomsRequest): Promise<any> => {
   })
 
   return response.data
-};
+}
 
 export const deleteRoom = async (id: string): Promise<any> => {
   const response: AxiosResponse<any> = await axios.delete(
@@ -44,14 +44,14 @@ export const deleteRoom = async (id: string): Promise<any> => {
   )
 
   return response.data
-}
+};
 
 export const getDetailRoom = async (id: string): Promise<any> => {
   const response: AxiosResponse<any> = await axios.get(
     endpoints.rooms.detail(id),
   )
   return response.data
-}
+};
 
 export const editRoom = async (
   id: string,
@@ -62,11 +62,11 @@ export const editRoom = async (
     request,
   )
   return response.data
-};
+}
 
 export const getEquipmentsByRoomId = async (id: string): Promise<any> => {
   const response: AxiosResponse<any> = await axios.get(
     endpoints.rooms.listEquipment(id),
   )
   return response.data
-}
+};

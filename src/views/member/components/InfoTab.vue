@@ -71,7 +71,7 @@
                     <input v-model="membershipInfo.start_date" type="text" class="form-control" disabled />
                   </div>
 
-                  <div class="mt-3 2xl:mt-0">
+                  <div class="mt-3">
                     <div class="flex items-center form-label">
                       <div class="font-medium">Ngày kết thúc</div>
                     </div>
@@ -131,7 +131,7 @@
           <button type="button" class="btn btn-primary w-20 mt-3" @click="updateMemberFunc">
             Lưu
           </button>
-          <router-link :to="{ name: 'list-members' }" tag="a" class="btn btn-outline-secondary ml-3 w-20 mt-3">
+          <router-link :to="{ name: 'list-members' }" class="btn btn-outline-secondary ml-3 w-20 mt-3">
             Hủy
           </router-link>
         </div>
@@ -142,8 +142,7 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/router';
-import { onMounted, ref } from 'vue';
+import { defineProps, defineEmits, defineComponent } from 'vue';
 
 const props = defineProps(['financials', 'formData', 'newImage', 'datePickerOptions', 'membershipInfo']);
 const emit = defineEmits(['preview-file', 'remove-preview', 'update']);
@@ -158,5 +157,7 @@ const removePreview = () => {
 
 const updateMemberFunc = () => {
   emit('update');
-};  
+};
 </script>
+
+

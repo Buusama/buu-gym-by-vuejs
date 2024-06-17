@@ -2,25 +2,24 @@ import axios from '@/common/utils/axios'
 import { AxiosResponse } from 'axios'
 import endpoints from '../endpoints'
 import {
-  CreateMembershipRequest,
-  CreateMembershipResponse,
-  EditMembershipRequest,
-  GetMembershipsRequest,
+  CreateWorkoutRequest,
+  CreateWorkoutResponse,
+  GetWorkoutsRequest,
 } from './interfaces'
 import { CommonResponse, SearchResponse } from '../response';
 
-export const createMembership = async (
-  request: CreateMembershipRequest,
-): Promise<CreateMembershipResponse> => {
-  const response: AxiosResponse<CreateMembershipResponse> = await axios.post(
-    endpoints.memberships.create,
+export const createWorkout = async (
+  request: CreateWorkoutRequest,
+): Promise<CreateWorkoutResponse> => {
+  const response: AxiosResponse<CreateWorkoutResponse> = await axios.post(
+    endpoints.workouts.create,
     request,
   )
   return response.data
 }
 
-export const getMemberships = async (
-  request: GetMembershipsRequest,
+export const getWorkouts = async (
+  request: GetWorkoutsRequest,
 ): Promise<any> => {
   const params = new URLSearchParams();
   if (request.page) params.append('page', request.page.toString());
@@ -35,34 +34,34 @@ export const getMemberships = async (
   }
 
   const response: AxiosResponse<SearchResponse<any>> = await axios.get(
-    endpoints.memberships.list,
+    endpoints.workouts.list,
     { params: params },
   )
 
   return response.data
 }
 
-export const deleteMembership = async (id: string): Promise<any> => {
+export const deleteWorkout = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
-    endpoints.memberships.delete(id),
+    endpoints.workouts.delete(id),
   )
 
   return response.data
 };
 
-export const getDetailMembership = async (id: string): Promise<any> => {
+export const getDetailWorkout = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
-    endpoints.memberships.detail(id),
+    endpoints.workouts.detail(id),
   )
   return response.data
 };
 
-export const editMembership = async (
+export const editWorkout = async (
   id: string,
-  request: EditMembershipRequest,
+  request: CreateWorkoutRequest,
 ): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.put(
-    endpoints.memberships.update(id),
+    endpoints.workouts.update(id),
     { ...request },
   )
 

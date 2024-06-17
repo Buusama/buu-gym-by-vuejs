@@ -4,12 +4,16 @@ import axios from '@/common/utils/axios'
 import endpoints from '../endpoints'
 import { GetMembersRequest } from './interfaces/list'
 import { CommonResponse } from '../response'
-import { CreateMemberMembershipPaymentRequest, CreateMemberMembershipRequest, CreateMemberResponse } from './interfaces/create'
+import {
+  CreateMemberMembershipPaymentRequest,
+  CreateMemberMembershipRequest,
+  CreateMemberResponse,
+} from './interfaces/create'
 
 export const getMembers = async (request: GetMembersRequest): Promise<any> => {
   const params = new URLSearchParams();
-  if (request.page) params.append('page', request.page.toString());
-  if (request.take) params.append('take', request.take.toString());
+  if (request.page !== undefined) params.append('page', request.page.toString());
+  if (request.page !== undefined) params.append('take', request.take.toString());
   if (request.sort_enum) params.append('sort_enum', request.sort_enum);
   if (request.sort_by) params.append('sort_by', request.sort_by);
   if (request.status) params.append('status', request.status);
@@ -25,14 +29,14 @@ export const getMembers = async (request: GetMembersRequest): Promise<any> => {
   )
 
   return response.data
-};
+}
 
 export const createMember = async (formData: FormData): Promise<any> => {
   const response: AxiosResponse<CommonResponse<CreateMemberResponse>> =
     await axios.post(endpoints.members.create, formData)
 
   return response.data
-};
+}
 
 export const getDetailMember = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -40,7 +44,7 @@ export const getDetailMember = async (id: string): Promise<any> => {
   )
 
   return response.data
-};
+}
 
 export const editMember = async (
   id: string,
@@ -52,7 +56,7 @@ export const editMember = async (
   )
 
   return response.data
-};
+}
 
 export const deleteMember = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
@@ -60,7 +64,7 @@ export const deleteMember = async (id: string): Promise<any> => {
   )
 
   return response.data
-}
+};
 
 export const getmemberMemberships = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -68,16 +72,19 @@ export const getmemberMemberships = async (id: string): Promise<any> => {
   )
 
   return response.data
-};
+}
 
-export const createMemberMembership = async (id: string, request: CreateMemberMembershipRequest): Promise<any> => {
+export const createMemberMembership = async (
+  id: string,
+  request: CreateMemberMembershipRequest,
+): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.post(
     endpoints.members.createMemberships(id),
     request,
   )
 
   return response.data
-}
+};
 
 export const getMemberMembershipPayments = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -85,16 +92,19 @@ export const getMemberMembershipPayments = async (id: string): Promise<any> => {
   )
 
   return response.data
-}
+};
 
-export const createMemberMembershipPayment = async (id: string, request: CreateMemberMembershipPaymentRequest): Promise<any> => {
+export const createMemberMembershipPayment = async (
+  id: string,
+  request: CreateMemberMembershipPaymentRequest,
+): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.post(
     endpoints.members.createMembershipsPayment(id),
     request,
   )
 
   return response.data
-}
+};
 
 export const getMemberFinancials = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -102,7 +112,7 @@ export const getMemberFinancials = async (id: string): Promise<any> => {
   )
 
   return response.data
-}
+};
 
 export const getMemberMeasurements = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -110,4 +120,4 @@ export const getMemberMeasurements = async (id: string): Promise<any> => {
   )
 
   return response.data
-}
+};

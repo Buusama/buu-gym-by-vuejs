@@ -26,14 +26,14 @@ export const getTrainers = async (
   )
 
   return response.data
-};
+}
 
 export const createTrainer = async (formData: FormData): Promise<any> => {
   const response: AxiosResponse<CommonResponse<CreateTrainerResponse>> =
     await axios.post(endpoints.trainers.create, formData)
 
   return response.data
-};
+}
 
 export const getDetailTrainer = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -41,7 +41,7 @@ export const getDetailTrainer = async (id: string): Promise<any> => {
   )
 
   return response.data
-};
+}
 
 export const editTrainer = async (
   id: string,
@@ -53,7 +53,7 @@ export const editTrainer = async (
   )
 
   return response.data
-};
+}
 
 export const deleteTrainer = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
@@ -61,4 +61,37 @@ export const deleteTrainer = async (id: string): Promise<any> => {
   )
 
   return response.data
+};
+
+export const getAvailableWorkouts = async (id: string): Promise<any> => {
+  const response: AxiosResponse<CommonResponse<any>> = await axios.get(
+    endpoints.trainers.availableWorkouts(id),
+  )
+
+  return response.data
+};
+
+export const getWorkSchedule = async (id: string): Promise<any> => {
+  const response: AxiosResponse<CommonResponse<any>> = await axios.get(
+    endpoints.trainers.workSchedule(id),
+  )
+
+  return response.data
 }
+export const updateWorkSchedule = async (
+  id: string,
+  schedules: { day: number; shift: number; isSelected: boolean }[]
+): Promise<CommonResponse<any>> => {
+  try {
+    const response: AxiosResponse<CommonResponse<any>> = await axios.patch(
+      endpoints.trainers.updateWorkSchedule(id),
+      schedules 
+    );
+
+    return response.data;
+  } catch (error) {
+    // Handle error appropriately
+    console.error("Failed to update work schedules", error);
+    throw error;
+  }
+};

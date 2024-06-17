@@ -3,7 +3,7 @@
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Danh sách lớp dịch vụ</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-      <router-link :to="{ name: 'create-member' }" tag="a" class="btn btn-primary shadow-md mr-2">
+      <router-link :to="{ name: 'create-member' }" class="btn btn-primary shadow-md mr-2">
         Thêm mới lớp dịch vụ
       </router-link>
     </div>

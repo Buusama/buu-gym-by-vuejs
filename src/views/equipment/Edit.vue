@@ -43,7 +43,7 @@
             <button @click="updateRoomFunc" type="button" class="btn btn-primary w-20 mt-3">
               Lưu
             </button>
-            <router-link :to="{ name: 'list-rooms' }" tag="a" class="btn btn-outline-secondary ml-3 w-20 mt-3">
+            <router-link :to="{ name: 'list-rooms' }" class="btn btn-outline-secondary ml-3 w-20 mt-3">
               Hủy
             </router-link>
           </div>

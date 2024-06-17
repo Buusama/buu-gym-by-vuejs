@@ -55,6 +55,12 @@ export const useSideMenuStore = defineStore('sideMenu', {
           },
           {
             icon: '',
+            pageName: 'requests-dayoff',
+            title: 'Yêu cầu nghỉ phép',
+            role: [RoleValue.ADMIN],
+          },
+          {
+            icon: '',
             pageName: 'list-trainers',
             title: 'Danh sách huấn luyện viên',
             path: '/trainers',
@@ -113,19 +119,19 @@ export const useSideMenuStore = defineStore('sideMenu', {
       'devider',
       {
         icon: 'BuildingIcon',
-        title: 'Phòng tập',
+        title: 'Khu vực tập luyện',
         role: [RoleValue.ADMIN, RoleValue.STAFF],
         subMenu: [
           {
             icon: '',
             pageName: 'create-room',
-            title: 'Thêm phòng tập',
+            title: 'Thêm khu vực',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
           },
           {
             icon: '',
             pageName: 'list-rooms',
-            title: 'Danh sách phòng tập',
+            title: 'Danh sách khu vực',
             path: '/rooms',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
           },

@@ -60,7 +60,7 @@
             <button @click="updateMembershipFunc" type="button" class="btn btn-primary w-20 mt-3">
               Lưu
             </button>
-            <router-link :to="{ name: 'list-memberships' }" tag="a" class="btn btn-outline-secondary ml-3 w-20 mt-3">
+            <router-link :to="{ name: 'list-memberships' }" class="btn btn-outline-secondary ml-3 w-20 mt-3">
               Hủy
             </router-link>
           </div>

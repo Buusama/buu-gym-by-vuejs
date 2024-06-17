@@ -5,7 +5,6 @@
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
       <router-link
         :to="{ name: 'create-membership' }"
-        tag="a"
         class="btn btn-primary shadow-md mr-2"
       >
         Thêm mới gói tập

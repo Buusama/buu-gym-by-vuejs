@@ -48,7 +48,6 @@
           </button>
           <router-link
             :to="{ name: 'list-members' }"
-            tag="a"
             class="btn btn-outline-secondary ml-3 w-20 mt-3"
           >
             Hủy

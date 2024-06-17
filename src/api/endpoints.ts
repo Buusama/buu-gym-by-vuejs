@@ -33,6 +33,9 @@ export default {
     detail: (id: string) => `/trainers/${id}`,
     update: (id: string) => `/trainers/${id}`,
     delete: (id: string) => `/trainers/${id}`,
+    availableWorkouts: (id: string) => `/trainers/${id}/available-workouts`,
+    workSchedule: (id: string) => `/trainers/${id}/work-schedules`,
+    updateWorkSchedule: (id: string) => `/trainers/${id}/work-schedules`,
   },
   services: {
     list: '/services',
@@ -69,5 +72,21 @@ export default {
     detail: (id: string) => `/bookings/${id}`,
     update: (id: string) => `/bookings/${id}`,
     delete: (id: string) => `/bookings/${id}`,
+  },
+  workouts: {
+    list: '/workouts',
+    create: '/workouts',
+    detail: (id: string) => `/workouts/${id}`,
+    update: (id: string) => `/workouts/${id}`,
+    delete: (id: string) => `/workouts/${id}`,
+  },
+  daysOff: {
+    list: '/days-off-requests',
+    create: '/days-off-requests',
+    detail: (id: string) => `/days-off-requests/${id}`,
+    update: (id: string) => `/days-off-requests/${id}`,
+    delete: (id: string) => `/days-off-requests/${id}`,
+    approve: (id: string) => `/days-off-requests/${id}/approve`,
+    reject: (id: string) => `/days-off-requests/${id}/reject`,
   },
 }

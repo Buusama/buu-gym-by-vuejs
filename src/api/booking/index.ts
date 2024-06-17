@@ -22,7 +22,9 @@ export const getBookings = async (
     params.append('value', request.value);
   }
 
-  if(request?.member_id) { params.append('member_id', request.member_id) }
+  if (request?.member_id) {
+    params.append('member_id', request.member_id)
+  }
 
   const response: AxiosResponse<any> = await axios.get(
     endpoints.bookings.list,
@@ -30,4 +32,4 @@ export const getBookings = async (
   );
 
   return response.data;
-};
+}

@@ -5,7 +5,7 @@
 
   <TabGroup class="py-5">
     <TabList class="nav-boxed-tabs text-bold flex sm:flex-row flex-col">
-      <Tab v-for="tab in tabs" tag="button" class="w-full py-2">
+      <Tab v-for="tab in tabs" :key="tab.id" tag="button" class="w-full py-2">
         <h6 class="font-medium">{{ tab.name }}</h6>
       </Tab>
     </TabList>
@@ -54,9 +54,9 @@ const financials = ref({
 const tabs = [
   { id: 1, name: 'Thông tin hội viên' },
   // { id: 2, name: 'Thông tin sức khỏe' },
-  { id: 3, name: 'Lịch sử tập luyện' },
-  { id: 4, name: 'Chỉ số cơ thể' },
-  { id: 5, name: 'Gói dịch vụ' },
+  { id: 2, name: 'Lịch sử tập luyện' },
+  { id: 3, name: 'Chỉ số cơ thể' },
+  { id: 4, name: 'Gói dịch vụ' },
   { id: 5, name: 'Lịch sử thanh toán' },
 ];
 const datePickerOptions = {

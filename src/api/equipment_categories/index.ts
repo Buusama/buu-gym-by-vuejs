@@ -28,4 +28,4 @@ export const getEquipmentCategories = async (
   )
 
   return response.data;
-};
+}

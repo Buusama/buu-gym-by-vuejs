@@ -1,13 +1,13 @@
 export interface CreateMemberRequest {
   name: string;
+  gender: string;
   avatar: any;
   birth_date: string;
-  gender: string;
-  email: string;
   phone: string;
+  email: string;
+  password: string;
   address: string;
 }
-
 
 export interface CreateMemberResponse {
   name?: string;
