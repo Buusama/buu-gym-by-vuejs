@@ -114,6 +114,13 @@ export const useSideMenuStore = defineStore('sideMenu', {
             role: [RoleValue.ADMIN, RoleValue.STAFF],
             path: '/schedule/members',
           },
+           {
+            icon: '',
+            pageName: 'create-schedule',
+            title: 'Đăng ký tập luyện',
+            role: [RoleValue.ADMIN, RoleValue.STAFF, RoleValue.TRAINER],
+            path: '/schedule/create',
+          }
         ],
       },
       'devider',
@@ -153,6 +160,26 @@ export const useSideMenuStore = defineStore('sideMenu', {
             pageName: 'list-equipments',
             title: 'Danh sách thiết bị',
             path: '/equipments',
+            role: [RoleValue.ADMIN, RoleValue.STAFF],
+          },
+        ],
+      },
+      {
+        icon: 'GanttChartSquareIcon',
+        title: 'Bài tập',
+        role: [RoleValue.ADMIN, RoleValue.STAFF],
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'create-workout',
+            role: [RoleValue.ADMIN, RoleValue.STAFF],
+            title: 'Thêm bài tập',
+          },
+          {
+            icon: '',
+            pageName: 'list-workouts',
+            title: 'Danh sách bài tập',
+            path: '/workouts',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
           },
         ],

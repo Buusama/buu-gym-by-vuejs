@@ -43,6 +43,8 @@ export default {
     detail: (id: string) => `/services/${id}`,
     update: (id: string) => `/services/${id}`,
     delete: (id: string) => `/services/${id}`,
+    session: (id: string) => `/services/${id}/sessions`,
+    workout: (id: string, session_id: string) => `/services/${id}/sessions/${session_id}/workouts`,
   },
   rooms: {
     list: '/rooms',
@@ -68,6 +70,7 @@ export default {
   },
   bookings: {
     list: '/admin/bookings',
+    createList: '/admin/bookings/list',
     create: '/admin/bookings',
     detail: (id: string) => `/bookings/${id}`,
     update: (id: string) => `/bookings/${id}`,
@@ -89,4 +92,10 @@ export default {
     approve: (id: string) => `/days-off-requests/${id}/approve`,
     reject: (id: string) => `/days-off-requests/${id}/reject`,
   },
+  session: {
+    create: '/sessions',
+    update: (id: string) => `/sessions/${id}`,
+    delete: (id: string) => `/sessions/${id}`,
+    workout: (id: string, workoutId: string) => `/sessions/${id}/workouts/${workoutId}`,
+  }
 }

@@ -2,230 +2,47 @@
   <div class="intro-y flex items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Chỉnh sửa lớp dịch vụ</h2>
   </div>
-  <div class="grid">
-    <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
-      <!-- BEGIN: Thông tin lớp dịch vụ -->
-      <div class="intro-y box lg:mt-5">
-        <div
-          class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
-        >
-          <h2 class="font-medium text-base mr-auto">Thông tin lớp dịch vụ</h2>
-        </div>
-        <div class="p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-          <div class="flex flex-col-reverse xl:flex-row flex-col">
-            <div class="flex-1 mt-6 xl:mt-0">
-              <div class="grid grid-cols-12 gap-x-5">
-                <div class="col-span-12 2xl:col-span-6">
-                  <div>
-                    <label for="create-package-form-1" class="form-label"
-                      >Tên lớp dịch vụ</label
-                    >
-                    <input
-                      v-model="nameService"
-                      type="text"
-                      class="form-control"
-                      placeholder="Tên dịch vụ"
-                    />
-                  </div>
-                  <div class="mt-3">
-                    <label for="create-package-form-2" class="form-label"
-                      >Loại lớp dịch vụ</label
-                    >
-                    <select v-model="type" class="form-select">
-                      <option value="1">Lớp Online</option>
-                      <option value="2">Lớp Offline</option>
-                    </select>
-                  </div>
-                  <div class="mt-3">
-                    <label for="create-package-form-2" class="form-label"
-                      >Dịch vụ miễn phí</label
-                    >
-                    <div class="flex flex-col sm:flex-row">
-                      <div class="form-check mr-2">
-                        <input
-                          v-model="freeServices"
-                          id="checkbox-switch-4"
-                          class="form-check-input"
-                          type="checkbox"
-                          value="1"
-                        />
-                        <label class="form-check-label" for="checkbox-switch-4"
-                          >Khăn</label
-                        >
-                      </div>
-                      <div class="form-check mr-2 sm:mt-0">
-                        <input
-                          v-model="freeServices"
-                          id="checkbox-switch-5"
-                          class="form-check-input"
-                          type="checkbox"
-                          value="2"
-                        />
-                        <label class="form-check-label" for="checkbox-switch-5"
-                          >Nước</label
-                        >
-                      </div>
-                      <div class="form-check mr-2 sm:mt-0">
-                        <input
-                          v-model="freeServices"
-                          id="checkbox-switch-6"
-                          class="form-check-input"
-                          type="checkbox"
-                          value="3"
-                        />
-                        <label class="form-check-label" for="checkbox-switch-6"
-                          >Vé xe</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-span-12 2xl:col-span-6">
-                  <div class="mt-3 2xl:mt-0">
-                    <label for="create-package-form-4" class="form-label"
-                      >Giá dịch vụ (VND)</label
-                    >
-                    <input
-                      v-model="price"
-                      type="number"
-                      step="50000"
-                      class="form-control"
-                      placeholder="Giá dịch vụ"
-                    />
-                  </div>
-                  <div class="mt-3">
-                    <label for="create-package-form-2" class="form-label"
-                      >Kiểu sử dụng</label
-                    >
-                    <div class="grid grid-cols-3 gap-4 sm:flex-row">
-                      <select v-model="useType" class="form-select mr-5 col-span-2">
-                        <option value="1">Theo ngày</option>
-                        <option value="2">Theo lần quẹt</option>
-                        <option value="3">Theo tháng</option>
-                      </select>
-                      <input
-                        v-model="usageLimit"
-                        type="text"
-                        class="form-control"
-                        placeholder="Số lượng"
-                      />
-                    </div>
-                  </div>
-                  <div class="mt-3">
-                    <label for="create-package-form-2" class="form-label"
-                      >Trạng thái</label
-                    >
-                    <div class="form-check">
-                      <input
-                        v-model="status"
-                        id="checkbox-switch-7"
-                        class="form-check-switch form-check-input"
-                        type="checkbox"
-                      />
-                      <label class="form-check-label" for="checkbox-switch-7"
-                        >Hoạt động</label
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="col-span-12">
-                  <div class="mt-3">
-                    <label for="create-package-form-7" class="form-label">Ghi chú</label>
-                    <textarea
-                      v-model="note"
-                      rows="5"
-                      class="form-control"
-                      placeholder="Ghi chú"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="p-5">
-          <button
-            @click="updateServiceFunc"
-            type="button"
-            class="btn btn-primary w-20 mt-3"
-          >
-            Lưu
-          </button>
-          <router-link
-            :to="{ name: 'list-services' }"
-            class="btn btn-outline-secondary ml-3 w-20 mt-3"
-          >
-            Hủy
-          </router-link>
-        </div>
-      </div>
-      <!-- END: Thông tin dịch vụ -->
-    </div>
-  </div>
+
+  <ServiceInfo :formData="formData" />
+
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { getDetailService, editService } from "@/api/services";
-import { showMessage } from "@/common/utils/helpers";
-import router from "@/router";
-import { CreateServiceRequest } from "@/api/services/interfaces";
-const paramId = router.currentRoute.value.params.id.toString();
+import { onMounted, ref, nextTick } from 'vue';
+import { getDetailService } from '@/api/services';
+import ServiceInfo from './components/InfoTab.vue';
+import router from '@/router';
 
-const nameService = ref("");
-const type = ref(0);
-const freeServices = ref([]);
-const price = ref(0);
-const useType = ref(1);
-const usageLimit = ref(0);
-const status = ref(false);
-const note = ref("");
-const sellerCommission = ref(0);
-const referralCommission = ref(0);
-const staffCommission = ref(0);
-const discount = ref(false);
+// Khai báo các tab và trạng thái hiển thị của SessionInfo
+const tabs = ref([{ id: 1, name: 'Thông tin lớp dịch vụ' }]);
 
-onMounted(() => {
-  getDetailServiceData();
+// Khai báo dữ liệu form
+const formData = ref({
+  name: '',
+  price: 0,
+  serviceType: 1,
+  duration: 0,
+  description: '',
+  maxParticipants: 0,
 });
 
-const getDetailServiceData = async () => {
-  const res = await getDetailService(paramId);
-  if (res) {
-    nameService.value = res.data.name;
-    type.value = res.data.type;
-    freeServices.value = res.data.free_service;
-    price.value = res.data.price;
-    useType.value = res.data.usage_type;
-    usageLimit.value = res.data.usage_limit;
-    status.value = Boolean(res.data.status);
-    note.value = res.data.note;
-    sellerCommission.value = res.data.commission_for_sellers;
-    referralCommission.value = res.data.referral_commission;
-    staffCommission.value = res.data.employee_referral_commission;
-    discount.value = Boolean(res.data.commission_status);
+// Hàm lấy chi tiết dịch vụ
+const fetchServiceDetail = async () => {
+  const paramId = router.currentRoute.value.params.id.toString();
+  try {
+    const response = await getDetailService(paramId);
+    console.log(response.data);
+    formData.value = response.data;
+    if (response.data.serviceType === 3) {
+      tabs.value.push({ id: 2, name: 'Thông tin buổi học' });
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
-const updateServiceFunc = async () => {
-  const data = {
-    name: nameService.value,
-    price: price.value,
-    type: type.value,
-    usage_type: useType.value,
-    usage_limit: usageLimit.value,
-    free_service: freeServices.value,
-    status: Number(status.value),
-    note: note.value,
-    commission_for_sellers: Number(sellerCommission.value),
-    referral_commission: Number(referralCommission.value),
-    employee_referral_commission: Number(staffCommission.value),
-    commission_status: Number(discount.value),
-  } as CreateServiceRequest;
-  const res = await editService(paramId, data);
-  if (res) {
-    showMessage("Chỉnh sửa thông tin dịch vụ thành công", true);
-    router.push({ name: "list-packages" });
-  }
-};
+// Gọi hàm fetchServiceDetail khi component được mount
+onMounted(async () => {
+  await fetchServiceDetail();
+});
 </script>

@@ -33,3 +33,11 @@ export const getBookings = async (
 
   return response.data;
 }
+
+export const createListBooking = async (request: any): Promise<any> => {
+  const response: AxiosResponse<any> = await axios.post(
+    endpoints.bookings.createList,
+    request,
+  );
+  return response.data;
+}

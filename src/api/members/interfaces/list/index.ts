@@ -1,8 +1,8 @@
 export interface GetMembersRequest {
-  page: number;
-  take: number;
-  sort_enum: string;
-  sort_by: string;
+  page?: number;
+  take?: number;
+  sort_enum?: string;
+  sort_by?: string;
   status?: string;
   field?: string;
   type?: string;

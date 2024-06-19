@@ -1,8 +1,8 @@
 export interface GetServicesRequest {
-  page: number;
-  take: number;
-  sort_enum: string;
-  sort_by: string;
+  page?: number;
+  take?: number;
+  sort_enum?: string;
+  sort_by?: string;
   status?: string;
   field?: string;
   type?: string;
@@ -17,4 +17,5 @@ export interface CreateServiceRequest {
   description?: string;
   service_type?: string;
   thumbnail?: string;
+  serviceType?: string;
 }

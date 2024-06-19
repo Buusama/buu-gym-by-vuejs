@@ -286,6 +286,21 @@
           download: false,
           headerSort: false,
           formatter(cell) {
+            const sessionButton = dom(`
+            <a class="flex items-center mr-3 text-primary" href="javascript:;">
+                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Buổi tập
+            </a>`);
+
+            dom(sessionButton).on('click', function () {
+              const serviceId = cell.getData().id;
+              router.push({
+                name: 'service-sessions-list',
+                params: {
+                  id: serviceId,
+                },
+              });
+            });
+
             const editButton = dom(`
             <a class="flex items-center mr-3 text-primary" href="javascript:;">
                 <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Chỉnh sửa
@@ -313,6 +328,9 @@
             const container = dom(
               '<div class="flex lg:justify-center items-center"></div>',
             );
+            if (cell.getData().serviceType == 3) {
+              container.append(sessionButton[0]);
+            }
             container.append(editButton[0]);
             container.append(deleteButton[0]);
 

@@ -164,6 +164,24 @@ const routes = [
             meta: { requiresAuth: true, title: 'Chỉnh sửa lớp dịch vụ' },
           },
           {
+            path: ':id/sessions',
+            name: 'service-sessions',
+            children: [
+              {
+                path: '',
+                name: 'service-sessions-list',
+                component: () => import('@/views/service/Session.vue'),
+                meta: { requiresAuth: true, title: 'Chỉnh sửa buổi tập' },
+              },
+              {
+                path: ':sessionId/workouts',
+                name: 'service-session-workouts',
+                component: () => import('@/views/service/Workout.vue'),
+                meta: { requiresAuth: true, title: 'Chỉnh sửa buổi tập' },
+              }
+            ],
+          },
+          {
             path: 'create',
             children: [
               {
@@ -198,6 +216,13 @@ const routes = [
             name: 'schedule-trainers',
             component: () => import('@/views/schedule/Trainer.vue'),
             meta: { requiresAuth: true, title: 'Danh sách hội viên' },
+          },
+          {
+            path: 'create',
+            name: 'create-schedule',
+            component: () => import('@/views/schedule/RegisterWorkout.vue'),
+            meta: { requiresAuth: true, title: 'Đăng ký tập luyện' },
+
           },
           // {
           // path: 'trainers',
@@ -270,6 +295,40 @@ const routes = [
                 name: 'create-equipment',
                 component: () => import('@/views/equipment/Create.vue'),
                 meta: { requiresAuth: true, title: 'Thêm thiết bị' },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: '/workouts',
+        name: 'workouts',
+        meta: { requiresAuth: true, title: 'Bài tập' },
+        children: [
+          {
+            path: '',
+            name: 'list-workouts',
+            component: () => import('@/views/workout/List.vue'),
+            meta: {
+              requiresAuth: true,
+              title: 'Danh sách bài tập',
+              role: [RoleValue.STAFF],
+            },
+          },
+          {
+            path: ':id/edit',
+            name: 'edit-workout',
+            component: () => import('@/views/workout/Edit.vue'),
+            meta: { requiresAuth: true, title: 'Chỉnh sửa bài tập' },
+          },
+          {
+            path: 'create',
+            children: [
+              {
+                path: '',
+                name: 'create-workout',
+                component: () => import('@/views/workout/Create.vue'),
+                meta: { requiresAuth: true, title: 'Thêm bài tập' },
               },
             ],
           },
