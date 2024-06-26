@@ -18,63 +18,90 @@
         </select>
       </div>
 
+      <div class="mb-4">
+        <label class="form-label">Bắt đầu từ ngày</label>
+        <input type="date" v-model="startDate" class="form-control" />
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Kết thúc vào ngày</label>
+        <input type="date" v-model="endDate" class="form-control" />
+      </div>
+
       <!-- Chọn dịch vụ -->
       <div class="mb-4">
         <label class="form-label">Chọn dịch vụ</label>
-        <select v-model="selectedServiceId" class="form-control">
+        <select v-model="selectedServiceId" class="form-control" @change="fetchSessionsAndWorkouts">
           <option v-for="service in serviceOptions" :key="service.value" :value="service.value">
             {{ service.label }}
           </option>
         </select>
       </div>
 
-      <div class="mb-4">
-        <label class="form-label">Số tuần</label>
-        <input type="number" v-model="numberOfWeeks" class="form-control" min="1" />
-      </div>
-
-      <div class="mb-4">
-        <label class="form-label">Khung giờ có thể tập luyện</label>
-        <div v-for="(time, index) in trainingTimes" :key="index" class="flex items-center mt-2">
-          <select v-model="time.day" class="form-control mr-2">
-            <option v-for="day in daysOfWeek" :key="day.value" :value="day.value">
-              {{ day.label }}
-            </option>
-          </select>
-          <input type="time" v-model="time.start" class="form-control mr-2" placeholder="Thời gian bắt đầu" />
-          <input type="time" v-model="time.end" class="form-control" placeholder="Thời gian kết thúc" />
-          <button class="btn btn-danger ml-2" @click="removeTimeSlot(index)">Xóa</button>
+      <!-- Hiển thị sessions và chọn khung giờ có thể tập luyện -->
+      <div v-if="sessions.length > 0">
+        <div v-for="(session) in sessions" :key="session.id" class="mb-4">
+          <h3 class="text-lg font-medium">{{ session.name }}</h3>
+          <div class="flex items-center mb-2">
+            <label class="form-label mr-2 flex-shrink-0" style="width: 100px;">Chọn ngày:</label>
+            <select v-model="session.trainingDay" class="form-control mr-2">
+              <option v-for="day in daysOfWeek" :key="day.value" :value="day.value">
+                {{ day.label }}
+              </option>
+            </select>
+          </div>
+          <div v-for="(workout) in session.workouts" :key="workout.id" class="mt-2">
+            <label class="font-medium">{{ workout.name }}</label>
+            <div class="flex items-center mt-2">
+              <input type="time" v-model="workout.trainingTime.start" class="form-control mr-2" placeholder="Thời gian bắt đầu" @change="updateEndTime(session, workout)" />
+              <input type="time" v-model="workout.trainingTime.end" class="form-control mr-2" placeholder="Thời gian kết thúc" disabled />
+              <select v-model="workout.trainingTime.trainer" class="form-control">
+                <option value="">-- Chọn giáo viên --</option>
+                <option v-for="trainer in workout.trainers" :key="trainer.id" :value="trainer.id">
+                  {{ trainer.name }}
+                </option>
+              </select>
+            </div>
+          </div>
         </div>
-        <button class="btn btn-outline-primary border-dashed w-full mt-4" @click="addTimeSlot">
-          <PlusIcon class="w-4 h-4 mr-2" /> Thêm khung giờ
-        </button>
       </div>
     </div>
     <!-- END: Striped Rows -->
+
+    <!-- END: Thông tin hội viên -->
     <div class="p-5">
       <button class="btn btn-primary w-20" @click="registerTrainingSession">Đăng ký</button>
-      <button class="btn btn-outline-secondary w-20  ml-2">Hủy</button>
+      <button class="btn btn-outline-secondary w-20 ml-2">Hủy</button>
+    </div>
+
+    <!-- Hiển thị lỗi chi tiết -->
+    <div v-if="errorDetails.length > 0" class="p-5">
+      <h3 class="text-lg font-medium text-red-600">Lỗi:</h3>
+      <ul class="list-disc list-inside">
+        <li v-for="error in errorDetails" :key="error.note">
+          {{ error.note }} - {{ error.reason }}
+        </li>
+      </ul>
     </div>
   </div>
-  <!-- END: Thông tin hội viên -->
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { getMembers } from '@/api/members';
-import { getServices } from '@/api/services';
-import { TypeValue } from '@/common/enums/services/type';
+import { getServices, getServiceSessions } from '@/api/services';
 import { createListBooking } from '@/api/booking';
-import moment from 'moment';
+import { showMessage } from '@/common/utils/helpers';
+import { TypeValue } from '@/common/enums/services/type';
 
 const selectedMemberId = ref<string | null>(null);
 const selectedServiceId = ref<string | null>(null);
-const numberOfWeeks = ref<number>(1);
+const startDate = ref<string | null>(null);
+const endDate = ref<string | null>(null);
 
 const memberOptions = ref<{ value: string; label: string }[]>([]);
 const serviceOptions = ref<{ value: string; label: string }[]>([]);
-
-const trainingTimes = ref<{ day: string; start: string; end: string }[]>([{ day: '', start: '', end: '' }]);
-
+const sessions = ref<Session[]>([]);
+const errorDetails = ref<{ note: string; reason: string }[]>([]);
 const daysOfWeek = [
   { value: 1, label: 'Thứ Hai' },
   { value: 2, label: 'Thứ Ba' },
@@ -85,6 +112,30 @@ const daysOfWeek = [
   { value: 0, label: 'Chủ Nhật' },
 ];
 
+interface Trainer {
+  id: number;
+  name: string;
+}
+
+interface Workout {
+  id: number;
+  name: string;
+  duration: number;  // Thời lượng buổi tập tính bằng phút
+  trainers: Trainer[];
+  trainingTime: {
+    start: string;
+    end: string;  // Thời gian kết thúc buổi tập
+    trainer: number;
+  };
+}
+
+interface Session {
+  id: number;
+  name: string;
+  trainingDay: number | null;
+  workouts: Workout[];
+}
+
 const fetchMembers = async () => {
   try {
     const response = await getMembers({});
@@ -92,8 +143,6 @@ const fetchMembers = async () => {
       value: member.MemberId,
       label: `${member.MemberName} - ${member.MemberPhone}`
     }));
-
-    console.log(memberOptions.value);
   } catch (error) {
     console.error(error);
   }
@@ -111,29 +160,79 @@ const fetchServices = async () => {
   }
 };
 
-const addTimeSlot = () => {
-  trainingTimes.value.push({ day: '', start: '', end: '' });
+const fetchSessionsAndWorkouts = async () => {
+  if (!selectedServiceId.value) return;
+
+  try {
+    const response = await getServiceSessions(selectedServiceId.value);
+    sessions.value = response.data.map((session: any) => ({
+      id: session.id,
+      name: session.name,
+      trainingDay: null,
+      workouts: session.workouts.map((workout: any) => ({
+        id: workout.id,
+        name: workout.name,
+        duration: workout.duration,
+        trainers: workout.trainers,
+        trainingTime: { start: '', end: '', trainer: 0 }
+      }))
+    }));
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-const removeTimeSlot = (index: number) => {
-  trainingTimes.value.splice(index, 1);
+const updateEndTime = (session: Session, workout: Workout) => {
+  if (workout.trainingTime.start) {
+    const [hours, minutes] = workout.trainingTime.start.split(':').map(Number);
+    const startTime = new Date();
+    startTime.setHours(hours, minutes);
+    const endTime = new Date(startTime.getTime() + workout.duration * 60000);
+    workout.trainingTime.end = endTime.toTimeString().slice(0, 5);
+  } else {
+    workout.trainingTime.end = '';
+  }
 };
 
 const registerTrainingSession = async () => {
+  if (!selectedMemberId.value || !startDate.value || !endDate.value) {
+    showMessage('Vui lòng nhập đầy đủ thông tin', false);
+    return;
+  }
+  // Kiểm tra các buổi tập đã được điền đầy đủ thông tin
+  for (const session of sessions.value) {
+    if (!session.trainingDay) {
+      showMessage(`Vui lòng chọn ngày cho buổi tập "${session.name}"`, false);
+      return;
+    }
+    for (const workout of session.workouts) {
+      if (!workout.trainingTime.start) {
+        showMessage(`Vui lòng chọn thời gian cho buổi tập "${workout.name}"`, false);
+        return;
+      }
+    }
+  }
   const bookingData = {
     memberId: selectedMemberId.value,
-    serviceId: selectedServiceId.value,
-    numberOfWeeks: numberOfWeeks.value,
-    trainingTimes: trainingTimes.value,
+    startDate: startDate.value,
+    endDate: endDate.value,
+    trainingTimes: sessions.value.flatMap(session =>
+      session.workouts.map(workout => ({
+        dayOfWeek: session.trainingDay,
+        start_time: workout.trainingTime.start,
+        end_time: workout.trainingTime.end,
+        workout: workout.id,
+        trainer: workout.trainingTime.trainer
+      }))
+    ),
   };
-
-  console.log(bookingData);
 
   try {
     await createListBooking(bookingData);
-    console.log('Booking successful');
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    if (error?.response?.data?.details) {
+      errorDetails.value = error.response.data.details;
+    }
   }
 };
 

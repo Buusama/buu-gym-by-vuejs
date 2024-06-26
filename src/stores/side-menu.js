@@ -95,6 +95,20 @@ export const useSideMenuStore = defineStore('sideMenu', {
         subMenu: [
           {
             icon: '',
+            pageName: 'create-schedule',
+            title: 'Đăng ký tập luyện',
+            role: [RoleValue.ADMIN, RoleValue.STAFF, RoleValue.TRAINER],
+            path: '/schedule/create',
+          },
+          {
+            icon: '',
+            pageName: 'assign-schedule',
+            title: 'Phân công lịch tập',
+            role: [RoleValue.ADMIN, RoleValue.STAFF, RoleValue.TRAINER],
+            path: '/schedule/assign',
+          },
+          {
+            icon: '',
             pageName: 'schedule-requests',
             title: 'Danh sách yêu cầu lịch tập hội viên',
             role: [RoleValue.ADMIN, RoleValue.STAFF, RoleValue.TRAINER],
@@ -114,13 +128,6 @@ export const useSideMenuStore = defineStore('sideMenu', {
             role: [RoleValue.ADMIN, RoleValue.STAFF],
             path: '/schedule/members',
           },
-           {
-            icon: '',
-            pageName: 'create-schedule',
-            title: 'Đăng ký tập luyện',
-            role: [RoleValue.ADMIN, RoleValue.STAFF, RoleValue.TRAINER],
-            path: '/schedule/create',
-          }
         ],
       },
       'devider',

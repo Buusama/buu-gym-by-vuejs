@@ -139,7 +139,7 @@
     let data = [];
     const page = params.page - 1;
     const take = params.size;
-    const order = params.sorters[0] ? params.sorters[0].field : 'serviceId';
+    const order = params.sorters[0] ? params.sorters[0].field : 'table.id';
     const sort = params.sorters[0] ? params.sorters[0].dir : 'desc';
     const filter = params.filters[0] ? params.filters[0] : null;
 
@@ -203,7 +203,7 @@
           <div class="flex items-center lg:justify-center">
             <div class="intro-x w-10 h-10 image-fit">
               <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${
-                cell.getData().serviceThumbnail
+                cell.getData().thumbnail
               }">
             </div>
             <div class="intro-x ml-5">
@@ -242,7 +242,7 @@
         },
         {
           title: 'Loại dịch vụ',
-          field: 'serviceType',
+          field: 'service_type',
           minWidth: 50,
           hozAlign: 'center',
           vertAlign: 'middle',
@@ -251,9 +251,9 @@
           formatter(cell) {
             return `<div class="flex items-center lg:justify-center }">
                 ${
-                  cell.getData().serviceType == 1? 'Lớp Online': 
-                  cell.getData().serviceType == 2? 'Lớp/ Nhóm Offline':
-                  cell.getData().serviceType == 3? 'Hướng dẫn riêng':
+                  cell.getData().service_type == 1? 'Lớp Online': 
+                  cell.getData().service_type == 2? 'Lớp/ Nhóm Offline':
+                  cell.getData().service_type == 3? 'Hướng dẫn riêng':
                   'Tự tập luyện'
                 }
               </div>`;
@@ -323,12 +323,12 @@
             </a>`);
 
             dom(deleteButton).on('click', function () {
-              showDeleteConfirmationModal(cell.getData().MemberId);
+              showDeleteConfirmationModal(cell.getData().id);
             });
             const container = dom(
               '<div class="flex lg:justify-center items-center"></div>',
             );
-            if (cell.getData().serviceType == 3) {
+            if (cell.getData().service_type == 3) {
               container.append(sessionButton[0]);
             }
             container.append(editButton[0]);

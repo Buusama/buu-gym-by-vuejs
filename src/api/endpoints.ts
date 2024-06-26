@@ -70,11 +70,13 @@ export default {
   },
   bookings: {
     list: '/admin/bookings',
-    createList: '/admin/bookings/list',
     create: '/admin/bookings',
     detail: (id: string) => `/bookings/${id}`,
     update: (id: string) => `/bookings/${id}`,
     delete: (id: string) => `/bookings/${id}`,
+    autoAssign: '/admin/bookings/solver-schedule',
+    saveSchedule: '/admin/bookings/save-schedule',
+    recommend: (id:string) => `/admin/bookings/${id}/recommend-trainers`
   },
   workouts: {
     list: '/workouts',
@@ -82,6 +84,9 @@ export default {
     detail: (id: string) => `/workouts/${id}`,
     update: (id: string) => `/workouts/${id}`,
     delete: (id: string) => `/workouts/${id}`,
+    trainer: (id: string) => `/workouts/${id}/trainers`,
+    equipment: (id: string) => `/workouts/${id}/equipments`,
+    deleteEquipment: (id: string, equipmentId: string) => `/workouts/${id}/equipments/${equipmentId}`,
   },
   daysOff: {
     list: '/days-off-requests',

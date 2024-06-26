@@ -126,7 +126,7 @@ const RequestFunc = async (url, config, params) => {
   const page = params.page - 1;
   const take = params.size;
   const limit = params.size;
-  const order = params.sorters[0] ? params.sorters[0].field : "id";
+  const order = params.sorters[0] ? params.sorters[0].field : "table.id";
   const sort = params.sorters[0] ? params.sorters[0].dir : "asc";
 
   await getWorkouts({

@@ -1,7 +1,4 @@
 <template>
-  <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Chỉnh sửa bài tập</h2>
-  </div>
   <div class="grid">
     <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
       <!-- BEGIN: Thông tin thiết bị -->
@@ -55,24 +52,39 @@
 import { onMounted, ref } from "vue";
 import { showMessage } from "@/common/utils/helpers";
 import router from "@/router";
-import { createWorkout } from "@/api/workouts";
+import { editWorkout, getDetailWorkout } from "@/api/workouts";
 
-const name = ref("");
+const nameRoom = ref("");
 const description = ref("");
 const duration = ref(0);
 
-const createWorkoutFunc = async () => {
+const editWorkoutFunc = async () => {
+  const paramId = router.currentRoute.value.params.id.toString();
   try {
-    const data = {
-      name: name.value,
+    await editWorkout(paramId, {
+      name: nameRoom.value,
       description: description.value,
       duration: duration.value,
-    };
-    await createWorkout(data);
-    showMessage("Tạo bài tập thành công", true);
+    });
+    showMessage("Chỉnh sửa bài tập thành công", true);
     router.push({ name: "list-workouts" });
   } catch (error) {
-    showMessage("Tạo bài tập thất bại", false);
+    console.error(error);
   }
 };
+const fetchDetailWorkout = async () => {
+  const paramId = router.currentRoute.value.params.id.toString();
+  try {
+    const response = await getDetailWorkout(paramId);
+    nameRoom.value = response.data.name;
+    description.value = response.data.description;
+    duration.value = response.data.duration;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+onMounted(async () => {
+  await fetchDetailWorkout();
+});
 </script>

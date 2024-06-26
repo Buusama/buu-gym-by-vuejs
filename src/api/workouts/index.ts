@@ -67,3 +67,31 @@ export const editWorkout = async (
 
   return response.data
 };
+
+export const getWorkoutEquipments = async (id: string): Promise<any> => {
+  const response: AxiosResponse<CommonResponse<any>> = await axios.get(
+    endpoints.workouts.equipment(id),
+  )
+  return response.data
+}
+
+export const createWorkoutEquipment = async (
+  id: string,
+  request: any,
+): Promise<any> => {
+  const response: AxiosResponse<CommonResponse<any>> = await axios.post(
+    endpoints.workouts.equipment(id),
+    request,
+  )
+  return response.data
+}
+
+export const deleteWorkoutEquipment = async (
+  id: string,
+  equipment_id: string,
+): Promise<any> => {
+  const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
+    endpoints.workouts.deleteEquipment(id, equipment_id),
+  )
+  return response.data
+}

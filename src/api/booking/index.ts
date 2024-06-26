@@ -1,10 +1,10 @@
 import { AxiosResponse } from 'axios'
-import { GetEquipmentsRequest } from './interfaces'
+import { GetBookingsRequest } from './interfaces'
 import axios from '@/common/utils/axios'
 import endpoints from '../endpoints'
 
 export const getBookings = async (
-  request?: Partial<GetEquipmentsRequest>,
+  request?: Partial<GetBookingsRequest>,
 ): Promise<any> => {
   const params = new URLSearchParams();
 
@@ -26,6 +26,14 @@ export const getBookings = async (
     params.append('member_id', request.member_id)
   }
 
+  if (request?.start_date && request?.end_date) {
+    params.append('start_date', request.start_date)
+    params.append('end_date', request.end_date)
+  }
+  if (request?.status) {
+    params.append('status', request.status)
+  }
+
   const response: AxiosResponse<any> = await axios.get(
     endpoints.bookings.list,
     { params: params },
@@ -36,7 +44,30 @@ export const getBookings = async (
 
 export const createListBooking = async (request: any): Promise<any> => {
   const response: AxiosResponse<any> = await axios.post(
-    endpoints.bookings.createList,
+    endpoints.bookings.create,
+    request,
+  );
+  return response.data;
+}
+
+export const autoAssignBooking = async (request: any): Promise<any> => {
+  const response: AxiosResponse<any> = await axios.post(
+    endpoints.bookings.autoAssign,
+    request,
+  );
+  return response.data;
+}
+
+export const recommendTrainers = async (id: string): Promise<any> => {
+  const response: AxiosResponse<any> = await axios.get(
+    endpoints.bookings.recommend(id),
+  );
+  return response.data;
+}
+
+export const saveBooking = async (request: any): Promise<any> => {
+  const response: AxiosResponse<any> = await axios.put(
+    endpoints.bookings.saveSchedule,
     request,
   );
   return response.data;

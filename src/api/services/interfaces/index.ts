@@ -17,5 +17,4 @@ export interface CreateServiceRequest {
   description?: string;
   service_type?: string;
   thumbnail?: string;
-  serviceType?: string;
 }

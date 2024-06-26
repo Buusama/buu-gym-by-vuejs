@@ -12,7 +12,7 @@
       <div class="mb-4">
         <label class="form-label">Chọn hội viên</label>
         <select v-model="selectedMemberId" class="form-control">
-          <option value="">-- Chọn hội viên --</option>
+          <option value=0>-- Chọn hội viên --</option>
           <option v-for="member in memberOptions" :key="member.value" :value="member.value">
             {{ member.label }}
           </option>
@@ -34,8 +34,9 @@
         <div class="mb-4">
           <h3 class="text-lg font-medium">{{ day.label }}</h3>
           <div v-for="(time, timeIndex) in getTimesByDay(dayIndex)" :key="timeIndex" class="flex items-center mt-2">
-            <input type="time" v-model="time.start" class="form-control mr-2" placeholder="Thời gian bắt đầu" />
-            <select v-model="time.workout" class="form-control mr-2">
+            <input type="time" v-model="time.start_time" class="form-control mr-2" placeholder="Thời gian bắt đầu" @change="updateEndTime(dayIndex, timeIndex)" />
+            <input type="time" v-model="time.end_time" class="form-control mr-2" placeholder="Thời gian kết thúc" disabled />
+            <select v-model="time.workout" class="form-control mr-2" @change="updateEndTime(dayIndex, timeIndex)">
               <option value="">-- Chọn bài tập --</option>
               <option v-for="workout in workoutOptions" :key="workout.value" :value="workout.value">
                 {{ workout.label }}
@@ -54,12 +55,23 @@
           </button>
         </div>
       </div>
+
     </div>
     <!-- END: Striped Rows -->
 
     <div class="p-5">
       <button class="btn btn-primary w-20" @click="registerTrainingSession">Đăng ký</button>
       <button class="btn btn-outline-secondary w-20 ml-2">Hủy</button>
+    </div>
+
+    <!-- Hiển thị lỗi chi tiết -->
+    <div v-if="errorDetails.length > 0" class="p-5">
+      <h3 class="text-lg font-medium text-red-600">Lỗi:</h3>
+      <ul class="list-disc list-inside">
+        <li v-for="error in errorDetails" :key="error.note">
+          {{ error.note }} - {{ error.reason }}
+        </li>
+      </ul>
     </div>
   </div>
   <!-- END: Thông tin hội viên -->
@@ -73,7 +85,7 @@ import { getWorkouts } from '@/api/workouts';
 import { getTrainers } from '@/api/trainers'; // Assuming this API exists
 import { createListBooking } from '@/api/booking';
 import { TypeValue } from '@/common/enums/services/type';
-import moment from 'moment';
+import { showMessage } from '@/common/utils/helpers';
 
 const selectedMemberId = ref<string | null>(null);
 const startDate = ref<string | null>(null);
@@ -85,7 +97,8 @@ const workoutOptions = ref<{ value: string; label: string }[]>([]);
 const trainerOptions = ref<{ value: string; label: string }[]>([]);
 const trainingTimes = ref<{
   dayOfWeek: number;
-  start: string;
+  start_time: string;
+  end_time: string;
   workout: number;
   trainer: number;
 }[][]>([
@@ -98,15 +111,33 @@ const trainingTimes = ref<{
   [], // Sunday
 ]);
 
+const errorDetails = ref<{ note: string; reason: string }[]>([]);
+
 const daysOfWeek = [
+  { value: 0, label: 'Chủ Nhật' },
   { value: 1, label: 'Thứ Hai' },
   { value: 2, label: 'Thứ Ba' },
   { value: 3, label: 'Thứ Tư' },
   { value: 4, label: 'Thứ Năm' },
   { value: 5, label: 'Thứ Sáu' },
   { value: 6, label: 'Thứ Bảy' },
-  { value: 0, label: 'Chủ Nhật' },
 ];
+
+const updateEndTime = (dayIndex: number, timeIndex: number) => {
+  const timeSlot = trainingTimes.value[dayIndex][timeIndex];
+  const workout = workoutOptions.value.find(w => w.value === timeSlot.workout);
+  
+  if (timeSlot.start_time && workout) {
+    const [hours, minutes] = timeSlot.start_time.split(':').map(Number);
+    const endDate = new Date();
+    endDate.setHours(hours, minutes + workout.duration);
+    
+    const endHours = endDate.getHours().toString().padStart(2, '0');
+    const endMinutes = endDate.getMinutes().toString().padStart(2, '0');
+    timeSlot.end_time = `${endHours}:${endMinutes}`;
+  }
+};
+
 
 const fetchMembers = async () => {
   try {
@@ -138,6 +169,7 @@ const fetchWorkouts = async () => {
     workoutOptions.value = response.data.map((workout: any) => ({
       value: workout.id,
       label: workout.name,
+      duration: workout.duration,
     }));
   } catch (error) {
     console.error(error);
@@ -157,7 +189,9 @@ const fetchTrainers = async () => {
 };
 
 const addTimeSlot = (dayIndex: number) => {
-  trainingTimes.value[dayIndex].push({ dayOfWeek: dayIndex, start: '', workout: 0, trainer: 0 });
+  trainingTimes.value[dayIndex].push({
+    dayOfWeek: dayIndex, start_time: '', end_time: '', workout: 0, trainer: 0
+  });
 };
 
 const removeTimeSlot = (dayIndex: number, timeIndex: number) => {
@@ -177,12 +211,13 @@ const registerTrainingSession = async () => {
     trainingTimes: trainingTimes.value.flat()
   };
 
-  console.log(bookingData);
   try {
     await createListBooking(bookingData);
-    console.log('Booking successful');
-  } catch (error) {
-    console.error(error);
+    showMessage('Đăng ký thành công', true);
+  } catch (error: any) {
+    if (error?.response?.data?.details) {
+      errorDetails.value = error.response.data.details;
+    }
   }
 };
 

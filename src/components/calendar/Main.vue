@@ -5,16 +5,11 @@
 </template>
 
 <script>
-import { defineComponent, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-
-let eventGuid = 0;
-export function createEventId() {
-  return String(eventGuid++);
-}
 
 export default defineComponent({
   components: {
@@ -26,45 +21,52 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
+  setup(props, { emit }) {
+    const calendarOptions = ref({
+      locale: "vi",
+      buttonText: {
+        today: "Hôm nay",
+        month: "Tháng",
+        week: "Tuần",
+        day: "Ngày",
+      },
+      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay",
+      },
+      initialView: "dayGridMonth",
+      events: props.externalEvents,
+      editable: true,
+      selectable: true,
+      dayMaxEvents: true,
+      weekends: true,
+      eventClick: handleEventClick,
+      datesSet: handleDatesSet,
+    });
+
+    watch(
+      () => props.externalEvents,
+      (newEvents) => {
+        calendarOptions.value.events = newEvents;
+      },
+      { immediate: true, deep: true }
+    );
+
+    function handleEventClick(clickInfo) {
+      if (clickInfo.event.url) {
+        window.location.href = clickInfo.event.url;
+      }
+    }
+
+    function handleDatesSet(dateInfo) {
+      emit('fetchBookings', dateInfo.startStr, dateInfo.endStr);
+    }
+
     return {
-      calendarOptions: {
-        locale: "vi",
-        buttonText: {
-          today: "Hôm nay",
-          month: "Tháng",
-          week: "Tuần",
-          day: "Ngày",
-        },
-        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-        headerToolbar: {
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
-        },
-        initialView: "dayGridMonth",
-        events: this.externalEvents,
-        editable: true,
-        selectable: true,
-        dayMaxEvents: true,
-        weekends: true,
-        eventClick: this.handleEventClick,
-      },
+      calendarOptions,
     };
-  },
-  watch: {
-    externalEvents: {
-      handler(newEvents) {
-        this.calendarOptions.events = newEvents;
-      },
-      immediate: true,
-      deep: true,
-    },
-  },
-  methods: {
-    handleEventClick(clickInfo) {
-      window.location.href = clickInfo.event.url;
-    },
   },
 });
 </script>

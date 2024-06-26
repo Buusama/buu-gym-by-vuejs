@@ -1,26 +1,28 @@
-export interface CreateEquipmentRequest {
+export interface CreateBookingRequest {
   name?: string;
   description?: string;
 }
 
-export interface CreateEquipmentResponse {
+export interface CreateBookingResponse {
   name?: string;
   description?: string;
 }
 
-export interface GetEquipmentsRequest {
+export interface GetBookingsRequest {
   page?: number;
   take?: number;
   sort_enum?: string;
   sort_by?: string;
-  status?: string;
   field?: string;
   type?: string;
   value?: string;
   member_id?: string;
+  status?: string;
+  start_date?: string;
+  end_date?: string;
 }
 
-export interface EditEquipmentRequest {
+export interface EditBookingRequest {
   name?: string;
   description?: string;
 }

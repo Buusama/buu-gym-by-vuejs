@@ -203,26 +203,31 @@ const routes = [
             path: 'members',
             name: 'schedule-members',
             component: () => import('@/views/schedule/Member.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách hội viên' },
+            meta: { requiresAuth: true, title: 'Lịch tập luyện hội viên' },
           },
           {
             path: 'requests',
             name: 'schedule-requests',
-            component: () => import('@/views/home/Home.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách hội viên' },
+            component: () => import('@/views/schedule/Booking.vue'),
+            meta: { requiresAuth: true, title: 'Danh sách lịch hẹn' },
           },
           {
             path: 'trainers',
             name: 'schedule-trainers',
             component: () => import('@/views/schedule/Trainer.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách hội viên' },
+            meta: { requiresAuth: true, title: 'Lịch dạy huấn luyện viên' },
           },
           {
             path: 'create',
             name: 'create-schedule',
             component: () => import('@/views/schedule/RegisterWorkout.vue'),
             meta: { requiresAuth: true, title: 'Đăng ký tập luyện' },
-
+          },
+          {
+            path: 'assign',
+            name: 'assign-schedule',
+            component: () => import('@/views/schedule/AssignTrainer.vue'),
+            meta: { requiresAuth: true, title: 'Phân bổ huấn luyện' },
           },
           // {
           // path: 'trainers',

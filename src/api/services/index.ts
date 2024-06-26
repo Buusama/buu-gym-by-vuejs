@@ -34,7 +34,7 @@ export const getDetailService = async (id: string): Promise<any> => {
   return response.data
 }
 
-export const createService = async (request: any): Promise<any> => {
+export const createService = async (request: FormData): Promise<any> => {
   const response: AxiosResponse<any> = await axios.post(
     endpoints.services.create,
     request,
@@ -42,7 +42,7 @@ export const createService = async (request: any): Promise<any> => {
   return response.data
 }
 
-export const editService = async (id: string, request: any): Promise<any> => {
+export const editService = async (id: string, request: FormData): Promise<any> => {
   const response: AxiosResponse<any> = await axios.put(
     endpoints.services.update(id),
     request,
