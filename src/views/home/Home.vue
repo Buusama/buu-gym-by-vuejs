@@ -6,27 +6,23 @@
       <h2 class="text-lg font-medium truncate mr-5">Tổng quan</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" v-for="stat in stats" :key="stat.id">
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y" v-for="(stat, index) in stats" :key="index">
         <div class="report-box zoom-in">
           <div class="box p-5">
-            <div class="flex">
-              <component :is="stat.icon" class="report-box__icon" :class="stat.iconClass" />
-              <div class="ml-auto">
-                <Tippy tag="div" class="report-box__indicator cursor-pointer" :class="stat.indicatorClass" :content="stat.tooltip">
-                  {{ stat.percentage }}%
-                  <component :is="stat.indicatorIcon" class="w-4 h-4" />
-                </Tippy>
+            <div class="flex items-center">
+              <div class="report-box__icon">
+                <component :is="stat.icon" class="report-box__icon" :class="stat.iconClass" />
               </div>
             </div>
-            <div class="text-3xl font-bold leading-8 mt-6">{{ stat.value }}</div>
-            <div class="text-base text-gray-600 mt-1">{{ stat.label }}</div>
+            <div class="text-xl font-bold leading-tight mt-6">{{ stat.label }}</div>
+            <div class="text-base text-gray-600 mt-1 leading-tight"> {{ stat.value }}</div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Current Workout Information Section -->
-    <div class="intro-y flex items-center h-10 mt-8">
+    <!-- <div class="intro-y flex items-center h-10 mt-8">
       <h2 class="text-lg font-medium truncate mr-5">Thông tin tập luyện</h2>
     </div>
     <div class="box mt-5">
@@ -50,7 +46,8 @@
           </tbody>
         </table>
       </div>
-    </div>
+    </div> -->
+
     <!-- Potential Members Section -->
     <div class="intro-y flex items-center h-10 mt-8">
       <h2 class="text-lg font-medium truncate mr-5">Hội viên tiềm năng</h2>
@@ -64,16 +61,16 @@
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Tên</th>
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Email</th>
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Điện thoại</th>
-              <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Trạng thái</th>
+              <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Tổng số đặt lịch</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-gray-200 dark:bg-dark-1" v-for="(member, index) in potentialMembers" :key="member.id">
+            <tr class="bg-gray-200 dark:bg-dark-1" v-for="(member, index) in members" :key="member.member_id">
               <td class="border-b dark:border-dark-5">{{ index + 1 }}</td>
-              <td class="border-b dark:border-dark-5">{{ member.name }}</td>
-              <td class="border-b dark:border-dark-5">{{ member.email }}</td>
-              <td class="border-b dark:border-dark-5">{{ member.phone }}</td>
-              <td class="border-b dark:border-dark-5">{{ member.status }}</td>
+              <td class="border-b dark:border-dark-5">{{ member.member_name }}</td>
+              <td class="border-b dark:border-dark-5">{{ member.member_email }}</td>
+              <td class="border-b dark:border-dark-5">{{ member.member_phone }}</td>
+              <td class="border-b dark:border-dark-5">{{ member.booking_count }}</td>
             </tr>
           </tbody>
         </table>
@@ -93,19 +90,24 @@
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Tên</th>
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Email</th>
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Điện thoại</th>
+              <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Kinh nghiệm</th>
+              <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Chuyên môn</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-gray-200 dark:bg-dark-1" v-for="(trainer, index) in availableTrainers" :key="trainer.id">
+            <tr class="bg-gray-200 dark:bg-dark-1" v-for="(trainer, index) in trainers" :key="trainer.trainer_staff_id">
               <td class="border-b dark:border-dark-5">{{ index + 1 }}</td>
-              <td class="border-b dark:border-dark-5">{{ trainer.name }}</td>
-              <td class="border-b dark:border-dark-5">{{ trainer.email }}</td>
-              <td class="border-b dark:border-dark-5">{{ trainer.phone }}</td>
+              <td class="border-b dark:border-dark-5">{{ trainer.user_name }}</td>
+              <td class="border-b dark:border-dark-5">{{ trainer.user_email }}</td>
+              <td class="border-b dark:border-dark-5">{{ trainer.user_phone }}</td>
+              <td class="border-b dark:border-dark-5">{{ trainer.trainer_experience }}</td>
+              <td class="border-b dark:border-dark-5">{{ trainer.trainer_specialty }}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+
     <!-- Exercises Section -->
     <div class="intro-y flex items-center h-10 mt-8">
       <h2 class="text-lg font-medium truncate mr-5">Bài tập</h2>
@@ -117,18 +119,18 @@
             <tr>
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Tên Bài Tập</th>
-              <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Loại</th>
+              <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Mô tả</th>
               <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Thời lượng</th>
-              <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Huấn luyện viên</th>
+              <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Ảnh đại diện</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-gray-200 dark:bg-dark-1" v-for="(exercise, index) in exercises" :key="exercise.id">
+            <tr class="bg-gray-200 dark:bg-dark-1" v-for="(exercise, index) in workouts" :key="exercise.id">
               <td class="border-b dark:border-dark-5">{{ index + 1 }}</td>
               <td class="border-b dark:border-dark-5">{{ exercise.name }}</td>
-              <td class="border-b dark:border-dark-5">{{ exercise.type }}</td>
-              <td class="border-b dark:border-dark-5">{{ exercise.duration }}</td>
-              <td class="border-b dark:border-dark-5">{{ exercise.trainer }}</td>
+              <td class="border-b dark:border-dark-5">{{ exercise.description }}</td>
+              <td class="border-b dark:border-dark-5">{{ exercise.duration }} phút</td>
+              <td class="border-b dark:border-dark-5"><img :src="exercise.thumbnail" class="h-16 w-16 object-cover rounded" alt="Exercise Thumbnail"></td>
             </tr>
           </tbody>
         </table>
@@ -138,137 +140,63 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-vue-next';
-import { UsersIcon } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
+import { UsersIcon } from 'lucide-vue-next';
+import { getDashboardData } from '@/api/dashboard';
 
-// Sample data for statistics
 const stats = ref([
-  {
-    id: 1,
-    icon: UsersIcon,
-    iconClass: 'text-theme-10',
-    label: 'Tổng số hội viên',
-    value: '4.710',
-    percentage: '33',
-    indicatorClass: 'bg-theme-9',
-    indicatorIcon: ChevronDownIcon,
-    tooltip: '33% Higher than last month',
-  },
-  {
-    id: 2,
-    icon: UsersIcon,
-    iconClass: 'text-theme-11',
-    label: 'Tham gia hôm nay',
-    value: '3.721',
-    percentage: '2',
-    indicatorClass: 'bg-theme-6',
-    indicatorIcon: ChevronDownIcon,
-    tooltip: '2% Lower than last month',
-  },
-  {
-    id: 3,
-    icon: UsersIcon,
-    iconClass: 'text-theme-12',
-    label: 'Tỷ lệ hội viên mới',
-    value: '2.149',
-    percentage: '12',
-    indicatorClass: 'bg-theme-9',
-    indicatorIcon: ChevronUpIcon,
-    tooltip: '12% Higher than last month',
-  },
-  {
-    id: 4,
-    icon: UsersIcon,
-    iconClass: 'text-theme-9',
-    label: 'Khách vãng lai',
-    value: '152.040',
-    percentage: '22',
-    indicatorClass: 'bg-theme-9',
-    indicatorIcon: ChevronUpIcon,
-    tooltip: '22% Higher than last month',
-  },
-  {
-    id: 5,
-    icon: UsersIcon,
-    iconClass: 'text-theme-10',
-    label: 'Tổng doanh thu hội viên',
-    value: '$15,000',
-    percentage: '10',
-    indicatorClass: 'bg-theme-9',
-    indicatorIcon: ChevronUpIcon,
-    tooltip: '10% Higher than last month',
-  },
-  {
-    id: 6,
-    icon: UsersIcon,
-    iconClass: 'text-theme-11',
-    label: 'Hội viên đang hoạt động',
-    value: '1,200',
-    percentage: '5',
-    indicatorClass: 'bg-theme-9',
-    indicatorIcon: ChevronUpIcon,
-    tooltip: '5% Higher than last month',
-  },
-  {
-    id: 7,
-    icon: UsersIcon,
-    iconClass: 'text-theme-12',
-    label: 'Tỷ lệ sử dụng thiết bị',
-    value: '75%',
-    percentage: '8',
-    indicatorClass: 'bg-theme-9',
-    indicatorIcon: ChevronUpIcon,
-    tooltip: '8% Higher than last month',
-  },
-  {
-    id: 8,
-    icon: UsersIcon,
-    iconClass: 'text-theme-10',
-    label: 'Hội viên mới trong tháng',
-    value: '300',
-    percentage: '15',
-    indicatorClass: 'bg-theme-9',
-    indicatorIcon: ChevronUpIcon,
-    tooltip: '15% Higher than last month',
+  { icon: UsersIcon, iconClass: '', label: 'Số lượt đặt chỗ', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Số hội viên', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Hội viên hoạt động', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Hội viên không hoạt động', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Hội viên sắp hết hạn', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Số khu vực', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Số HLV', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Số bài tập', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Doanh thu tổng', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Tổng doanh thu', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+  { icon: UsersIcon, iconClass: '', label: 'Tổng tiền phải thu', value: '', percentage: '', indicatorClass: 'bg-theme-9' },
+]);
+
+const workoutAreas = ref([]);
+const members = ref([
+  { member_id: 1, member_name: '', member_email: '', member_phone: '', booking_count: 0 }
+]);
+const trainers = ref([
+  { trainer_staff_id: 1, user_name: '', user_email: '', user_phone: '', trainer_experience: '', trainer_specialty: '' }
+]);
+const workouts = ref([
+  { id: 1, name: '', description: '', duration: 0, thumbnail: '' }
+]);
+
+const fetchData = async () => {
+  try {
+    const response = await getDashboardData();
+    stats.value[0].value = response.data.data.dashboard.data.bookingCount;
+    stats.value[1].value = response.data.data.dashboard.data.memberCount;
+    stats.value[2].value = response.data.data.dashboard.data.activeMembers;
+    stats.value[3].value = response.data.data.dashboard.data.inactiveMembers;
+    stats.value[4].value = response.data.data.dashboard.data.expiringMembers;
+    stats.value[5].value = response.data.data.dashboard.data.roomCount;
+    stats.value[6].value = response.data.data.dashboard.data.trainerCount;
+    stats.value[7].value = response.data.data.dashboard.data.workoutCount;
+    stats.value[8].value = response.data.data.dashboard.data.totalSales;
+    stats.value[9].value = response.data.data.dashboard.data.totalRevenue || 0;
+    stats.value[10].value = response.data.data.dashboard.data.totalReceivable;
+
+
+    workoutAreas.value = response.data.data.dashboard.meta;
+    members.value = response.data.data.member.data;
+    trainers.value = response.data.data.trainer.data;
+    workouts.value = response.data.data.workout.data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
   }
-]);
-
-// Sample data for current workout areas
-const workoutAreas = ref([
-  { id: 1, name: 'Gym Area 1', current: 20, capacity: 50 },
-  { id: 2, name: 'Cardio Area', current: 15, capacity: 40 },
-  { id: 3, name: 'Pool Area', current: 10, capacity: 30 },
-]);
-
-// Sample data for potential members
-const potentialMembers = ref([
-  { id: 1, name: 'Nguyen Van A', email: 'nguyenvana@example.com', phone: '0123456789', status: 'Interested' },
-  { id: 2, name: 'Tran Thi B', email: 'tranthib@example.com', phone: '0987654321', status: 'Interested' },
-]);
-
-// Sample data for available trainers
-const availableTrainers = ref([
-  { id: 1, name: 'Trainer 1', email: 'trainer1@example.com', phone: '0123456789' },
-  { id: 2, name: 'Trainer 2', email: 'trainer2@example.com', phone: '0987654321' },
-]);
-
-// Sample data for exercises
-const exercises = ref([
-  { id: 1, name: 'Push-ups', type: 'Strength', duration: '10 mins', trainer: 'Trainer 1' },
-  { id: 2, name: 'Running', type: 'Cardio', duration: '30 mins', trainer: 'Trainer 2' },
-]);
+};
 
 onMounted(() => {
-  // Fetch data from an API if necessary
-  // stats.value = fetchStats();
-  // workoutAreas.value = fetchWorkoutAreas();
-  // potentialMembers.value = fetchPotentialMembers();
-  // availableTrainers.value = fetchAvailableTrainers();
-  // exercises.value = fetchExercises();
+  fetchData();
 });
+
 </script>
 
-<style scoped>
-/* Additional styles if necessary */
-</style>

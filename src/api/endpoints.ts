@@ -76,7 +76,7 @@ export default {
     delete: (id: string) => `/bookings/${id}`,
     autoAssign: '/admin/bookings/solver-schedule',
     saveSchedule: '/admin/bookings/save-schedule',
-    recommend: (id:string) => `/admin/bookings/${id}/recommend-trainers`
+    recommend: (id: string) => `/admin/bookings/${id}/recommend-trainers`
   },
   workouts: {
     list: '/workouts',
@@ -102,5 +102,11 @@ export default {
     update: (id: string) => `/sessions/${id}`,
     delete: (id: string) => `/sessions/${id}`,
     workout: (id: string, workoutId: string) => `/sessions/${id}/workouts/${workoutId}`,
+  },
+  dashboard: {
+    index: 'dashboard',
+    trainer: 'dashboard/trainer',
+    member: 'dashboard/member',
+    workout: 'dashboard/workout',
   }
 }
