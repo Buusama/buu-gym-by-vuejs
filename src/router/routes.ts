@@ -340,6 +340,12 @@ const routes = [
         ],
       },
       {
+        path: '/reports',
+        name: 'reports',
+        meta: { requiresAuth: true, title: 'Báo cáo' },
+        component: () => import('@/views/report/Report.vue'),
+      },
+      {
         path: '/users',
         name: 'users',
         meta: { requiresAuth: true, title: 'Người dùng' },

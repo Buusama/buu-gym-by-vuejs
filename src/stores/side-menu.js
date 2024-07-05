@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
-import { RoleValue } from '../common/enums/permision/role'
+import { defineStore } from 'pinia';
+import { RoleValue } from '../common/enums/permision/role';
 
 export const useSideMenuStore = defineStore('sideMenu', {
   state: () => ({
@@ -219,28 +219,13 @@ export const useSideMenuStore = defineStore('sideMenu', {
         subMenu: [
           {
             icon: '',
-            pageName: 'list-users',
+            pageName: 'reports',
             title: 'Thống kê doanh thu',
-            path: '/users',
-            role: [RoleValue.ADMIN, RoleValue.STAFF],
-          },
-          {
-            icon: '',
-            pageName: 'list-users',
-            title: 'Báo cáo doanh thu',
-            path: '/users',
+            path: '/reports',
             role: [RoleValue.ADMIN, RoleValue.STAFF],
           },
         ],
       },
-      'devider',
-      {
-        icon: 'UsersIcon',
-        title: 'Quản trị viên',
-        pageName: 'list-users',
-        path: '/users',
-        role: [RoleValue.ADMIN, RoleValue.STAFF],
-      },
     ],
   }),
-})
+});

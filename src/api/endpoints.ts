@@ -108,5 +108,7 @@ export default {
     trainer: 'dashboard/trainer',
     member: 'dashboard/member',
     workout: 'dashboard/workout',
+    revenueMonthly: 'dashboard/revenue-monthly',
+    revenueYearly: 'dashboard/revenue-yearly',
   }
 }
